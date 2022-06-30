@@ -1,0 +1,10 @@
+.tab {
+  text-transform: none;
+  justify-content: left;
+  padding-left: 30px;
+}
+
+.tabTitle {
+  text-transform: none;
+  align-items: baseline;
+}
