@@ -81,7 +81,7 @@ const Menu = () => {
           className={styles.tab}
           icon={<ContactsOutlinedIcon />}
           iconPosition="start"
-          label="Contáctos"
+          label="Contactos"
           {...a11yProps(2)}
           value={0}
         />
