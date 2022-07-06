@@ -12,6 +12,7 @@ import PollOutlinedIcon from "@mui/icons-material/PollOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 
 import ContactList from "@/components/ContactList";
+import SurveyTypeForm from "@/components/SurveyTypeForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,7 +67,7 @@ const Menu = () => {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        sx={{ borderRight: 1, borderColor: "divider", maxHeight: "100vh" }}
       >
         <Tab disabled label="CEPRA" {...a11yProps(0)} />
         <Tab
@@ -158,7 +159,7 @@ const Menu = () => {
         Formulario de Organización
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div>Tipo de Encuesta</div>
+        <SurveyTypeForm />
         <div>Datos de la encuesta</div>
         <div>Plantilla de encuesta</div>
       </TabPanel>
