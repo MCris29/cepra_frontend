@@ -2,7 +2,7 @@ import React from "react";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
-const FormTipoEncuesta = () => {
+const ContactList = () => {
   const { data, error } = useSWR("it/itcontacto/", fetcher);
   console.log("data", data);
 
@@ -29,4 +29,4 @@ const FormTipoEncuesta = () => {
   );
 };
 
-export default FormTipoEncuesta;
+export default ContactList;
