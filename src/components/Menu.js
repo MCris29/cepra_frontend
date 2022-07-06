@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import styles from "@/styles/Menu.module.css";
 import PropTypes from "prop-types";
-import { Tabs, Tab, Typography, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EnergySavingsLeafOutlinedIcon from "@mui/icons-material/EnergySavingsLeafOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-import PollOutlinedIcon from '@mui/icons-material/PollOutlined';
+import PollOutlinedIcon from "@mui/icons-material/PollOutlined";
+import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+
+import ContactList from "@/components/ContactList";
+import SurveyTypeForm from "@/components/SurveyTypeForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -23,7 +27,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -63,7 +67,7 @@ const Menu = () => {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        sx={{ borderRight: 1, borderColor: "divider", maxHeight: "100vh" }}
       >
         <Tab disabled label="CEPRA" {...a11yProps(0)} />
         <Tab
@@ -76,11 +80,20 @@ const Menu = () => {
         <Tab
           disableRipple
           className={styles.tab}
+          icon={<ContactsOutlinedIcon />}
+          iconPosition="start"
+          label="Contactos"
+          {...a11yProps(2)}
+          value={0}
+        />
+        <Tab
+          disableRipple
+          className={styles.tab}
           icon={<BusinessIcon />}
           iconPosition="start"
           label="Organización"
-          {...a11yProps(2)}
-          value={0}
+          {...a11yProps(3)}
+          value={1}
         />
         <Tab
           disableRipple
@@ -88,15 +101,15 @@ const Menu = () => {
           icon={<BallotOutlinedIcon />}
           iconPosition="start"
           label="Encuesta"
-          value={1}
-          {...a11yProps(3)}
+          value={2}
+          {...a11yProps(4)}
         />
         <Tab
           className={styles.tabTitle}
           wrapped={true}
           disabled
           label="Indicadores"
-          {...a11yProps(4)}
+          {...a11yProps(5)}
         />
         <Tab
           disableRipple
@@ -104,8 +117,8 @@ const Menu = () => {
           icon={<PollOutlinedIcon />}
           iconPosition="start"
           label="Gráfico"
-          {...a11yProps(5)}
-          value={2}
+          {...a11yProps(6)}
+          value={3}
         />
         <Tab
           disableRipple
@@ -113,15 +126,15 @@ const Menu = () => {
           icon={<PublicOutlinedIcon />}
           iconPosition="start"
           label="Área geográfica"
-          {...a11yProps(6)}
-          value={3}
+          {...a11yProps(7)}
+          value={4}
         />
         <Tab
           className={styles.tabTitle}
           wrapped={true}
           disabled
           label="Usuario"
-          {...a11yProps(7)}
+          {...a11yProps(8)}
         />
         <Tab
           disableRipple
@@ -129,8 +142,8 @@ const Menu = () => {
           icon={<PersonOutlineOutlinedIcon />}
           iconPosition="start"
           label="Perfil"
-          {...a11yProps(8)}
-          value={4}
+          {...a11yProps(9)}
+          value={5}
         />
         <Tab
           className={styles.tab}
@@ -140,18 +153,23 @@ const Menu = () => {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
-        Formulario de Organización
+        <ContactList />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Formulario de encuesta
+        Formulario de Organización
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Gráficos 1
+        <SurveyTypeForm />
+        <div>Datos de la encuesta</div>
+        <div>Plantilla de encuesta</div>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Gráfico 2
+        Gráficos 1
       </TabPanel>
       <TabPanel value={value} index={4}>
+        Gráfico 2
+      </TabPanel>
+      <TabPanel value={value} index={5}>
         Perfil
       </TabPanel>
     </Box>
