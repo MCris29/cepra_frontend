@@ -15,7 +15,7 @@ const schema = yup.object().shape({
     .max(50, "El nombre debe contener máximo 50 caracteres"),
   itten_observacion: yup
     .string()
-    .max(200, "El nombre debe contener máximo 200 caracteres"),
+    .max(200, "Debe contener máximo 200 caracteres"),
 });
 
 const SurveyTypeForm = () => {
@@ -28,7 +28,7 @@ const SurveyTypeForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const TipoEncuestaData = await SurveyTypes.create(data);
+      const surveyTypeData = await SurveyTypes.create(data);
       console.log("Data survey type", data);
 
       reset();

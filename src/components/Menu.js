@@ -13,6 +13,7 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 
 import ContactList from "@/components/ContactList";
 import SurveyTypeForm from "@/components/SurveyTypeForm";
+import SurveyForm from "@/components/SurveyForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -160,7 +161,7 @@ const Menu = () => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <SurveyTypeForm />
-        <div>Datos de la encuesta</div>
+        <SurveyForm />
         <div>Plantilla de encuesta</div>
       </TabPanel>
       <TabPanel value={value} index={3}>
