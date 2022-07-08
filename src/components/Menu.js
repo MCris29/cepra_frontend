@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "@/styles/Menu.module.css";
 import PropTypes from "prop-types";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, Divider } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -161,8 +161,8 @@ const Menu = () => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <SurveyTypeForm />
+        <Divider sx={{ margin: "20px 0" }} />
         <SurveyForm />
-        <div>Plantilla de encuesta</div>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Gráficos 1

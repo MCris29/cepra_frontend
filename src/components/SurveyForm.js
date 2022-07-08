@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
+import { styled } from "@mui/material/styles";
 import { TextField, Button, MenuItem } from "@mui/material";
 
 import { useForm, Controller } from "react-hook-form";
@@ -10,6 +11,9 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { Surveys } from "@/lib/survey";
+import { Options } from "@/models/option";
+
+import * as XLSX from "xlsx";
 
 const schema = yup.object().shape({
   itenc_fecha_vigente: yup
@@ -50,6 +54,37 @@ const SurveyForm = () => {
 
   const handleChange = (event) => {
     setTypeSurvey(event.target.value);
+  };
+
+  const handleFile = (e) => {
+    console.log("file", e);
+
+    const [file] = e.target.files;
+    const reader = new FileReader();
+
+    reader.onload = (evt) => {
+      const bstr = evt.target.result;
+      const wb = XLSX.read(bstr, { type: "binary" });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      //const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      console.log("data", data);
+
+      data.map((row, index) =>
+        row.map((col, index_col) => {
+          //   console.log(index_col, col);
+        })
+      );
+
+      Options.grupo_opciones.nombre_grupo_opcion = "Sedes";
+      Options.grupo_opciones.Options = ["1 sede", "2 sedes", "3 o más sedes"];
+
+      console.log(JSON.stringify(Options.grupo_opciones.Options));
+      console.log(Options);
+    };
+
+    reader.readAsBinaryString(file);
   };
 
   return (
@@ -131,6 +166,16 @@ const SurveyForm = () => {
         <span className={styles.error}>
           {errors.itten_observacion?.message}
         </span>
+
+        <input
+          accept=".csv, .xlsx"
+          id="contained-button-file"
+          type="file"
+          multiple
+          //   onChange={(e) => handleFile(e.target.files[0])}
+          onChange={(e) => handleFile(e)}
+        />
+
         <br />
         <Button type="submit" variant="outlined">
           Guardar
