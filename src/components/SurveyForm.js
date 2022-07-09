@@ -11,9 +11,11 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { Surveys } from "@/lib/survey";
-import { Options } from "@/models/option";
+import { Question } from "@/models/question";
+import { GroupOptions } from "@/models/groupOption";
 
 import * as XLSX from "xlsx";
+import { Category } from "@/models/category";
 
 const schema = yup.object().shape({
   itenc_fecha_vigente: yup
@@ -27,7 +29,7 @@ const schema = yup.object().shape({
 const SurveyForm = () => {
   const [typeSurvey, setTypeSurvey] = useState(false);
   const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
-
+  const [categorias, setCategorias] = useState([]);
   const {
     control,
     handleSubmit,
@@ -36,6 +38,15 @@ const SurveyForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
+    
+    const NewSurvey = {
+      id_encuesta: 3,
+      categorias: categorias,
+    };
+
+    console.log(JSON.stringify(NewSurvey))
+    /*  
+
     const NewSurvey = {
       itten_codigo: typeSurvey,
       itenc_fecha_vigente: data.itenc_fecha_vigente,
@@ -50,15 +61,21 @@ const SurveyForm = () => {
     } catch (e) {
       console.log(e);
     }
+    */
   };
 
   const handleChange = (event) => {
     setTypeSurvey(event.target.value);
   };
 
+  const undefinedToNull = (value) => {
+    if(value == undefined) {
+      return null;
+    } else {
+      return value;
+    }
+  }
   const handleFile = (e) => {
-    console.log("file", e);
-
     const [file] = e.target.files;
     const reader = new FileReader();
 
@@ -67,23 +84,61 @@ const SurveyForm = () => {
       const wb = XLSX.read(bstr, { type: "binary" });
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
-      //const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      console.log("data", data);
 
-      data.map((row, index) =>
-        row.map((col, index_col) => {
-          //   console.log(index_col, col);
-        })
-      );
+      //Esta variable declarar fuera del método
+      // Declarar como categoriasArray
+      setCategorias([]);
 
-      Options.grupo_opciones.nombre_grupo_opcion = "Sedes";
-      Options.grupo_opciones.Options = ["1 sede", "2 sedes", "3 o más sedes"];
+      for (let index = 1; index < data.length; index++) {
 
-      console.log(JSON.stringify(Options.grupo_opciones.Options));
-      console.log(Options);
+        const categoria = categorias.find(c => c.nombre_categoria === data[index][0]);
+        const preguntas = [];
+        const opciones = [];
+        const grupo_opciones = null;
+
+        if(data[index][7]) {
+          opciones = data[index][8].split(',');
+          grupo_opciones = new GroupOptions(
+            undefinedToNull(data[index][7]), // nombre_grupo_opcion
+            opciones                         // array opciones
+          );
+        }
+
+        if(categoria) {
+          categoria.preguntas.push(
+            new Question(
+              undefinedToNull(data[index][2]), // codigo_pregunta
+              undefinedToNull(data[index][3]), // codigo_pregunta_padre
+              undefinedToNull(data[index][4]), // nombre_pregunta
+              undefinedToNull(data[index][5]), // observacion_pregunta
+              undefinedToNull(data[index][6]), // tipo_dato
+              grupo_opciones                   // grupo_opciones
+            )
+          );
+        } else {
+          preguntas.push(
+            new Question(
+              undefinedToNull(data[index][2]), // codigo_pregunta
+              undefinedToNull(data[index][3]), // codigo_pregunta_padre
+              undefinedToNull(data[index][4]), // nombre_pregunta
+              undefinedToNull(data[index][5]), // observacion_pregunta
+              undefinedToNull(data[index][6]), // tipo_dato
+              grupo_opciones                   // grupo_opciones
+            )
+          );
+
+          categorias.push(
+            new Category(
+              data[index][0],                  // nombre_categoria
+              undefinedToNull(data[index][1]), // observacion_categoria
+              preguntas                        // array preguntas
+            )
+          );
+        }
+      }
+      setCategorias(categorias);
     };
-
     reader.readAsBinaryString(file);
   };
 
