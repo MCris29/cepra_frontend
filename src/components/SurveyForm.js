@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { styled } from "@mui/material/styles";
 import { TextField, Button, MenuItem } from "@mui/material";
 
 import { useForm, Controller } from "react-hook-form";
@@ -11,11 +10,12 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { Surveys } from "@/lib/survey";
+import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { Question } from "@/models/question";
 import { GroupOptions } from "@/models/groupOption";
+import { Category } from "@/models/category";
 
 import * as XLSX from "xlsx";
-import { Category } from "@/models/category";
 
 const schema = yup.object().shape({
   itenc_fecha_vigente: yup
@@ -27,9 +27,13 @@ const schema = yup.object().shape({
 });
 
 const SurveyForm = () => {
-  const [typeSurvey, setTypeSurvey] = useState(false);
   const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
+
+  const [typeSurvey, setTypeSurvey] = useState("");
   const [categorias, setCategorias] = useState([]);
+  const [errorTemplate, setErrorTemplate] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -38,30 +42,50 @@ const SurveyForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
-    
-    const NewSurvey = {
-      id_encuesta: 3,
+    setLoading(true);
+
+    if (categorias.length > 0) {
+      const NewSurvey = {
+        itten_codigo: typeSurvey,
+        itenc_fecha_vigente: data.itenc_fecha_vigente,
+        itenc_observacion: data.itenc_observacion,
+      };
+
+      try {
+        const surveyData = await Surveys.create(NewSurvey);
+        console.log("Success survey", surveyData);
+
+        submitTemplate(surveyData.data.idEncuesta);
+        setErrorTemplate("");
+      } catch (e) {
+        console.log(e);
+        setLoading(false);
+      }
+    } else {
+      setErrorTemplate("Debe subir la plantilla de la encuesta");
+      setLoading(false);
+    }
+  };
+
+  const submitTemplate = async (surveyId) => {
+    const SurveyTemplate = {
+      id_encuesta: surveyId,
       categorias: categorias,
     };
 
-    console.log(JSON.stringify(NewSurvey))
-    /*  
-
-    const NewSurvey = {
-      itten_codigo: typeSurvey,
-      itenc_fecha_vigente: data.itenc_fecha_vigente,
-      itenc_observacion: data.itenc_observacion,
-    };
-
     try {
-      const surveyData = await Surveys.create(NewSurvey);
-      console.log("Data survey", data);
+      const surveyTemplateData = await SurveyTemplates.create(SurveyTemplate);
+      console.log("Success template", surveyTemplateData);
 
       reset();
+      deleteFile();
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setErrorTemplate(e.response.data.message);
+      const surveyError = await Surveys.deleteSurvey(surveyId);
+      setLoading(false);
     }
-    */
   };
 
   const handleChange = (event) => {
@@ -69,77 +93,95 @@ const SurveyForm = () => {
   };
 
   const undefinedToNull = (value) => {
-    if(value == undefined) {
-      return null;
+    if (value == undefined) {
+      return "";
     } else {
       return value;
     }
-  }
+  };
+
+  const handleNameFile = (e) => {
+    const nameFile = e.target.files[0].name;
+    document.getElementById("file-span").innerHTML = nameFile;
+  };
+
+  const deleteFile = () => {
+    document.getElementById("file-span").innerHTML = "Selecciona un archivo *";
+    document.getElementById("button-file").value = "";
+  };
+
   const handleFile = (e) => {
     const [file] = e.target.files;
-    const reader = new FileReader();
 
-    reader.onload = (evt) => {
-      const bstr = evt.target.result;
-      const wb = XLSX.read(bstr, { type: "binary" });
-      const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    if (e.target.files.length != 0) {
+      handleNameFile(e);
 
-      //Esta variable declarar fuera del método
-      // Declarar como categoriasArray
-      setCategorias([]);
+      const reader = new FileReader();
 
-      for (let index = 1; index < data.length; index++) {
+      reader.onload = (evt) => {
+        const bstr = evt.target.result;
+        const wb = XLSX.read(bstr, { type: "binary" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-        const categoria = categorias.find(c => c.nombre_categoria === data[index][0]);
-        const preguntas = [];
-        const opciones = [];
-        const grupo_opciones = null;
+        //Esta variable declarar fuera del método
+        // Declarar como categoriasArray
+        setCategorias([]);
+        const categoriasArray = [];
 
-        if(data[index][7]) {
-          opciones = data[index][8].split(',');
-          grupo_opciones = new GroupOptions(
-            undefinedToNull(data[index][7]), // nombre_grupo_opcion
-            opciones                         // array opciones
+        for (let index = 1; index < data.length; index++) {
+          const categoria = categoriasArray.find(
+            (c) => c.nombre_categoria === data[index][0]
           );
+          const preguntas = [];
+          const opciones = [];
+          const grupo_opciones = null;
+
+          if (data[index][7]) {
+            opciones = data[index][8].split(",");
+            grupo_opciones = new GroupOptions(
+              undefinedToNull(data[index][7]), // nombre_grupo_opcion
+              opciones // array opciones
+            );
+          }
+
+          if (categoria) {
+            categoria.preguntas.push(
+              new Question(
+                undefinedToNull(data[index][2]), // codigo_pregunta
+                undefinedToNull(data[index][3]), // codigo_pregunta_padre
+                undefinedToNull(data[index][4]), // nombre_pregunta
+                undefinedToNull(data[index][5]), // observacion_pregunta
+                undefinedToNull(data[index][6]), // tipo_dato
+                grupo_opciones // grupo_opciones
+              )
+            );
+          } else {
+            preguntas.push(
+              new Question(
+                undefinedToNull(data[index][2]), // codigo_pregunta
+                undefinedToNull(data[index][3]), // codigo_pregunta_padre
+                undefinedToNull(data[index][4]), // nombre_pregunta
+                undefinedToNull(data[index][5]), // observacion_pregunta
+                undefinedToNull(data[index][6]), // tipo_dato
+                grupo_opciones // grupo_opciones
+              )
+            );
+
+            categoriasArray.push(
+              new Category(
+                data[index][0], // nombre_categoria
+                undefinedToNull(data[index][1]), // observacion_categoria
+                preguntas // array preguntas
+              )
+            );
+          }
         }
-
-        if(categoria) {
-          categoria.preguntas.push(
-            new Question(
-              undefinedToNull(data[index][2]), // codigo_pregunta
-              undefinedToNull(data[index][3]), // codigo_pregunta_padre
-              undefinedToNull(data[index][4]), // nombre_pregunta
-              undefinedToNull(data[index][5]), // observacion_pregunta
-              undefinedToNull(data[index][6]), // tipo_dato
-              grupo_opciones                   // grupo_opciones
-            )
-          );
-        } else {
-          preguntas.push(
-            new Question(
-              undefinedToNull(data[index][2]), // codigo_pregunta
-              undefinedToNull(data[index][3]), // codigo_pregunta_padre
-              undefinedToNull(data[index][4]), // nombre_pregunta
-              undefinedToNull(data[index][5]), // observacion_pregunta
-              undefinedToNull(data[index][6]), // tipo_dato
-              grupo_opciones                   // grupo_opciones
-            )
-          );
-
-          categorias.push(
-            new Category(
-              data[index][0],                  // nombre_categoria
-              undefinedToNull(data[index][1]), // observacion_categoria
-              preguntas                        // array preguntas
-            )
-          );
-        }
-      }
-      setCategorias(categorias);
-    };
-    reader.readAsBinaryString(file);
+        setCategorias(categoriasArray);
+      };
+      reader.readAsBinaryString(file);
+    }
   };
 
   return (
@@ -193,14 +235,16 @@ const SurveyForm = () => {
               margin="normal"
               required
               fullWidth
-              error={Boolean(errors.itten_nombre)}
+              error={Boolean(errors.itenc_fecha_vigente)}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           )}
         />
-        <span className={styles.error}>{errors.itten_nombre?.message}</span>
+        <span className={styles.error}>
+          {errors.itenc_fecha_vigente?.message}
+        </span>
         <Controller
           name="itenc_observacion"
           control={control}
@@ -214,25 +258,28 @@ const SurveyForm = () => {
               variant="outlined"
               margin="normal"
               fullWidth
-              error={Boolean(errors.itten_observacion)}
+              error={Boolean(errors.itenc_observacion)}
             />
           )}
         />
         <span className={styles.error}>
-          {errors.itten_observacion?.message}
+          {errors.itenc_observacion?.message}
         </span>
 
-        <input
-          accept=".csv, .xlsx"
-          id="contained-button-file"
-          type="file"
-          multiple
-          //   onChange={(e) => handleFile(e.target.files[0])}
-          onChange={(e) => handleFile(e)}
-        />
+        <label htmlFor="button-file" className={styles.button_template_survey}>
+          <input
+            className={styles.input_file}
+            accept=".csv, .xlsx"
+            id="button-file"
+            type="file"
+            multiple
+            onChange={(e) => handleFile(e)}
+          />
+          <span id="file-span">Selecciona un archivo *</span>
+        </label>
+        <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
 
-        <br />
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="outlined" disabled={loading}>
           Guardar
         </Button>
       </form>
