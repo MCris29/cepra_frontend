@@ -15,11 +15,11 @@ async function create(data) {
 }
 
 async function update(id, data) {
-  return await api.get(`it/ittipoencuesta/${id}`, data);
+  return await api.put(`it/ittipoencuesta/${id}`, data);
 }
 
 async function deleteSurveyType(id) {
-  return await api.get(`it/ittipoencuesta/${id}`);
+  return await api.delete(`it/ittipoencuesta/${id}`);
 }
 
 export const SurveyTypes = {

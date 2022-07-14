@@ -1,5 +1,24 @@
 /* Tipo de encuesta */
 .error {
   color: #d32f2f;
-  padding-left: 5px;
+  padding: 0 0 15px 5px;
+  min-width: 100%;
+}
+
+input[type="file"].input_file {
+  display: none;
+}
+
+.button_template_survey {
+  padding: 16.5px 14px;
+  margin: 16px 0 8px 0;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  min-width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  color: #666666;
+}
+.button_template_survey:hover {
+  border: 1px solid #000;
 }

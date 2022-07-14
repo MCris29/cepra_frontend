@@ -77,10 +77,9 @@ const SurveyTypeForm = () => {
             />
           )}
         />
-        <span className={styles.error}>
+        <div className={styles.error}>
           {errors.itten_observacion?.message}
-        </span>
-        <br />
+        </div>
         <Button type="submit" variant="outlined">
           Guardar
         </Button>

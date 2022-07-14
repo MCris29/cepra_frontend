@@ -15,11 +15,11 @@ async function create(data) {
 }
 
 async function update(id, data) {
-  return await api.get(`it/itencuesta/${id}`, data);
+  return await api.put(`it/itencuesta/${id}`, data);
 }
 
 async function deleteSurvey(id) {
-  return await api.get(`it/itencuesta/${id}`);
+  return await api.delete(`it/itencuesta/${id}`);
 }
 
 export const Surveys = {
