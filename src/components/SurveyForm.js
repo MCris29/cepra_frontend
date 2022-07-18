@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { TextField, Button, MenuItem } from "@mui/material";
+import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,6 +34,7 @@ const SurveyForm = () => {
   const [categorias, setCategorias] = useState([]);
   const [errorTemplate, setErrorTemplate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const {
     control,
@@ -80,6 +82,7 @@ const SurveyForm = () => {
       reset();
       deleteFile();
       setLoading(false);
+      setOpen(true);
     } catch (e) {
       console.log(e);
       setErrorTemplate(e.response.data.message);
@@ -184,6 +187,19 @@ const SurveyForm = () => {
     }
   };
 
+  //Mensaje de alerta
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <>
       Datos de encuesta
@@ -283,6 +299,17 @@ const SurveyForm = () => {
           Guardar
         </Button>
       </form>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={"success"}
+            sx={{ width: "100%" }}
+          >
+            Encuesta guardada con exito
+          </Alert>
+        </Snackbar>
+      </Stack>
     </>
   );
 };
