@@ -1,17 +1,21 @@
-/* Tipo de encuesta */
 .error {
   color: #d32f2f;
   padding: 0 0 15px 5px;
   min-width: 100%;
 }
 
+.button_submit {
+  text-transform: none;
+}
+
+/*Formulario  de encuesta*/
 input[type="file"].input_file {
   display: none;
 }
 
 .button_template_survey {
-  padding: 16.5px 14px;
-  margin: 16px 0 8px 0;
+  padding: 8.5px 14px;
+  margin: 8px 0 4px 0;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   min-width: 100%;

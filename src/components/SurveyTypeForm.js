@@ -52,7 +52,8 @@ const SurveyTypeForm = () => {
               id="nombre-form"
               label="Tipo de encuesta"
               variant="outlined"
-              margin="normal"
+              margin="dense"
+              size="small"
               required
               fullWidth
               error={Boolean(errors.itten_nombre)}
@@ -71,16 +72,19 @@ const SurveyTypeForm = () => {
               id="observacion-form"
               label="Observación"
               variant="outlined"
-              margin="normal"
+              margin="dense"
+              size="small"
               fullWidth
               error={Boolean(errors.itten_observacion)}
             />
           )}
         />
-        <div className={styles.error}>
-          {errors.itten_observacion?.message}
-        </div>
-        <Button type="submit" variant="outlined">
+        <div className={styles.error}>{errors.itten_observacion?.message}</div>
+        <Button
+          type="submit"
+          variant="outlined"
+          className={styles.button_submit}
+        >
           Guardar
         </Button>
       </form>
