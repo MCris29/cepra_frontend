@@ -8,11 +8,13 @@
   justify-content: left;
   padding-left: 30px;
   min-width: 14em;
+  min-height: fit-content;
 }
 
 .tabTitle {
   text-transform: none;
   align-items: baseline;
+  margin-top: 20px;
 }
 
 .tabPanel {

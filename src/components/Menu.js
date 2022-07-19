@@ -12,6 +12,7 @@ import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
 import SurveyTypeForm from "@/components/SurveyTypeForm";
 import SurveyForm from "@/components/SurveyForm";
+import SurveyList from "@/components/SurveyList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -159,6 +160,8 @@ const Menu = () => {
         <SurveyTypeForm />
         <Divider sx={{ margin: "20px 0" }} />
         <SurveyForm />
+        <Divider sx={{ margin: "20px 0" }} />
+        <SurveyList />
       </TabPanel>
       <TabPanel value={value} index={2} className={styles.tabPanel}>
         Formulario de respuestas
