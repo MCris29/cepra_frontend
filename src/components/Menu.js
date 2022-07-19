@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import styles from "@/styles/Menu.module.css";
 import PropTypes from "prop-types";
-import { Tabs, Tab, Box, Divider } from "@mui/material";
+import { Tabs, Tab, Box, Divider, Hidden } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import EnergySavingsLeafOutlinedIcon from "@mui/icons-material/EnergySavingsLeafOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import PollOutlinedIcon from "@mui/icons-material/PollOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
-import ContactList from "@/components/ContactList";
 import SurveyTypeForm from "@/components/SurveyTypeForm";
 import SurveyForm from "@/components/SurveyForm";
+import SurveyList from "@/components/SurveyList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,19 +55,21 @@ const Menu = () => {
   };
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: "flex",
-      }}
-    >
+    <Box className={styles.box}>
       <Tabs
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider", maxHeight: "100vh" }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          maxHeight: "100vh",
+          overflow: "inherit",
+          position: "fixed",
+          minHeight: "100vh",
+        }}
       >
         <Tab disabled label="CEPRA" {...a11yProps(0)} />
         <Tab
@@ -81,44 +82,44 @@ const Menu = () => {
         <Tab
           disableRipple
           className={styles.tab}
-          icon={<ContactsOutlinedIcon />}
+          icon={<BusinessIcon />}
           iconPosition="start"
-          label="Contactos"
+          label={<Hidden smDown>Organización</Hidden>}
           {...a11yProps(2)}
           value={0}
         />
         <Tab
           disableRipple
           className={styles.tab}
-          icon={<BusinessIcon />}
+          icon={<BallotOutlinedIcon />}
           iconPosition="start"
-          label="Organización"
+          label={<Hidden smDown>Encuesta</Hidden>}
           {...a11yProps(3)}
           value={1}
         />
         <Tab
           disableRipple
           className={styles.tab}
-          icon={<BallotOutlinedIcon />}
+          icon={<ArticleOutlinedIcon />}
           iconPosition="start"
-          label="Encuesta"
+          label={<Hidden smDown>Respuestas</Hidden>}
+          {...a11yProps(3)}
           value={2}
-          {...a11yProps(4)}
         />
         <Tab
           className={styles.tabTitle}
           wrapped={true}
           disabled
           label="Indicadores"
-          {...a11yProps(5)}
+          {...a11yProps(4)}
         />
         <Tab
           disableRipple
           className={styles.tab}
           icon={<PollOutlinedIcon />}
           iconPosition="start"
-          label="Gráfico"
-          {...a11yProps(6)}
+          label={<Hidden smDown>Gráfico</Hidden>}
+          {...a11yProps(5)}
           value={3}
         />
         <Tab
@@ -126,8 +127,8 @@ const Menu = () => {
           className={styles.tab}
           icon={<PublicOutlinedIcon />}
           iconPosition="start"
-          label="Área geográfica"
-          {...a11yProps(7)}
+          label={<Hidden smDown>Área Geográfica</Hidden>}
+          {...a11yProps(6)}
           value={4}
         />
         <Tab
@@ -135,42 +136,44 @@ const Menu = () => {
           wrapped={true}
           disabled
           label="Usuario"
-          {...a11yProps(8)}
+          {...a11yProps(7)}
         />
         <Tab
           disableRipple
           className={styles.tab}
           icon={<PersonOutlineOutlinedIcon />}
           iconPosition="start"
-          label="Perfil"
-          {...a11yProps(9)}
+          label={<Hidden smDown>Perfil</Hidden>}
+          {...a11yProps(8)}
           value={5}
         />
         <Tab
           className={styles.tab}
           icon={<ExitToAppOutlinedIcon />}
           iconPosition="start"
-          label="Cerrar Sesión"
+          label={<Hidden smDown>Cerrar Sesión</Hidden>}
         />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <ContactList />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={0} className={styles.tabPanel}>
         Formulario de Organización
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={1} className={styles.tabPanel}>
         <SurveyTypeForm />
         <Divider sx={{ margin: "20px 0" }} />
         <SurveyForm />
+        <Divider sx={{ margin: "20px 0" }} />
+        <SurveyList />
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={2} className={styles.tabPanel}>
+        Formulario de respuestas
+      </TabPanel>
+      <TabPanel value={value} index={3} className={styles.tabPanel}>
         Gráficos 1
       </TabPanel>
-      <TabPanel value={value} index={4}>
+      <TabPanel value={value} index={4} className={styles.tabPanel}>
         Gráfico 2
       </TabPanel>
-      <TabPanel value={value} index={5}>
+      <TabPanel value={value} index={5} className={styles.tabPanel}>
         Perfil
       </TabPanel>
     </Box>

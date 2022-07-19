@@ -60,12 +60,12 @@ const SurveyForm = () => {
         submitTemplate(surveyData.data.idEncuesta);
         setErrorTemplate("");
       } catch (e) {
-        console.log(e);
         setLoading(false);
+        console.log(e);
       }
     } else {
-      setErrorTemplate("Debe subir la plantilla de la encuesta");
       setLoading(false);
+      setErrorTemplate("Debe subir la plantilla de la encuesta");
     }
   };
 
@@ -84,10 +84,10 @@ const SurveyForm = () => {
       setLoading(false);
       setOpen(true);
     } catch (e) {
+      setLoading(false);
       console.log(e);
       setErrorTemplate(e.response.data.message);
       const surveyError = await Surveys.deleteSurvey(surveyId);
-      setLoading(false);
     }
   };
 
@@ -217,7 +217,8 @@ const SurveyForm = () => {
               helperText="Por favor selecciona un tipo de encuesta"
               variant="outlined"
               type="date"
-              margin="normal"
+              margin="dense"
+              size="small"
               select
               required
               fullWidth
@@ -248,7 +249,8 @@ const SurveyForm = () => {
               label="Fecha vigente"
               variant="outlined"
               type="date"
-              margin="normal"
+              margin="dense"
+              size="small"
               required
               fullWidth
               error={Boolean(errors.itenc_fecha_vigente)}
@@ -272,7 +274,8 @@ const SurveyForm = () => {
               id="observacion-form"
               label="Observación"
               variant="outlined"
-              margin="normal"
+              margin="dense"
+              size="small"
               fullWidth
               error={Boolean(errors.itenc_observacion)}
             />
@@ -295,7 +298,12 @@ const SurveyForm = () => {
         </label>
         <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
 
-        <Button type="submit" variant="outlined" disabled={loading}>
+        <Button
+          type="submit"
+          variant="outlined"
+          disabled={loading}
+          className={styles.button_submit}
+        >
           Guardar
         </Button>
       </form>

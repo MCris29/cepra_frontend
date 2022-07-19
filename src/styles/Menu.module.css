@@ -1,10 +1,37 @@
+.box {
+  display: flex;
+  position: relative;
+}
+
 .tab {
   text-transform: none;
   justify-content: left;
   padding-left: 30px;
+  min-width: 14em;
+  min-height: fit-content;
 }
 
 .tabTitle {
   text-transform: none;
   align-items: baseline;
+  margin-top: 20px;
+}
+
+.tabPanel {
+  margin-left: 13em;
+}
+
+/*Responsive*/
+@media only screen and (max-width: 600px) {
+  .box {
+    display: -webkit-box;
+  }
+
+  .tab {
+    min-width: 4em;
+  }
+
+  .tabPanel {
+    margin-left: 6em;
+  }
 }
