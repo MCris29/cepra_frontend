@@ -60,12 +60,12 @@ const SurveyForm = () => {
         submitTemplate(surveyData.data.idEncuesta);
         setErrorTemplate("");
       } catch (e) {
-        console.log(e);
         setLoading(false);
+        console.log(e);
       }
     } else {
-      setErrorTemplate("Debe subir la plantilla de la encuesta");
       setLoading(false);
+      setErrorTemplate("Debe subir la plantilla de la encuesta");
     }
   };
 
@@ -84,10 +84,10 @@ const SurveyForm = () => {
       setLoading(false);
       setOpen(true);
     } catch (e) {
+      setLoading(false);
       console.log(e);
       setErrorTemplate(e.response.data.message);
       const surveyError = await Surveys.deleteSurvey(surveyId);
-      setLoading(false);
     }
   };
 

@@ -68,6 +68,7 @@ const Menu = () => {
           maxHeight: "100vh",
           overflow: "inherit",
           position: "fixed",
+          minHeight: "100vh",
         }}
       >
         <Tab disabled label="CEPRA" {...a11yProps(0)} />
