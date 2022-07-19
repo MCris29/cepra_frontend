@@ -142,7 +142,7 @@ const SurveyForm = () => {
           const grupo_opciones = null;
 
           if (data[index][7]) {
-            opciones = data[index][8].split(",");
+            opciones = data[index][8].split(";");
             grupo_opciones = new GroupOptions(
               undefinedToNull(data[index][7]), // nombre_grupo_opcion
               opciones // array opciones
