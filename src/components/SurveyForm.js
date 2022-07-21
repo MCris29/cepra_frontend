@@ -15,6 +15,7 @@ import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { Question } from "@/models/question";
 import { GroupOptions } from "@/models/groupOption";
 import { Category } from "@/models/category";
+import Loading from "@/components/Loading";
 
 import * as XLSX from "xlsx";
 
@@ -304,7 +305,7 @@ const SurveyForm = () => {
           disabled={loading}
           className={styles.button_submit}
         >
-          Guardar
+          {loading ? <Loading /> : <div>Guardar</div>}
         </Button>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>
