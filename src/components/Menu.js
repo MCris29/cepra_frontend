@@ -159,9 +159,9 @@ const Menu = () => {
       </TabPanel>
       <TabPanel value={value} index={1} className={styles.tabPanel}>
         <SurveyTypeForm />
-        <Divider sx={{ margin: "20px 0" }} />
+        <Divider sx={{ margin: "40px 0" }} />
         <SurveyForm />
-        <Divider sx={{ margin: "20px 0" }} />
+        <Divider sx={{ margin: "40px 0" }} />
         <SurveyList />
       </TabPanel>
       <TabPanel value={value} index={2} className={styles.tabPanel}>
