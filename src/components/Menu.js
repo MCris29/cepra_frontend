@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import Routes from "@/constants/routes";
 import styles from "@/styles/Menu.module.css";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
@@ -26,70 +26,75 @@ const Tab = ({ href, isSelected, title, icon }) => (
   </Link>
 );
 
+const TabButton = ({ title, icon }) => (
+  <div
+    className={styles.tab}
+    style={{
+      backgroundColor: "transparent",
+      color: "#2A2A2A",
+    }}
+  >
+    <span>{icon}</span>
+    <p>{title}</p>
+  </div>
+);
+
 const Menu = () => {
-  const { query } = useRouter();
   const router = useRouter();
 
-  const isTabOrganizationSelected = !!query.tab1;
-  const isTabSurveySelected = !!query.tab2;
-  const isTabAnswerSelected = !!query.tab3;
-  const isTabGraphicSelected = !!query.tab4;
-  const isTabGraphicAreaSelected = !!query.tab5;
-  const isTabProfileSelected = !!query.tab6;
-  const isTabLogOutSelected = !!query.tab7;
+  const handleTadSelected = (tabSelected) => {
+    const currentRoute = router.pathname;
+    if (tabSelected === currentRoute) return true;
+    else return false;
+  };
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.tabs}>
           <div className={styles.tabLogo}>
-            <Link href="/">CEPRA</Link>
+            <Link href={Routes.HOME}>CEPRA</Link>
           </div>
           <div className={styles.tabTitle}>Datos</div>
           <Tab
-            href="/observatorio/organizacion?tab1=true"
             title="Organización"
             icon={<BusinessOutlinedIcon />}
-            isSelected={isTabOrganizationSelected}
+            href={Routes.ORGANIZATION}
+            isSelected={handleTadSelected(Routes.ORGANIZATION)}
           />
           <Tab
-            href="/observatorio/encuesta?tab2=true"
             title="Encuesta"
             icon={<ArticleOutlinedIcon />}
-            isSelected={isTabSurveySelected}
+            href={Routes.SURVEY}
+            isSelected={handleTadSelected(Routes.SURVEY)}
           />
           <Tab
-            href="/observatorio/respuesta?tab3=true"
             title="Respuesta"
             icon={<BallotOutlinedIcon />}
-            isSelected={isTabAnswerSelected}
+            href={Routes.ANSWER}
+            isSelected={handleTadSelected(Routes.ANSWER)}
           />
           <div className={styles.tabTitle}>Indicadores</div>
           <Tab
-            href="/observatorio?tab4=true"
             title="Gráfico"
             icon={<PollOutlinedIcon />}
-            isSelected={isTabGraphicSelected}
+            href={Routes.GRAPHIC}
+            isSelected={handleTadSelected(Routes.GRAPHIC)}
           />
           <Tab
-            href="/observatorio?tab5=true"
             title="Área Geográfica"
             icon={<PublicOutlinedIcon />}
-            isSelected={isTabGraphicAreaSelected}
+            href={Routes.GRAPHICAREA}
+            isSelected={handleTadSelected(Routes.GRAPHICAREA)}
           />
           <div className={styles.tabTitle}>Usuario</div>
           <Tab
-            href="/observatorio?tab6=true"
             title="Perfil"
             icon={<AccountCircleOutlinedIcon />}
-            isSelected={isTabProfileSelected}
+            href={Routes.PROFILE}
+            isSelected={handleTadSelected(Routes.PROFILE)}
           />
-          <Tab
-            href="/observatorio?tab7=true"
-            title="Cerrar Sesión"
-            icon={<LoginOutlinedIcon />}
-            isSelected={isTabLogOutSelected}
-          />
+          <TabButton title="Cerrar Sesión" icon={<LoginOutlinedIcon />} />
         </div>
       </div>
     </>
