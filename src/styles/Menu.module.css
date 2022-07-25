@@ -39,10 +39,6 @@
   justify-content: center;
 }
 
-.tabPanel {
-  margin-left: 13em;
-}
-
 /*Responsive*/
 @media only screen and (max-width: 600px) {
   .container {

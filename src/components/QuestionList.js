@@ -3,6 +3,7 @@ import styles from "@/styles/Survey.module.css";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 import {
+  IconButton,
   Button,
   Dialog,
   DialogActions,
@@ -10,6 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const QuestionList = (props) => {
   const [open, setOpen] = useState(false);
@@ -35,20 +37,17 @@ const QuestionList = (props) => {
   }, [open]);
 
   const { data, error } = useSWR("it/itencuestapregunta/", fetcher);
-  console.log("data", data);
+  // console.log("data", data);
 
   if (error) return <>Error</>;
   if (!data) return <>Cargando...</>;
 
   return (
     <div>
-      <Button
-        variant="outlined"
-        onClick={handleClickOpen("paper")}
-        className={styles.button_submit}
-      >
-        Ver preguntas
-      </Button>
+      <IconButton onClick={handleClickOpen("paper")}>
+        <VisibilityIcon />
+      </IconButton>
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -57,7 +56,7 @@ const QuestionList = (props) => {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          Encuesta de {props.survey.id}
+          Encuesta de {props.survey.itten_nombre}
         </DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
           <DialogContentText
@@ -65,7 +64,6 @@ const QuestionList = (props) => {
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            {"Encuesta " + props.survey.id + "     "}
             {[...new Array(50)]
               .map((item, index) => `Pregunta ${index}      `)
               .join("\n")}
