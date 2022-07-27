@@ -4,7 +4,7 @@
   min-width: 100%;
 }
 
-.button_submit {
+.button {
   text-transform: none;
 }
 
@@ -15,6 +15,11 @@
 
 input[type="file"].input_file {
   display: none;
+}
+
+.button_container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .button_template_survey {

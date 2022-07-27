@@ -298,15 +298,16 @@ const SurveyForm = () => {
           <span id="file-span">Selecciona un archivo *</span>
         </label>
         <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
-
-        <Button
-          type="submit"
-          variant="outlined"
-          disabled={loading}
-          className={styles.button_submit}
-        >
-          {loading ? <Loading /> : <div>Guardar</div>}
-        </Button>
+        <div className={styles.button_container}>
+          <Button
+            type="submit"
+            variant="outlined"
+            disabled={loading}
+            className={styles.button}
+          >
+            {loading ? <Loading /> : <div>Guardar</div>}
+          </Button>
+        </div>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

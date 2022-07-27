@@ -100,14 +100,16 @@ const SurveyTypeForm = () => {
           )}
         />
         <div className={styles.error}>{errors.itten_observacion?.message}</div>
-        <Button
-          type="submit"
-          variant="outlined"
-          className={styles.button_submit}
-          disabled={loading}
-        >
-          {loading ? <Loading /> : <div>Guardar</div>}
-        </Button>
+        <div className={styles.button_container}>
+          <Button
+            type="submit"
+            variant="outlined"
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading ? <Loading /> : <div>Guardar</div>}
+          </Button>
+        </div>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

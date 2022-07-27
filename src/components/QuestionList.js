@@ -4,6 +4,7 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 import {
   IconButton,
+  Tooltip,
   Button,
   Dialog,
   DialogActions,
@@ -44,9 +45,11 @@ const QuestionList = (props) => {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen("paper")}>
-        <VisibilityIcon />
-      </IconButton>
+      <Tooltip title="Ver" placement="top-start" followCursor>
+        <IconButton onClick={handleClickOpen("paper")}>
+          <VisibilityIcon />
+        </IconButton>
+      </Tooltip>
 
       <Dialog
         open={open}
@@ -64,13 +67,13 @@ const QuestionList = (props) => {
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            {[...new Array(50)]
-              .map((item, index) => `Pregunta ${index}      `)
-              .join("\n")}
+            Aquí van las preguntas
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Button className={styles.button} onClick={handleClose}>
+            Cerrar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
