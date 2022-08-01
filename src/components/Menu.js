@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Routes from "@/constants/routes";
 import styles from "@/styles/Menu.module.css";
+import { Tooltip } from "@mui/material";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
@@ -20,7 +21,11 @@ const Tab = ({ href, isSelected, title, icon }) => (
         color: isSelected ? "#2F2F2F " : "#2A2A2A",
       }}
     >
-      <span>{icon}</span>
+      <span>
+        <Tooltip title={title} placement="right">
+          {icon}
+        </Tooltip>
+      </span>
       <p>{title}</p>
     </div>
   </Link>
@@ -34,7 +39,11 @@ const TabButton = ({ title, icon }) => (
       color: "#2A2A2A",
     }}
   >
-    <span>{icon}</span>
+    <span>
+      <Tooltip title={title} placement="right">
+        {icon}
+      </Tooltip>
+    </span>
     <p>{title}</p>
   </div>
 );
@@ -62,6 +71,7 @@ const Menu = () => {
             href={Routes.ORGANIZATION}
             isSelected={handleTadSelected(Routes.ORGANIZATION)}
           />
+
           <Tab
             title="Encuesta"
             icon={<ArticleOutlinedIcon />}
