@@ -1,8 +1,11 @@
 import React from "react";
+import Link from "next/link";
+import Routes from "@/constants/routes";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 import { DataGrid } from "@mui/x-data-grid";
-import QuestionList from "@/components/QuestionList";
+import { IconButton, Tooltip } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function handleDate(dateTime) {
   if (dateTime !== null) {
@@ -30,14 +33,21 @@ const columns = [
     headerName: "",
     type: "actions",
     width: 200,
-    getActions: (data) => [<QuestionList survey={data.row} />],
+    getActions: (data) => [
+      <Tooltip title="Ver" placement="top-start" followCursor>
+        <Link href={`${Routes.SURVEY}/${data.row.id}`}>
+          <IconButton>
+            <VisibilityIcon />
+          </IconButton>
+        </Link>
+      </Tooltip>,
+    ],
   },
 ];
 
 const SurveyList = () => {
   const { data, error } = useSWR("it/itencuesta/", fetcher);
   console.log("data", data);
-  // console.log("format Date", handleDate());
 
   if (error) return <>Error</>;
   if (!data) return <>Cargando...</>;
