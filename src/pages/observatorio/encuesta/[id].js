@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { useRouter } from "next/router";
@@ -16,30 +16,36 @@ export default function SurveyId() {
 
   // Modifica el JSON con las preguntas hijas dentro de las padre
   function handleData(survey) {
-    let questionParent = [];
-    let questionChild = [];
-    let positionParent = 0;
+    let newCategories = [];
 
     survey.categorias.map((category) => {
-      category.preguntas.map((question) => {
-        if (question.codigo_pregunta_padre === null)
+      let questionParent = [];
+      let positionParent = 0;
+
+      let newCategory = {
+        codigo_categoria: category.codigo_categoria,
+        nombre_categoria: category.nombre_categoria,
+        observacion_categoria: category.observacion_categoria,
+        preguntas: [],
+      };
+
+      category.preguntas.map((question, index) => {
+        if (question.codigo_pregunta_padre === null) {
+          question.preguntas_hija = [];
           questionParent.push(question);
-        else {
+        } else {
           positionParent = binarySearch(
             question.codigo_pregunta_padre,
             questionParent
           );
-          questionChild.push(question);
-          questionParent[positionParent].preguntas_hija = questionChild;
+          questionParent[positionParent].preguntas_hija.push(question);
         }
       });
-      category.preguntas = questionParent;
-      positionParent = 0;
-      questionChild = [];
-      questionParent = [];
+      newCategory.preguntas = questionParent;
+      newCategories.push(newCategory);
     });
 
-    return survey;
+    return newCategories;
   }
 
   // Algoritmo de busqueda Binaria
@@ -69,11 +75,11 @@ export default function SurveyId() {
       <h3>
         {"-->"}Aqui va el nombre de la encuesta{"<---"}
       </h3>
-      <p>{handleData(data).encuesta_observacion}</p>
+      <p>{data.encuesta_observacion}</p>
       {data ? (
         <div>
           {/* categorias */}
-          {data.categorias.map((category, index) => (
+          {handleData(data).map((category, index) => (
             <div key={index}>
               <h5>{category.nombre_categoria}</h5>
 
