@@ -52,7 +52,7 @@ const SurveyList = () => {
   if (error) return <>Error</>;
   if (!data) return <>Cargando...</>;
   if (data) {
-    data.datos.map((item) => {
+    data.data.map((item) => {
       item.id = item.itenc_codigo;
     });
   }
@@ -62,7 +62,7 @@ const SurveyList = () => {
       <div>Lista de encuestas</div>
       {data ? (
         <DataGrid
-          rows={data.datos}
+          rows={data.data}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}

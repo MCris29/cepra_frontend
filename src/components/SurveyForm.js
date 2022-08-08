@@ -29,8 +29,6 @@ const schema = yup.object().shape({
 });
 
 const SurveyForm = () => {
-  const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
-
   const [typeSurvey, setTypeSurvey] = useState("");
   const [categorias, setCategorias] = useState([]);
   const [errorTemplate, setErrorTemplate] = useState("");
@@ -43,6 +41,11 @@ const SurveyForm = () => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
+
+  if (!data) return <>Cargando...</>;
+  if (error) return <>Ocurrió un error, por favor vuelve a cargar la página</>;
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -227,7 +230,7 @@ const SurveyForm = () => {
               onChange={handleChange}
             >
               {data ? (
-                data.tipo_encuestas.map((type, index) => (
+                data.data.map((type, index) => (
                   <MenuItem key={index} value={type.itten_codigo}>
                     {type.itten_nombre}
                   </MenuItem>
