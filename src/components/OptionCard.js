@@ -3,10 +3,10 @@ import styles from "@/styles/Survey.module.css";
 
 const OptionCard = (props) => {
   return (
-    <>
+    <div className={styles.cardOption}>
       <h5>{props.option.itgop_nombre}</h5>
       {props.option.opciones ? (
-        <div className={styles.cardOption}>
+        <div className={styles.options}>
           {props.option.opciones.map((option, index) => (
             <div key={index}>{"• " + option.itopc_nombre}</div>
           ))}
@@ -14,7 +14,7 @@ const OptionCard = (props) => {
       ) : (
         <span></span>
       )}
-    </>
+    </div>
   );
 };
 

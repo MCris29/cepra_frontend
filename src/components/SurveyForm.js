@@ -206,7 +206,7 @@ const SurveyForm = () => {
 
   return (
     <>
-      Datos de encuesta
+      <h4>Datos de encuesta</h4>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_codigo"

@@ -59,7 +59,7 @@ const SurveyTypeForm = () => {
 
   return (
     <>
-      Tipo de encuesta
+      <h4>Tipo de encuesta</h4>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_nombre"

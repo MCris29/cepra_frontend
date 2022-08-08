@@ -53,5 +53,9 @@ input[type="file"].input_file {
 }
 
 .cardOption {
-  padding: 0 0 0 12px;
+  padding-left: 18px;
+}
+
+.cardOption .options {
+  padding: 0 0 0 16px;
 }

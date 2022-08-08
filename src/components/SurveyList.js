@@ -47,7 +47,6 @@ const columns = [
 
 const SurveyList = () => {
   const { data, error } = useSWR("it/itencuesta/", fetcher);
-  console.log("data", data);
 
   if (error) return <>Error</>;
   if (!data) return <>Cargando...</>;
@@ -59,7 +58,7 @@ const SurveyList = () => {
 
   return (
     <>
-      <div>Lista de encuestas</div>
+      <h4>Lista de encuestas</h4>
       {data ? (
         <DataGrid
           rows={data.data}
