@@ -15,6 +15,7 @@ import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { Question } from "@/models/question";
 import { GroupOptions } from "@/models/groupOption";
 import { Category } from "@/models/category";
+import Loading from "@/components/Loading";
 
 import * as XLSX from "xlsx";
 
@@ -28,8 +29,6 @@ const schema = yup.object().shape({
 });
 
 const SurveyForm = () => {
-  const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
-
   const [typeSurvey, setTypeSurvey] = useState("");
   const [categorias, setCategorias] = useState([]);
   const [errorTemplate, setErrorTemplate] = useState("");
@@ -42,6 +41,11 @@ const SurveyForm = () => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
+
+  if (!data) return <>Cargando...</>;
+  if (error) return <>Ocurrió un error, por favor vuelve a cargar la página</>;
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -202,7 +206,7 @@ const SurveyForm = () => {
 
   return (
     <>
-      Datos de encuesta
+      <h4>Datos de encuesta</h4>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_codigo"
@@ -226,7 +230,7 @@ const SurveyForm = () => {
               onChange={handleChange}
             >
               {data ? (
-                data.tipo_encuestas.map((type, index) => (
+                data.data.map((type, index) => (
                   <MenuItem key={index} value={type.itten_codigo}>
                     {type.itten_nombre}
                   </MenuItem>
@@ -297,15 +301,16 @@ const SurveyForm = () => {
           <span id="file-span">Selecciona un archivo *</span>
         </label>
         <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
-
-        <Button
-          type="submit"
-          variant="outlined"
-          disabled={loading}
-          className={styles.button_submit}
-        >
-          Guardar
-        </Button>
+        <div className={styles.button_container}>
+          <Button
+            type="submit"
+            variant="outlined"
+            disabled={loading}
+            className={styles.button}
+          >
+            {loading ? <Loading /> : <div>Guardar</div>}
+          </Button>
+        </div>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

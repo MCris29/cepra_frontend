@@ -1,37 +1,50 @@
-.box {
-  display: flex;
-  position: relative;
+.container {
+  padding: 0 10px;
+  width: fit-content;
+  height: 100vh;
+  overflow: scroll;
+}
+.tabs {
+  color: #666666;
 }
 
 .tab {
-  text-transform: none;
-  justify-content: left;
-  padding-left: 30px;
-  min-width: 14em;
-  min-height: fit-content;
+  border-radius: 5px;
+  padding: 6px 28px;
+  margin: 6px 0;
+  max-width: 100%;
+  max-height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.tab span {
+  align-self: baseline;
+}
+
+.tab svg {
+  margin-right: 8px;
 }
 
 .tabTitle {
+  color: #666666;
   text-transform: none;
   align-items: baseline;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.tabPanel {
-  margin-left: 13em;
+.tabLogo {
+  display: flex;
+  justify-content: center;
 }
 
 /*Responsive*/
 @media only screen and (max-width: 600px) {
-  .box {
-    display: -webkit-box;
+  .container {
+    padding: 0;
   }
-
-  .tab {
-    min-width: 4em;
-  }
-
-  .tabPanel {
-    margin-left: 6em;
+  .tab p {
+    display: none;
   }
 }

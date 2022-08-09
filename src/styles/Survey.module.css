@@ -1,16 +1,26 @@
+/*General*/
 .error {
   color: #d32f2f;
   padding: 0 0 15px 5px;
   min-width: 100%;
 }
 
-.button_submit {
+.button {
   text-transform: none;
 }
 
 /*Formulario  de encuesta*/
+.forms_container {
+  max-width: 40em;
+}
+
 input[type="file"].input_file {
   display: none;
+}
+
+.button_container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .button_template_survey {
@@ -25,4 +35,27 @@ input[type="file"].input_file {
 }
 .button_template_survey:hover {
   border: 1px solid #000;
+}
+
+/*Tarjeta de preguntas*/
+.cardParent {
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+}
+
+.cardChild {
+  margin: 8px 0 0 35px;
+  padding: 12px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+}
+
+.cardOption {
+  padding-left: 18px;
+}
+
+.cardOption .options {
+  padding: 0 0 0 16px;
 }

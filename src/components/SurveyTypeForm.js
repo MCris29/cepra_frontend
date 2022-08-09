@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { SurveyTypes } from "@/lib/suveyType";
+import Loading from "@/components/Loading";
 
 const schema = yup.object().shape({
   itten_nombre: yup
@@ -19,6 +21,9 @@ const schema = yup.object().shape({
 });
 
 const SurveyTypeForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -27,19 +32,34 @@ const SurveyTypeForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const surveyTypeData = await SurveyTypes.create(data);
       console.log("Data survey type", data);
-
       reset();
+      setOpen(true);
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
+  };
+
+  //Mensaje de alerta
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
     <>
-      Tipo de encuesta
+      <h4>Tipo de encuesta</h4>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_nombre"
@@ -80,14 +100,28 @@ const SurveyTypeForm = () => {
           )}
         />
         <div className={styles.error}>{errors.itten_observacion?.message}</div>
-        <Button
-          type="submit"
-          variant="outlined"
-          className={styles.button_submit}
-        >
-          Guardar
-        </Button>
+        <div className={styles.button_container}>
+          <Button
+            type="submit"
+            variant="outlined"
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading ? <Loading /> : <div>Guardar</div>}
+          </Button>
+        </div>
       </form>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={"success"}
+            sx={{ width: "100%" }}
+          >
+            Tipo de encuesta guardada con exito
+          </Alert>
+        </Snackbar>
+      </Stack>
     </>
   );
 };
