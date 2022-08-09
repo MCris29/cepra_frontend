@@ -1,6 +1,13 @@
 import React from "react";
-import Menu from "@/components/Menu";
+import styles from "@/styles/Survey.module.css";
+import ReplyForm from "@/components/ReplyForm";
 
 export default function Answer() {
-  return <>Formulario de respuestas</>;
+  return (
+    <>
+      <div className={styles.forms_container}>
+        <ReplyForm />
+      </div>
+    </>
+  );
 }

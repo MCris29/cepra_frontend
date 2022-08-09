@@ -34,13 +34,13 @@ const columns = [
     type: "actions",
     width: 200,
     getActions: (data) => [
-      <Tooltip title="Ver" placement="top-start" followCursor>
-        <Link href={`${Routes.SURVEY}/${data.row.id}`}>
-          <IconButton>
+      <Link href={`${Routes.SURVEY}/${data.row.id}`}>
+        <IconButton>
+          <Tooltip title="Ver encuesta" placement="top-start" followCursor>
             <VisibilityIcon />
-          </IconButton>
-        </Link>
-      </Tooltip>,
+          </Tooltip>
+        </IconButton>
+      </Link>,
     ],
   },
 ];
