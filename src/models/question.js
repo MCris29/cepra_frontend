@@ -5,7 +5,8 @@ export class Question {
         nombre_pregunta,
         observacion_pregunta,
         tipo_dato,
-        grupo_opciones) {
+        grupo_opciones
+    ) {
         this.codigo_pregunta = codigo_pregunta;
         this.codigo_pregunta_padre = codigo_pregunta_padre;
         this.nombre_pregunta = nombre_pregunta;
