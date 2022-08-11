@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/Survey.module.css";
 import {
   TextField,
@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
+import PropTypes from 'prop-types';
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -17,8 +22,8 @@ import * as yup from "yup";
 import axios from "axios";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
-
 import * as XLSX from "xlsx";
+
 import { Organization } from "@/models/organization";
 import { Contact } from "@/models/contact";
 import { SurveyReply } from "@/models/surveyReply";
@@ -31,7 +36,35 @@ const schema = yup.object().shape({
     .required("Debe ingresar la fecha en que fue realizada la encuesta"),
 });
 
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" {...props}>{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+  value: PropTypes.number.isRequired,
+  color: PropTypes.string
+};
+
 const ReplyForm = () => {
+  
+  const [progress, setProgress] = React.useState(0);
+  const [showProgress, setShowProgress] = React.useState(false);
+  const [colorProgress, setColorProgress] = React.useState("primary");
   const { data, error } = useSWR("it/itencuesta/", fetcher);
   const [surveyTemplateId, setSurveyTemplateId] = useState("");
   const [surveyReplyArray, setSurveyReplyArray] = useState([]);
@@ -111,6 +144,9 @@ const ReplyForm = () => {
             throw new Error(error);
           }
 
+          setProgress(0);
+          setShowProgress(true);
+          setColorProgress("primary");
           //Recorre por cada organizacion, contacto y sus respuestas
           for (let index = 0; index < surveyReplyArray.length; index++) {
             let surveyReply = surveyReplyArray[index];
@@ -158,20 +194,24 @@ const ReplyForm = () => {
               contacto: surveyReply.contact,
               respuestas: newQuestionReplyArray,
             };
-            console.log(JSON.stringify(newSurveyReply));
             const surveyData = await SurveyReplys.create(newSurveyReply);
+            let nextProgress = (index*100)/surveyReplyArray.length;
+            //setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+            setProgress(nextProgress);
             setErrorTemplate("");
           }
 
+          console.log("Respuestas guardadas con exito")
+          setOpen(true);
           setLoading(false);
         } catch (error) {
+          setLoading(false);
           if (axios.isAxiosError(error)) {
             axiosErrorHandler(error);
           } else {
             setMessageError(error.message);
             setOpenError(true);
           }
-          setLoading(false);
         }
       } else {
         setErrorTemplate("Debe subir los datos de la encuesta.");
@@ -185,32 +225,34 @@ const ReplyForm = () => {
   const axiosErrorHandler = (error) => {
     const nameRequest = `"${error.config.baseURL}${error.config.url}" `;
     let message = "";
-    if (error.code === "ERR_NETWORK") {
+    setColorProgress("secondary");
+    if (error.code == "ERR_NETWORK") {
       message = "No se ha podido establecer conexión con el servidor.";
-    } else if (error.code === "ERR_BAD_REQUEST") {
+    } else if (error.code == "ERR_BAD_REQUEST") {
+      let response = JSON.parse(error.request.response);
       message =
         "Error " +
         error.request.status +
         "." +
         " Solicitud " +
         nameRequest +
-        "fallida.";
-
-      message =
-        "Error " +
-        error.request.status +
-        "." +
-        " Solicitud " +
-        nameRequest +
-        "fallida.";
-    } else if (error.code === "ERR_BAD_RESPONSE") {
+        "fallida." +
+        response.message +
+        ". " +
+        response.error +
+        ".";
+    } else if (error.code == "ERR_BAD_RESPONSE") {
       message =
         "Error " +
         error.response.status +
         "." +
         " Respuesta " +
         nameRequest +
-        "fallida.";
+        "fallida." +
+        error.response.data.message +
+        ". " +
+        error.response.data.error +
+        ".";
     } else {
       message = error.message + "." + " Solicitud " + nameRequest + "fallida. ";
     }
@@ -277,6 +319,9 @@ const ReplyForm = () => {
           setSurveyReplyArray([]);
           setCellUndefinedArray([]);
           setCellEmptyArray([]);
+
+          setShowProgress(false);
+          setColorProgress("primary");
           //Recorre la primera fila del excel
           //almacenando las preguntas de la
           //encuesta en un array
@@ -366,7 +411,7 @@ const ReplyForm = () => {
                 //Elimina los espacios en blanco
                 //en ambos extremos
                 cellData = cellData.toString().trim();
-
+                if(cellData.length>100)console.log("Length: "+cellData.length+", data: "+cellData)
                 questionReplyArray.push({
                   question: cellHeader,
                   reply: cellData,
@@ -477,7 +522,9 @@ const ReplyForm = () => {
           <span id="file-span">Selecciona un archivo *</span>
         </label>
         <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
-
+        <Box sx={{ width: '100%'}} style={{display:showProgress?'block':'none'}} className={styles.error}>
+          <LinearProgressWithLabel value={progress} color={colorProgress}/>
+        </Box>
         <div className={styles.button_container}>
           <Button
             type="submit"
