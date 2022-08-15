@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import Sidebar from "@/components/Sidebar";
 import HomeIcon from "@mui/icons-material/Home";
 import ReceiptIcon from "@mui/icons-material/Receipt";
@@ -7,25 +8,20 @@ import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { SurveyTemplates } from "@/lib/surveyTemplate";
 import axios from "axios";
-import {
-Stack,
-Snackbar,
-AlertTitle,
-} from "@mui/material";
+import { Stack, Snackbar, AlertTitle } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 const SurveyMenu = () => {
-
   const [itemArray, setItemArray] = useState([]);
 
   const [openError, setOpenError] = useState(false);
   const [messageError, setMessageError] = useState("");
-  
+
   useEffect(() => {
     try {
       SurveyTemplates.getAll()
         .then((response) => {
-          if(response.data.data) {
+          if (response.data.data) {
             let surveyTemplate = response.data.data;
             setItemArray([]);
             let newItemArray = [];
@@ -36,19 +32,19 @@ const SurveyMenu = () => {
                   name: question.itpre_nombre,
                   label: question.itpre_nombre,
                   id: question.itpre_codigo,
-                  onClick
-                }
+                  onClick,
+                };
                 newSubItemArray.push(subItem);
               });
               let item = {
                 name: surveyTemplate[index].itcat_nombre,
                 label: surveyTemplate[index].itcat_nombre,
-                items: newSubItemArray
+                items: newSubItemArray,
               };
               newItemArray.push(item);
-              if(index < (surveyTemplate.length-1)) {
+              if (index < surveyTemplate.length - 1) {
                 newItemArray.push("divider");
-              } 
+              }
             }
             setItemArray(newItemArray);
           }
@@ -60,7 +56,7 @@ const SurveyMenu = () => {
             setMessageError(error.message);
             setOpenError(true);
           }
-        })
+        });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         axiosErrorHandler(error);
@@ -78,11 +74,10 @@ const SurveyMenu = () => {
 
   const onClick = (e, item) => {
     window.alert(JSON.stringify(item, null, 2));
-  }
+  };
 
   const axiosErrorHandler = (error) => {
-    
-    console.log(error)
+    console.log(error);
     const nameRequest = `"${error.config.baseURL}${error.config.url}" `;
     let message = "";
     if (error.code == "ERR_NETWORK") {
@@ -115,16 +110,15 @@ const SurveyMenu = () => {
     setMessageError(message);
     setOpenError(true);
   };
-  
+
   const items = [
     {
-      
       name: "billing",
       label: "Billing",
       items: [
-        { name: "statements", label: "Statements", onClick , itpre_codigo: 8},
-        { name: "reports", label: "Reports", onClick }
-      ]
+        { name: "statements", label: "Statements", onClick, itpre_codigo: 8 },
+        { name: "reports", label: "Reports", onClick },
+      ],
     },
     "divider",
     {
@@ -147,14 +141,14 @@ const SurveyMenu = () => {
               Icon: DesktopWindowsIcon,
               items: [
                 { name: "schedule", label: "Schedule" },
-                { name: "frequency", label: "Frequency" }
-              ]
+                { name: "frequency", label: "Frequency" },
+              ],
             },
-            { name: "sms", label: "SMS" }
-          ]
-        }
-      ]
-    }
+            { name: "sms", label: "SMS" },
+          ],
+        },
+      ],
+    },
   ];
 
   return (

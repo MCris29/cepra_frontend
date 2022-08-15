@@ -10,7 +10,6 @@ const publicRoutes = {
   GRAPHIC: "/observatorio/grafico",
   GRAPHICAREA: "/observatorio",
   PROFILE: "/observatorio",
-  GRAPHIC_2: "/observatorio/grafico-general",
   /* */
 };
 
