@@ -6,6 +6,10 @@ let config = {
   },
 };
 
+async function getAll() {
+  return await api.get(`it/datosGrafico2/`)
+}
+
 async function getById(id) {
   return await api.get(`it/encuestaPreguntas/${id}`)
     .then((response) => {
@@ -18,6 +22,7 @@ async function create(data) {
 }
 
 export const SurveyTemplates = {
+  getAll,
   getById,
   create,
 };
