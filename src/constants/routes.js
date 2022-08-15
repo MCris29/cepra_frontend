@@ -7,9 +7,10 @@ const publicRoutes = {
   SURVEY: "/observatorio/encuesta",
   ANSWER: "/observatorio/respuesta",
 
-  GRAPHIC: "/observatorio",
+  GRAPHIC: "/observatorio/grafico",
   GRAPHICAREA: "/observatorio",
   PROFILE: "/observatorio",
+  GRAPHIC_2: "/observatorio/grafico-general",
   /* */
 };
 
