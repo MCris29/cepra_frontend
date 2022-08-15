@@ -30,7 +30,7 @@ const schema = yup.object().shape({
 
 const SurveyForm = () => {
   const [typeSurvey, setTypeSurvey] = useState("");
-  const [categorias, setCategorias] = useState([]);
+  const [categoryArray, setCategoryArray] = useState([]);
   const [errorTemplate, setErrorTemplate] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -50,15 +50,15 @@ const SurveyForm = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    if (categorias.length > 0) {
-      const NewSurvey = {
+    if (categoryArray.length > 0) {
+      const newSurvey = {
         itten_codigo: typeSurvey,
         itenc_fecha_vigente: data.itenc_fecha_vigente,
         itenc_observacion: data.itenc_observacion,
       };
 
       try {
-        const surveyData = await Surveys.create(NewSurvey);
+        const surveyData = await Surveys.create(newSurvey);
         console.log("Success survey", surveyData);
 
         submitTemplate(surveyData.data.idEncuesta);
@@ -76,7 +76,7 @@ const SurveyForm = () => {
   const submitTemplate = async (surveyId) => {
     const SurveyTemplate = {
       id_encuesta: surveyId,
-      categorias: categorias,
+      categorias: categoryArray,
     };
 
     try {
@@ -97,14 +97,6 @@ const SurveyForm = () => {
 
   const handleChange = (event) => {
     setTypeSurvey(event.target.value);
-  };
-
-  const undefinedToNull = (value) => {
-    if (value == undefined) {
-      return "";
-    } else {
-      return value;
-    }
   };
 
   const handleNameFile = (e) => {
@@ -134,58 +126,59 @@ const SurveyForm = () => {
 
         //Esta variable declarar fuera del método
         // Declarar como categoriasArray
-        setCategorias([]);
-        const categoriasArray = [];
+        setCategoryArray([]);
+        const newCategoryArray = [];
 
         for (let index = 1; index < data.length; index++) {
-          const categoria = categoriasArray.find(
-            (c) => c.nombre_categoria === data[index][0]
+          const category = newCategoryArray.find(
+            (c) => c.nombre_categoria == data[index][0]
           );
-          const preguntas = [];
-          const opciones = [];
-          const grupo_opciones = null;
+          
+          const questionArray = [];
+          const optionArray = [];
+          const groupOptions = "";
 
           if (data[index][7]) {
-            opciones = data[index][8].split(";");
-            grupo_opciones = new GroupOptions(
-              undefinedToNull(data[index][7]), // nombre_grupo_opcion
-              opciones // array opciones
+            optionArray = data[index][8].split(";");
+            groupOptions = new GroupOptions(
+              data[index][7].toString().trim(), // nombre_grupo_opcion
+              optionArray // array opciones
             );
           }
 
-          if (categoria) {
-            categoria.preguntas.push(
+          if(category) {
+            category.preguntas.push(
               new Question(
-                undefinedToNull(data[index][2]), // codigo_pregunta
-                undefinedToNull(data[index][3]), // codigo_pregunta_padre
-                undefinedToNull(data[index][4]), // nombre_pregunta
-                undefinedToNull(data[index][5]), // observacion_pregunta
-                undefinedToNull(data[index][6]), // tipo_dato
-                grupo_opciones // grupo_opciones
+                data[index][2]?data[index][2].toString().trim():"", // codigo_pregunta
+                data[index][3]?data[index][3].toString().trim():"", // codigo_pregunta_padre
+                data[index][4]?data[index][4].toString().trim():"", // nombre_pregunta
+                data[index][5]?data[index][5].toString().trim():"", // observacion_pregunta
+                data[index][6]?data[index][6].toString().trim():"", // tipo_dato
+                groupOptions // grupo_opciones
               )
             );
           } else {
-            preguntas.push(
+            questionArray.push(
               new Question(
-                undefinedToNull(data[index][2]), // codigo_pregunta
-                undefinedToNull(data[index][3]), // codigo_pregunta_padre
-                undefinedToNull(data[index][4]), // nombre_pregunta
-                undefinedToNull(data[index][5]), // observacion_pregunta
-                undefinedToNull(data[index][6]), // tipo_dato
-                grupo_opciones // grupo_opciones
+                data[index][2]?data[index][2].toString().trim():"", // codigo_pregunta
+                data[index][3]?data[index][3].toString().trim():"", // codigo_pregunta_padre
+                data[index][4]?data[index][4].toString().trim():"", // nombre_pregunta
+                data[index][5]?data[index][5].toString().trim():"", // observacion_pregunta
+                data[index][6]?data[index][6].toString().trim():"", // tipo_dato
+                groupOptions // grupo_opciones
               )
             );
 
-            categoriasArray.push(
+            newCategoryArray.push(
               new Category(
-                data[index][0], // nombre_categoria
-                undefinedToNull(data[index][1]), // observacion_categoria
-                preguntas // array preguntas
+                data[index][0]?data[index][0].toString().trim():"", // nombre_categoria
+                data[index][1]?data[index][1].toString().trim():"", // observacion_categoria
+                questionArray // array preguntas
               )
             );
           }
         }
-        setCategorias(categoriasArray);
+        setCategoryArray(newCategoryArray);
       };
       reader.readAsBinaryString(file);
     }

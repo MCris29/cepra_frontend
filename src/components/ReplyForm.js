@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
 import {
   TextField,
@@ -15,7 +15,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -104,7 +104,6 @@ const ReplyForm = () => {
               (_questionReply) =>
                 _questionReply.question == questionTemplate.nombre_pregunta
             );
-
             //Verifica si existe la pregunta en la plantilla
             if (questionReply) {
               questionReply.questionFind = true;
@@ -195,16 +194,19 @@ const ReplyForm = () => {
               respuestas: newQuestionReplyArray,
             };
             const surveyData = await SurveyReplys.create(newSurveyReply);
+
             let nextProgress = (index*100)/surveyReplyArray.length;
             //setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
             setProgress(nextProgress);
             setErrorTemplate("");
           }
-
+          setProgress(100);
           console.log("Respuestas guardadas con exito")
           setOpen(true);
           setLoading(false);
+          setShowProgress(false);
         } catch (error) {
+          console.log(error)
           setLoading(false);
           if (axios.isAxiosError(error)) {
             axiosErrorHandler(error);
@@ -313,7 +315,7 @@ const ReplyForm = () => {
           const newSurveyReplyArray = [];
           const newCellUndefinedArray = [];
           const newCellEmptyArray = [];
-          const rowHeaders = 0;
+          const rowHeaders = 0
 
           setQuestionReplyArray([]);
           setSurveyReplyArray([]);
@@ -326,7 +328,7 @@ const ReplyForm = () => {
           //almacenando las preguntas de la
           //encuesta en un array
           for (
-            let index = rowHeaders;
+            let index = 11;
             index < data[rowHeaders].length;
             index++
           ) {
@@ -382,20 +384,20 @@ const ReplyForm = () => {
 
           for (let indexRow = 1; indexRow < data.length; indexRow++) {
             const organization = new Organization(
-              indexRow, //itorg_ruc
-              "Org " + indexRow, //itorg_nombre
-              "Sector " + indexRow, //itorg_sector
-              "SubSector " + indexRow, //itorg_subsector
-              100 + indexRow, //itorg_num_empleados
-              "-1.282083, -78.633050", //itorg_ubicacion
-              52 //itopc_codigo_ciudad => Id de Ambato
+              data[indexRow][0]?data[indexRow][0].toString().trim():"", //itorg_ruc
+              data[indexRow][1]?data[indexRow][1].toString().trim():"", //itorg_nombre
+              data[indexRow][2]?data[indexRow][2].toString().trim():"", //itorg_sector
+              data[indexRow][3]?data[indexRow][3].toString().trim():"", //itorg_subsector
+              data[indexRow][4]?data[indexRow][4].toString().trim():"", //itorg_num_empleados
+              data[indexRow][5]?data[indexRow][5].toString().trim():"", //itorg_ubicacion
+              data[indexRow][6]?data[indexRow][6].toString().trim():""  //itopc_codigo_ciudad => Id de Ambato
             );
 
             const contact = new Contact(
-              "Contacto " + indexRow, //itcon_nombre
-              "contacto" + indexRow + "@gmail.com", //itcon_email
-              "N. Estudios " + indexRow, //itcon_nivel_estudios
-              "N. Decisión " + indexRow //itcon_nivel_decision
+              data[indexRow][7]?data[indexRow][7].toString().trim():"", //itcon_nombre
+              data[indexRow][8]?data[indexRow][8].toString().trim():"", //itcon_email
+              data[indexRow][9]?data[indexRow][9].toString().trim():"", //itcon_nivel_estudios
+              data[indexRow][10]?data[indexRow][10].toString().trim():""  //itcon_nivel_decision
             );
 
             const questionReplyArray = [];
@@ -403,7 +405,7 @@ const ReplyForm = () => {
             //almacenando las respuestas de la
             //encuesta de la organizacion en un array
             newQuestionReplyArray.forEach((questionReply, indexCol) => {
-              let cellData = data[indexRow][indexCol];
+              let cellData = data[indexRow][11+indexCol];
               let cellHeader = questionReply.question;
               //Verifica si existe la celda
               if (cellData) {
@@ -411,7 +413,6 @@ const ReplyForm = () => {
                 //Elimina los espacios en blanco
                 //en ambos extremos
                 cellData = cellData.toString().trim();
-                if(cellData.length>100)console.log("Length: "+cellData.length+", data: "+cellData)
                 questionReplyArray.push({
                   question: cellHeader,
                   reply: cellData,
