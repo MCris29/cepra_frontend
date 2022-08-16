@@ -1,0 +1,12 @@
+.main_container {
+  max-width: 40em;
+}
+
+.graphic_container {
+  border: 1px solid #cccccc;
+  border-radius: 15px;
+  padding: 0 15px;
+  margin: 0;
+
+  min-height: 15rem;
+}
