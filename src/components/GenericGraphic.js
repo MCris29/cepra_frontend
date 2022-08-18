@@ -74,7 +74,6 @@ const GenericGraphic = (props) => {
         {newData ? (
           <div>
             <Line options={options} data={newData} />
-            <Bar options={options} data={newData} />
 
             <button onClick={() => setId(id - 1)}>Dato Anterior</button>
             <button onClick={() => setId(id + 1)}>Dato Siguiente</button>

@@ -24,9 +24,13 @@ a {
   width: 0;
 }
 
-.main {
+.main-admin {
   margin-left: 15em;
   padding: 40px;
+}
+
+.main {
+  padding: 0 40px;
 }
 
 /*Responsive*/

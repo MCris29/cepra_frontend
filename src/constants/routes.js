@@ -2,14 +2,22 @@ const publicRoutes = {
   HOME: "/",
 
   /* Rutas privadas para cambiar al implementar el Login*/
-  OBSERVATORY: "/observatorio",
-  ORGANIZATION: "/observatorio/organizacion",
-  SURVEY: "/observatorio/encuesta",
-  ANSWER: "/observatorio/respuesta",
+  /** Administración **/
+  MANAGEMENT: "/administracion",
+  ORGANIZATION: "/administracion/organizacion",
+  SURVEY: "/administracion/encuesta",
+  ANSWER: "/administracion/respuesta",
+  GRAPHIC: "/administracion/grafico",
+  GRAPHICAREA: "/administracion/area-geografica",
+  PROFILE: "/administracion/perfil",
 
-  GRAPHIC: "/observatorio/grafico",
-  GRAPHICAREA: "/observatorio",
-  PROFILE: "/observatorio",
+  /** Observatorio **/
+  OBSERVATORY: "/observatorio",
+  ENERGY: "/observatorio/energia",
+  PERFORMANCE: "/observatorio/desempeno",
+  INNOVATION: "/observatorio/innovacion",
+  OBS_GRAPHICAREA: "/observatorio/area-geografica",
+
   /* */
 };
 

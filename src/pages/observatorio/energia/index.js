@@ -1,8 +1,9 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import SurveyMenu from "@/components/SurveyMenu";
+import SurveyIndicators from "@/components/SurveyIndicators";
 
-export default function Observatory() {
+export default function Energy() {
   return (
     <>
       <Grid container spacing={2}>
@@ -10,7 +11,10 @@ export default function Observatory() {
           <SurveyMenu />
         </Grid>
         <Grid item xs={9}>
-          Indicadores
+          <div>Indicadores de energia</div>
+          <div>
+            <SurveyIndicators />
+          </div>
         </Grid>
       </Grid>
     </>
