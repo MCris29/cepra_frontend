@@ -1,0 +1,38 @@
+.container {
+  padding: 12px 34px;
+  margin-bottom: 16px;
+  background: #cccccc;
+
+  display: flex;
+  align-items: center;
+}
+
+.cover {
+  height: 18vh;
+}
+
+.logo {
+  padding: 10px 40px;
+}
+
+.item {
+  padding: 0 6px;
+}
+.item:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.login {
+  display: flex;
+  justify-content: end;
+
+  margin: 10px 12px 0;
+}
+
+.button_login {
+  border: 1px solid #ccc;
+  padding: 3px;
+
+  text-transform: none;
+}

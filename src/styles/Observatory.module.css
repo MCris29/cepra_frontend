@@ -1,0 +1,14 @@
+.item {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 6px;
+  margin: 6px 0;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+}
+
+.item:hover {
+  background: #ccc;
+}
