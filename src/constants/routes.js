@@ -12,12 +12,8 @@ const publicRoutes = {
   PROFILE: "/administracion/perfil",
 
   /** Observatorio **/
-  OBSERVATORY: "/observatorio",
-  ENERGY: "/observatorio/energia",
-  PERFORMANCE: "/observatorio/desempeno",
-  INNOVATION: "/observatorio/innovacion",
-  OBS_GRAPHICAREA: "/observatorio/area-geografica",
-
+  OBS_SURVEY: "/encuesta",
+  OBS_GRAPHIC: "/encuesta/:id/grafico",
   /* */
 };
 

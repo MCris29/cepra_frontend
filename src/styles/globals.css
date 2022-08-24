@@ -1,11 +1,34 @@
 html,
 body {
+  scroll-behaviour: smooth;
   padding: 0;
   margin: 0;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+.header {
+  height: 10vh;
+  overflow: hidden;
+}
+.content {
+  height: 90vh;
+  overflow: auto;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.content::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.content {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.footer {
+  height: 10vh;
+  overflow: hidden;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -29,9 +52,9 @@ a {
   padding: 40px;
 }
 
-.main {
-  padding: 0 40px;
-}
+/*.main {*/
+/*  padding: 0 40px;*/
+/*}*/
 
 /*Responsive*/
 @media only screen and (max-width: 600px) {

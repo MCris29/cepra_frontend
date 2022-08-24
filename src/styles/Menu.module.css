@@ -37,6 +37,8 @@
 .tabLogo {
   display: flex;
   justify-content: center;
+
+  color: #0070f3;
 }
 
 /*Responsive*/
