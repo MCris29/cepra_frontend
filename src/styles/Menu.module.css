@@ -20,10 +20,15 @@
 }
 
 .tab span {
-  align-self: baseline;
+  display: flex;
+}
+
+.tab p {
+  margin: 0;
 }
 
 .tab svg {
+  font-size: large;
   margin-right: 8px;
 }
 
