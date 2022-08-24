@@ -54,6 +54,7 @@ const SurveyList = () => {
     data.data.map((item) => {
       item.id = item.itenc_codigo;
     });
+    console.log(data.data)
   }
 
   return (

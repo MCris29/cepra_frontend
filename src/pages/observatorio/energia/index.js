@@ -2,21 +2,15 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import SurveyMenu from "@/components/SurveyMenu";
 import SurveyIndicators from "@/components/SurveyIndicators";
+import {Box, Container, Divider} from "@mui/material";
 
 export default function Energy() {
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <SurveyMenu />
-        </Grid>
-        <Grid item xs={9}>
-          <div>Indicadores de energia</div>
-          <div>
-            <SurveyIndicators />
-          </div>
-        </Grid>
-      </Grid>
+      <Box sx={{textAlign: 'center' ,mt: 1, mb: 2, fontWeight: 'bold', fontSize: 'h4.fontSize'}}>
+        Indicadores de energia
+      </Box>
+      <SurveyIndicators />
     </>
   );
 }

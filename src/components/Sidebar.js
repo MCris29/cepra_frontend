@@ -4,9 +4,12 @@ import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Collapse from "@mui/material/Collapse";
+import Typography from "@mui/material/Typography";
 
-function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
+function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
   const [collapsed, setCollapsed] = React.useState(true);
   const { label, items, Icon, onClick: onClickProp } = item;
 
@@ -27,13 +30,9 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
 
   if (Array.isArray(items) && items.length) {
     expandIcon = !collapsed ? (
-      <ExpandLessIcon
-        className={
-          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
-        }
-      />
+      <ArrowDropDownIcon />
     ) : (
-      <ExpandMoreIcon className="sidebar-item-expand-arrow" />
+      <ArrowRightIcon />
     );
   }
 
@@ -42,18 +41,13 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
       <ListItem
         className="sidebar-item"
         onClick={onClick}
-        button
+        button={true}
         dense
         {...rest}
       >
-        <div
-          style={{ paddingLeft: depth * depthStep }}
-          className="sidebar-item-content"
-        >
-          {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text">{label}</div>
-        </div>
-        {expandIcon}
+        <Typography style={{ paddingLeft: depth * depthStep }}>
+            <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }}> {expandIcon} {label}</span>
+        </Typography>
       </ListItem>
       <Collapse in={!collapsed} timeout="auto" unmountOnExit>
         {Array.isArray(items) ? (
@@ -85,7 +79,7 @@ function Sidebar({ items, depthStep, depth, expanded }) {
         {items.map((sidebarItem, index) => (
           <React.Fragment key={`${sidebarItem.name}${index}`}>
             {sidebarItem === "divider" ? (
-              <Divider style={{ margin: "6px 0" }} />
+              <Divider style={{ margin: "6px 3px" }} />
             ) : (
               <SidebarItem
                 depthStep={depthStep}
