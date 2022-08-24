@@ -17,14 +17,14 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {router.pathname.includes("/administracion") ? (
-        <>
+        <div className="main-container">
           <div className="menu">
             <Menu />
           </div>
           <div className="main-admin">
             <Component {...pageProps} />
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div className="header">

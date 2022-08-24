@@ -1,12 +1,22 @@
 html,
 body {
-  scroll-behaviour: smooth;
+  scroll-behavior: smooth;
   padding: 0;
   margin: 0;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .header {
   height: 10vh;
   overflow: hidden;
@@ -22,28 +32,24 @@ body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .content {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 .footer {
   height: 10vh;
   overflow: hidden;
 }
-a {
-  color: inherit;
-  text-decoration: none;
+
+.main-container {
+  display: flex;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-.menu {
+.main-container .menu {
   position: fixed;
   padding: 40px 10px;
   border-right: 1px solid #d9d9d9;
 }
-.menu ::-webkit-scrollbar {
+.main-container .menu ::-webkit-scrollbar {
   width: 0;
 }
 
@@ -52,14 +58,17 @@ a {
   padding: 40px;
 }
 
-/*.main {*/
-/*  padding: 0 40px;*/
-/*}*/
-
 /*Responsive*/
 @media only screen and (max-width: 600px) {
-  .main {
+  .main-admin {
     margin-left: 6em;
+    padding: 40px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .main-admin {
+    margin-left: 14em;
     padding: 40px;
   }
 }
