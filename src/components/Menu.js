@@ -11,6 +11,7 @@ import PollOutlinedIcon from "@mui/icons-material/PollOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 const Tab = ({ href, isSelected, title, icon }) => (
   <Link href={href}>
@@ -62,6 +63,7 @@ const Menu = () => {
       <div className={styles.container}>
         <div className={styles.tabs}>
           <div className={styles.tabLogo}>
+            <BarChartIcon />
             <Link href={Routes.HOME}>CEPRA</Link>
           </div>
           <div className={styles.tabTitle}>Datos</div>
