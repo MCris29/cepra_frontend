@@ -27,11 +27,13 @@ function MyApp({ Component, pageProps }) {
         </div>
       ) : (
         <>
-          <div className="header">
-            <MenuResponsive />
-          </div>
-          <div className="content">
-            <Component {...pageProps} />
+          <div className="page">
+              <div className="header">
+                  <MenuResponsive />
+              </div>
+              <div className="content">
+                  <Component {...pageProps} />
+              </div>
           </div>
         </>
       )}
