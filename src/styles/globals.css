@@ -63,10 +63,11 @@ a {
 }
 
 /*Responsive*/
-@media only screen and (min-width: 800px) {
+@media only screen and (max-width: 900px) {
   .main-admin {
     margin-left: 14em;
     padding: 40px;
+    min-width: 74%;
   }
 }
 

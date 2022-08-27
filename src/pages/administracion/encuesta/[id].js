@@ -4,6 +4,8 @@ import { fetcher } from "@/lib/utils";
 import { useRouter } from "next/router";
 
 import QuestionCard from "@/components/QuestionCard";
+import LoadingInformation from "@/components/LoadingInformation";
+import ErrorInformation from "@/components/ErrorInformation";
 
 export default function SurveyId() {
   const router = useRouter();
@@ -11,8 +13,8 @@ export default function SurveyId() {
 
   const { data, error } = useSWR(`it/encuesta/${id}`, fetcher);
 
-  if (error) return <div>No se pudo cargar la información de la encuesta</div>;
-  if (!data) return <div>Cargando...</div>;
+  if (error) return <ErrorInformation />;
+  if (!data) return <LoadingInformation />;
 
   // Modifica el JSON con las preguntas hijas dentro de las padre
   function handleData(survey) {

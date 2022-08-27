@@ -15,7 +15,10 @@ import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { Question } from "@/models/question";
 import { GroupOptions } from "@/models/groupOption";
 import { Category } from "@/models/category";
-import Loading from "@/components/Loading";
+
+import Saving from "@/components/Saving";
+import LoadingInformation from "@/components/LoadingInformation";
+import ErrorInformation from "@/components/ErrorInformation";
 
 import * as XLSX from "xlsx";
 
@@ -44,8 +47,8 @@ const SurveyForm = () => {
 
   const { data, error } = useSWR("it/ittipoencuesta/", fetcher);
 
-  if (!data) return <>Cargando...</>;
-  if (error) return <>Ocurrió un error, por favor vuelve a cargar la página</>;
+  if (!data) return <> </>;
+  if (error) return <ErrorInformation />;
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -133,7 +136,7 @@ const SurveyForm = () => {
           const category = newCategoryArray.find(
             (c) => c.nombre_categoria == data[index][0]
           );
-          
+
           const questionArray = [];
           const optionArray = [];
           const groupOptions = "";
@@ -146,33 +149,33 @@ const SurveyForm = () => {
             );
           }
 
-          if(category) {
+          if (category) {
             category.preguntas.push(
               new Question(
-                data[index][2]?data[index][2].toString().trim():"", // codigo_pregunta
-                data[index][3]?data[index][3].toString().trim():"", // codigo_pregunta_padre
-                data[index][4]?data[index][4].toString().trim():"", // nombre_pregunta
-                data[index][5]?data[index][5].toString().trim():"", // observacion_pregunta
-                data[index][6]?data[index][6].toString().trim():"", // tipo_dato
+                data[index][2] ? data[index][2].toString().trim() : "", // codigo_pregunta
+                data[index][3] ? data[index][3].toString().trim() : "", // codigo_pregunta_padre
+                data[index][4] ? data[index][4].toString().trim() : "", // nombre_pregunta
+                data[index][5] ? data[index][5].toString().trim() : "", // observacion_pregunta
+                data[index][6] ? data[index][6].toString().trim() : "", // tipo_dato
                 groupOptions // grupo_opciones
               )
             );
           } else {
             questionArray.push(
               new Question(
-                data[index][2]?data[index][2].toString().trim():"", // codigo_pregunta
-                data[index][3]?data[index][3].toString().trim():"", // codigo_pregunta_padre
-                data[index][4]?data[index][4].toString().trim():"", // nombre_pregunta
-                data[index][5]?data[index][5].toString().trim():"", // observacion_pregunta
-                data[index][6]?data[index][6].toString().trim():"", // tipo_dato
+                data[index][2] ? data[index][2].toString().trim() : "", // codigo_pregunta
+                data[index][3] ? data[index][3].toString().trim() : "", // codigo_pregunta_padre
+                data[index][4] ? data[index][4].toString().trim() : "", // nombre_pregunta
+                data[index][5] ? data[index][5].toString().trim() : "", // observacion_pregunta
+                data[index][6] ? data[index][6].toString().trim() : "", // tipo_dato
                 groupOptions // grupo_opciones
               )
             );
 
             newCategoryArray.push(
               new Category(
-                data[index][0]?data[index][0].toString().trim():"", // nombre_categoria
-                data[index][1]?data[index][1].toString().trim():"", // observacion_categoria
+                data[index][0] ? data[index][0].toString().trim() : "", // nombre_categoria
+                data[index][1] ? data[index][1].toString().trim() : "", // observacion_categoria
                 questionArray // array preguntas
               )
             );
@@ -301,7 +304,7 @@ const SurveyForm = () => {
             disabled={loading}
             className={styles.button}
           >
-            {loading ? <Loading /> : <div>Guardar</div>}
+            {loading ? <Saving /> : <div>Guardar</div>}
           </Button>
         </div>
       </form>

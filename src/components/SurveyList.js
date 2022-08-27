@@ -7,6 +7,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
+import LoadingInformation from "@/components/LoadingInformation";
+import ErrorInformation from "@/components/ErrorInformation";
+
 function handleDate(dateTime) {
   if (dateTime !== null) {
     var formatDate = new Date(dateTime);
@@ -32,7 +35,7 @@ const columns = [
     field: "actions",
     headerName: "",
     type: "actions",
-    width: 200,
+    width: 100,
     getActions: (data) => [
       <Link href={`${Routes.SURVEY}/${data.row.id}`}>
         <IconButton>
@@ -48,13 +51,12 @@ const columns = [
 const SurveyList = () => {
   const { data, error } = useSWR("it/itencuesta/", fetcher);
 
-  if (error) return <>Error</>;
-  if (!data) return <>Cargando...</>;
+  if (!data) return <LoadingInformation />;
+  if (error) return <ErrorInformation />;
   if (data) {
     data.data.map((item) => {
       item.id = item.itenc_codigo;
     });
-    console.log(data.data)
   }
 
   return (
