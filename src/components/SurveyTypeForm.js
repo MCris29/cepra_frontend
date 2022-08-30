@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { SurveyTypes } from "@/lib/suveyType";
-import Loading from "@/components/Loading";
+import Loading from "@/components/Saving";
 
 const schema = yup.object().shape({
   itten_nombre: yup

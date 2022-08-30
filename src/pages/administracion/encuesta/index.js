@@ -9,8 +9,8 @@ const Survey = () => {
   return (
     <>
       <div className={styles.forms_container}>
-        <SurveyTypeForm />
-        <Divider sx={{ margin: "40px 0" }} />
+        {/* <SurveyTypeForm />
+        <Divider sx={{ margin: "40px 0" }} /> */}
         <SurveyForm />
       </div>
       <Divider sx={{ margin: "40px 0" }} />
