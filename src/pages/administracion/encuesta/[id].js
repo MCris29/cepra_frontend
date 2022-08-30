@@ -74,10 +74,7 @@ export default function SurveyId() {
 
   return (
     <>
-      <h3>
-        {"-->"}Aqui va el nombre de la encuesta{"<---"}
-      </h3>
-      <p>{data.encuesta_observacion}</p>
+      <h3>{data.encuesta_observacion}</h3>
       {data ? (
         <div>
           {/* categorias */}
