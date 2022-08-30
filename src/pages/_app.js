@@ -4,7 +4,12 @@ import Menu from "@/components/Menu";
 import { useRouter } from "next/router";
 import MenuResponsive from "@/components/MenuResponsive";
 import Head from "next/head";
-import Footer from "@/components/Footer";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ThemeCepra from "@/constants/theme";
+import {Box} from "@mui/material";
+const theme = createTheme({
+    breakpoints: ThemeCepra.landing.breakpoints
+});
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -27,14 +32,35 @@ function MyApp({ Component, pageProps }) {
         </div>
       ) : (
         <>
-          <div className="page">
-              <div className="header">
-                  <MenuResponsive />
+            <ThemeProvider theme={theme}>
+              <div className="page">
+                  <Box
+                      sx={{
+                          height: {
+                              desktop: "9vh",
+                              laptop: "9vh",
+                              tablet: "9vh",
+                              mobile: "8vh",
+                              min: "7.5vh"
+                          }
+                      }}
+                      className="header">
+                      <MenuResponsive />
+                  </Box>
+                  <Box sx={{
+                          height: {
+                              desktop: "91vh",
+                              laptop: "91vh",
+                              tablet: "91vh",
+                              mobile: "92vh",
+                              min: "92.5vh"
+                          }
+                     }}
+                       className="content">
+                      <Component {...pageProps} />
+                  </Box>
               </div>
-              <div className="content">
-                  <Component {...pageProps} />
-              </div>
-          </div>
+            </ThemeProvider>
         </>
       )}
     </>

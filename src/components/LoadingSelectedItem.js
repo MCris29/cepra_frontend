@@ -19,8 +19,8 @@ export default function LoadingSelectedItem() {
                     <span>Cargando información</span>
                 </Typography>
                 <Box sx={{
-                    height: {desktop: '100%', laptop: '100%', tablet: '100%', mobile: '80%'},
-                    width: {desktop: '100%', laptop: '100%', tablet: '100%', mobile: '80%'},
+                    height: {desktop: '100%', laptop: '100%', tablet: '100%', mobile: '80%', min: "80%"},
+                    width: {desktop: '100%', laptop: '100%', tablet: '100%', mobile: '80%', min: "80%"},
                 }}
                 >
                     <LinearProgress />

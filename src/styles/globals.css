@@ -15,29 +15,27 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/*Landing Page*/
 .page {
   overflow: hidden;
   height: 100%;
   width: 100%;
 }
 .header {
-  height: 10vh;
   overflow: hidden;
 }
 .content {
-  height: 90vh;
   overflow: auto;
 }
-/* Hide scrollbar for Chrome, Safari and Opera */
 .content::-webkit-scrollbar {
   display: none;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
 .content {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 .footer {
   height: 10vh;
   overflow: hidden;
