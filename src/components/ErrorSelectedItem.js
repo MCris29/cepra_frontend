@@ -16,8 +16,8 @@ const ErrorSelectedItem = () => {
                 <CloudOffIcon
                     color="error"
                     sx={{
-                        height: {desktop: '40%', laptop: '45%', tablet: '50%', mobile: '35%'},
-                        width: {desktop: '40%', laptop: '45%', tablet: '50%', mobile: '35%'},
+                        height: {desktop: '40%', laptop: '45%', tablet: '50%', mobile: '35%', min: "35%"},
+                        width: {desktop: '40%', laptop: '45%', tablet: '50%', mobile: '35%', min: "35%"},
                     }}
                 />
                 <Typography variant="h4" color="error">
