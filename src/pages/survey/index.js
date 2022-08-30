@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "@/styles/Graphic2.module.css";
+import styles from "@/styles/LandingSurvey.module.css";
 import {
   Box,
   IconButton,
@@ -11,22 +11,16 @@ import {
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
 import RoutesCepra from "@/constants/routes";
+import ThemeCepra from "@/constants/theme";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 
 const theme = createTheme({
-  breakpoints: {
-    values: {
-      mobile: 0,
-      tablet: 640,
-      laptop: 1024,
-      desktop: 1280,
-    },
-  },
+  breakpoints: ThemeCepra.landing.breakpoints
 });
 
 function handleDate(dateTime) {
@@ -38,43 +32,47 @@ function handleDate(dateTime) {
   }
 }
 
-const columns = [
-  {
-    field: "itenc_fecha_vigente",
-    headerName: "Fecha de vigencia",
-    type: "dateTime",
-    width: 175,
-    renderCell: (data) => {
-      return handleDate(data.row.itenc_fecha_vigente);
-    },
-  },
-  { field: "itenc_observacion", headerName: "Observación", width: 400 },
-  {
-    field: "actions",
-    headerName: "Acciones",
-    type: "actions",
-    width: 200,
-    renderCell: (data) => [
-      <Link
-        key={data.row.ittenc_codigo}
-        href={`${RoutesCepra.OBS_SURVEY}/${data.row.ittenc_codigo}/grafico`}
-      >
-        <IconButton>
-          <Tooltip title="Ver encuesta" placement="top-start" followCursor>
-            <VisibilityIcon />
-          </Tooltip>
-        </IconButton>
-      </Link>,
-    ],
-  },
-];
-
-export default function Survey() {
+export default function LandingSurvey() {
   const { data, error } = useSWR("it/datosGrafico2/", fetcher, {
     shouldRetryOnError: false,
   });
   const [typeSurvey, setTypeSurvey] = useState("");
+  const typeSurveyUrl = new Map([
+    ['Energía', 'energy'],
+    ['Innovación', 'innovation'],
+    ['Desempeño', 'performance']
+  ]);
   const [surveyList, setSurveyList] = useState([]);
+  const columns = [
+    {
+      field: "itenc_fecha_vigente",
+      headerName: "Fecha de vigencia",
+      type: "dateTime",
+      width: 175,
+      renderCell: (data) => {
+        return handleDate(data.row.itenc_fecha_vigente);
+      },
+    },
+    { field: "itenc_observacion", headerName: "Observación", width: 400 },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      type: "actions",
+      width: 200,
+      renderCell: (data) => [
+        <Link
+            key={data.row.itenc_codigo}
+            href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(typeSurvey)}/graphic/${data.row.itenc_codigo}`}
+        >
+          <IconButton>
+            <Tooltip title="Ver encuesta" placement="top-start" followCursor>
+              <VisibilityIcon />
+            </Tooltip>
+          </IconButton>
+        </Link>,
+      ],
+    },
+  ];
 
   const handleChangeTypeSurvey = (event) => {
     const newTypeSurvey = event.target.value;
@@ -116,6 +114,7 @@ export default function Survey() {
                       laptop: "50%",
                       tablet: "60%",
                       mobile: "100%",
+                      min: "100%"
                     },
                   }}
                 >
@@ -146,6 +145,7 @@ export default function Survey() {
                       laptop: "80%",
                       tablet: "80%",
                       mobile: "100%",
+                      min: "100%"
                     },
                   }}
                 >
