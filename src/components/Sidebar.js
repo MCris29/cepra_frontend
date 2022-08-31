@@ -2,8 +2,8 @@ import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 
@@ -12,7 +12,7 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
   const { label, items, Icon, onClick: onClickProp } = item;
 
   function toggleCollapse() {
-    setCollapsed(prevValue => !prevValue);
+    setCollapsed((prevValue) => !prevValue);
   }
 
   function onClick(e) {
@@ -27,11 +27,7 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
   let expandIcon;
 
   if (Array.isArray(items) && items.length) {
-    expandIcon = !collapsed ? (
-      <ArrowDropDownIcon />
-    ) : (
-      <ArrowRightIcon />
-    );
+    expandIcon = !collapsed ? <ArrowDropDownIcon /> : <ArrowRightIcon />;
   }
 
   return (
@@ -44,7 +40,12 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
         {...rest}
       >
         <Typography style={{ paddingLeft: depth * depthStep }}>
-            <span style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }}> {expandIcon} {label}</span>
+          <span
+            style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
+          >
+            {" "}
+            {expandIcon} {label}
+          </span>
         </Typography>
       </ListItem>
       <Collapse in={!collapsed} timeout="auto" unmountOnExit>
