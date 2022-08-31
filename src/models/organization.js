@@ -5,8 +5,9 @@ export class Organization {
         itorg_sector, 
         itorg_subsector, 
         itorg_num_empleados, 
-        itorg_ubicacion, 
-        itopc_codigo_ciudad
+        itorg_ubicacion,
+        itorg_provincia,
+        itorg_ciudad
     ) {
         this.itorg_ruc = itorg_ruc;
         this.itorg_nombre = itorg_nombre;
@@ -14,6 +15,7 @@ export class Organization {
         this.itorg_subsector= itorg_subsector;
         this.itorg_num_empleados = itorg_num_empleados;
         this.itorg_ubicacion = itorg_ubicacion;
-        this.itopc_codigo_ciudad = itopc_codigo_ciudad;
+        this.itorg_provincia = itorg_provincia;
+        this.itorg_ciudad = itorg_ciudad;
     }
 }
