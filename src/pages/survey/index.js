@@ -33,7 +33,7 @@ function handleDate(dateTime) {
 }
 
 export default function LandingSurvey() {
-  const { data, error } = useSWR("it/datosGrafico2/", fetcher, {
+  const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
     shouldRetryOnError: false,
   });
   const [typeSurvey, setTypeSurvey] = useState("");
