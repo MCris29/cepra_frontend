@@ -66,7 +66,6 @@ export default function LandingGraphic() {
       .then((response) => {
         if (response.data) {
           response.data.data.title = item.label;
-          console.log("Data dynamic", response.data.data);
           setChartInformation(response.data.data);
           setChartTitle(item.label);
           setChartType("bar");
