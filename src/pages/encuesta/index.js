@@ -20,7 +20,7 @@ import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 
 const theme = createTheme({
-  breakpoints: ThemeCepra.landing.breakpoints
+  breakpoints: ThemeCepra.landing.breakpoints,
 });
 
 function handleDate(dateTime) {
@@ -33,14 +33,14 @@ function handleDate(dateTime) {
 }
 
 export default function LandingSurvey() {
-  const { data, error } = useSWR("it/datosGrafico2/", fetcher, {
+  const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
     shouldRetryOnError: false,
   });
   const [typeSurvey, setTypeSurvey] = useState("");
   const typeSurveyUrl = new Map([
-    ['Energía', 'energy'],
-    ['Innovación', 'innovation'],
-    ['Desempeño', 'performance']
+    ["Energía", "energia"],
+    ["Innovación", "innovacion"],
+    ["Desempeño", "desempeno"],
   ]);
   const [surveyList, setSurveyList] = useState([]);
   const columns = [
@@ -61,8 +61,10 @@ export default function LandingSurvey() {
       width: 200,
       renderCell: (data) => [
         <Link
-            key={data.row.itenc_codigo}
-            href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(typeSurvey)}/graphic/${data.row.itenc_codigo}`}
+          key={data.row.itenc_codigo}
+          href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(
+            typeSurvey
+          )}/grafico/${data.row.itenc_codigo}`}
         >
           <IconButton>
             <Tooltip title="Ver encuesta" placement="top-start" followCursor>
@@ -114,7 +116,7 @@ export default function LandingSurvey() {
                       laptop: "50%",
                       tablet: "60%",
                       mobile: "100%",
-                      min: "100%"
+                      min: "100%",
                     },
                   }}
                 >
@@ -145,7 +147,7 @@ export default function LandingSurvey() {
                       laptop: "80%",
                       tablet: "80%",
                       mobile: "100%",
-                      min: "100%"
+                      min: "100%",
                     },
                   }}
                 >
