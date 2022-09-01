@@ -41,6 +41,7 @@ const schema = yup.object().shape({
 });
 
 function LinearProgressWithLabel(props) {
+  console.log(props)
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
@@ -48,7 +49,7 @@ function LinearProgressWithLabel(props) {
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" {...props}>{`${Math.round(
-          <span>{props.value}</span>
+            props.value
         )}%`}</Typography>
       </Box>
     </Box>
@@ -107,7 +108,6 @@ const ReplyForm = () => {
     setLoading(true);
     if (cellEmptyArray.length == 0 && cellUndefinedArray.length == 0) {
       if (surveyReplyArray.length > 0) {
-        console.log(JSON.stringify(surveyReplyArray))
         try {
           //Obtiene la plantilla de la encuesta
           const surveyTemplate = await SurveyTemplates.getById(
@@ -116,7 +116,7 @@ const ReplyForm = () => {
 
           const questionTemplateNotFoundArray = [];
           const questionReplyNotFoundArray = [];
-
+          console.log(surveyTemplate)
           //Comprueba que se encuentren todas las
           //las preguntas de la plantilla
           surveyTemplate.preguntas.forEach((questionTemplate) => {
@@ -150,13 +150,13 @@ const ReplyForm = () => {
             let error = "Error al procesar las preguntas. ";
             if (questionTemplateNotFoundArray.length > 0) {
               error +=
-                "Preguntas no encontradas: " +
+                "PLANTILLA - Preguntas no encontradas: " +
                 questionTemplateNotFoundArray.join(", ") +
                 ". ";
             }
             if (questionReplyNotFoundArray.length > 0) {
               error +=
-                "Preguntas adicionales encontradas: " +
+                "RESPUESTAS - Preguntas adicionales encontradas: " +
                 questionReplyNotFoundArray.join(", ") +
                 ". ";
             }
@@ -214,8 +214,9 @@ const ReplyForm = () => {
               respuestas: newQuestionReplyArray,
             };
             const surveyData = await SurveyReplys.create(newSurveyReply);
-
             let nextProgress = (index*100)/surveyReplyArray.length;
+
+            console.log(nextProgress)
             //setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
             setProgress(nextProgress);
             setErrorTemplate("");
@@ -226,7 +227,6 @@ const ReplyForm = () => {
           setLoading(false);
           setShowProgress(false);
         } catch (error) {
-          console.log(error)
           setLoading(false);
           if (axios.isAxiosError(error)) {
             axiosErrorHandler(error);
