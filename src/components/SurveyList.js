@@ -37,7 +37,7 @@ const columns = [
     type: "actions",
     width: 100,
     getActions: (data) => [
-      <Link href={`${Routes.SURVEY}/${data.row.id}`}>
+      <Link key={`${Routes.SURVEY}/${data.row.id}`} href={`${Routes.SURVEY}/${data.row.id}`}>
         <IconButton>
           <Tooltip title="Ver encuesta" placement="top-start" followCursor>
             <VisibilityIcon />

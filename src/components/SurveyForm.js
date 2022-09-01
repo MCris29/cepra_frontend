@@ -137,12 +137,15 @@ const SurveyForm = () => {
             (c) => c.nombre_categoria == data[index][0]
           );
 
-          const questionArray = [];
-          const optionArray = [];
-          const groupOptions = "";
+          let questionArray = [];
+          let optionArray = [];
+          let groupOptions = "";
 
           if (data[index][7]) {
             optionArray = data[index][8].split(";");
+            optionArray.forEach((option, index) => {
+              optionArray[index] = option.toString().trim();
+            });
             groupOptions = new GroupOptions(
               data[index][7].toString().trim(), // nombre_grupo_opcion
               optionArray // array opciones
