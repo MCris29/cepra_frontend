@@ -41,7 +41,6 @@ const schema = yup.object().shape({
 });
 
 function LinearProgressWithLabel(props) {
-  console.log(props)
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
@@ -113,10 +112,9 @@ const ReplyForm = () => {
           const surveyTemplate = await SurveyTemplates.getById(
             surveyTemplateId
           );
-
+          console.log(surveyTemplate)
           const questionTemplateNotFoundArray = [];
           const questionReplyNotFoundArray = [];
-          console.log(surveyTemplate)
           //Comprueba que se encuentren todas las
           //las preguntas de la plantilla
           surveyTemplate.preguntas.forEach((questionTemplate) => {
