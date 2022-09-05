@@ -133,7 +133,7 @@ const Graphic = (props) => {
                 },
               }}
             >
-              <Chart options={options} data={data} />
+              <Chart id="graphic_canvas" options={options} data={data} />
             </Box>
           </ThemeProvider>
         </>
@@ -141,7 +141,11 @@ const Graphic = (props) => {
         <>
           <ThemeProvider theme={theme}>
             <Box>
-              <Chart options={radarOptions} data={dataRadar} />
+              <Chart
+                id="graphic_canvas"
+                options={radarOptions}
+                data={dataRadar}
+              />
             </Box>
           </ThemeProvider>
         </>

@@ -30,6 +30,7 @@ import NotSelectedItem from "@/components/NotSelectedItem";
 import ThemeCepra from "@/constants/theme";
 import dayjs from "dayjs";
 import { ChartData } from "@/lib/ChartData";
+import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -502,6 +503,7 @@ export default function LandingGraphic() {
                           </LocalizationProvider>
                         </Box>
                       </Box>
+                      <ButtonDownloadGraphic title={chartTitle} />
                       <Box
                         sx={{
                           overflow: "auto",
