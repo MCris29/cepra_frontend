@@ -300,13 +300,7 @@ export default function LandingGraphic() {
                 <Box
                   sx={{
                     overflow: "auto",
-                    height: {
-                      desktop: "90%",
-                      laptop: "90%",
-                      tablet: "90%",
-                      mobile: "19%",
-                      min: "19%",
-                    },
+                    height: "fit-content",
                     marginTop: {
                       desktop: "0%",
                       laptop: "0%",
@@ -503,10 +497,11 @@ export default function LandingGraphic() {
                           </LocalizationProvider>
                         </Box>
                       </Box>
-                      <ButtonDownloadGraphic title={chartTitle} />
+                      <ButtonDownloadGraphic
+                        title={chartTitle + " (" + chartType + ")"}
+                      />
                       <Box
                         sx={{
-                          overflow: "auto",
                           height: {
                             desktop: "90%",
                             laptop: "90%",
