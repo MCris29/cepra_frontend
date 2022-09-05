@@ -50,7 +50,7 @@ const OrganizationForm = (props) => {
 
     const newOrganization = {
       itorg_ruc: data.itorg_ruc,
-      itopc_codigo: city,
+      itopc_codigo_ciudad: city,
       itorg_nombre: data.itorg_nombre,
       itorg_sector: data.itorg_sector,
       itorg_subsector: data.itorg_subsector,

@@ -104,7 +104,7 @@ export default function LandingGraphic() {
       .then((response) => {
         if (response.data) {
           setChartInformation(response.data.data);
-          setChartTitle("Muestra por provincias");
+          setChartTitle("Muestra por ciudad");
           setChartType("bar");
           setLoadingItem(false);
         }
@@ -122,7 +122,7 @@ export default function LandingGraphic() {
       .then((response) => {
         if (response.data) {
           setChartInformation(response.data.data);
-          setChartTitle("Muestra por provincias");
+          setChartTitle("Perfil por nivel de decisión");
           setChartType("pie");
           setLoadingItem(false);
         }
@@ -180,7 +180,7 @@ export default function LandingGraphic() {
           },
           "divider",
           {
-            label: "Muestra por provincias",
+            label: "Muestra por ciudad",
             name: "grafico_i2",
             onClick: () => orgGraficoCiudad(surveyId),
           },
@@ -277,6 +277,7 @@ export default function LandingGraphic() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
+                    margin: "12px 0 22px",
                   }}
                 >
                   <Typography
@@ -384,6 +385,7 @@ export default function LandingGraphic() {
                           },
                           width: "100%",
                           display: "flex",
+                          justifyContent: "space-between",
                           flexDirection: {
                             desktop: "row",
                             laptop: "row",
@@ -408,13 +410,6 @@ export default function LandingGraphic() {
                               tablet: "100%",
                               mobile: "34%",
                               min: "34%",
-                            },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
                             },
                             display: "flex",
                             flexDirection: "column",
@@ -456,13 +451,6 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
-                            },
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -496,13 +484,6 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
-                            },
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -532,6 +513,13 @@ export default function LandingGraphic() {
                             min: "62%",
                           },
                           width: "100%",
+                          padding: {
+                            desktop: "0 8em",
+                            laptop: "0",
+                            tablet: "0",
+                            mobile: "0",
+                            min: "0",
+                          },
                         }}
                         className={styles.graphic}
                       >
