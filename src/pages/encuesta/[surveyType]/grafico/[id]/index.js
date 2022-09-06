@@ -301,6 +301,13 @@ export default function LandingGraphic() {
                   sx={{
                     overflow: "auto",
                     height: "fit-content",
+                    maxHeight: {
+                      desktop: "71vh",
+                      laptop: "71vh",
+                      tablet: "71vh",
+                      mobile: "33vh",
+                      min: "33vh",
+                    },
                     marginTop: {
                       desktop: "0%",
                       laptop: "0%",
@@ -357,24 +364,17 @@ export default function LandingGraphic() {
                     <>
                       <Box
                         sx={{
-                          height: {
-                            desktop: "10%",
-                            laptop: "10%",
-                            tablet: "10%",
-                            mobile: "34%",
-                            min: "34%",
-                          },
                           marginTop: {
-                            desktop: "0%",
-                            laptop: "0%",
-                            tablet: "0%",
+                            desktop: "0",
+                            laptop: "0",
+                            tablet: "0",
                             mobile: "2%",
                             min: "2%",
                           },
                           marginBottom: {
-                            desktop: "0%",
-                            laptop: "0%",
-                            tablet: "0%",
+                            desktop: "0",
+                            laptop: "0",
+                            tablet: "0",
                             mobile: "1%",
                             min: "1%",
                           },
@@ -405,6 +405,13 @@ export default function LandingGraphic() {
                               tablet: "100%",
                               mobile: "34%",
                               min: "34%",
+                            },
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
                             },
                             display: "flex",
                             flexDirection: "column",
@@ -446,6 +453,13 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
+                            },
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -479,6 +493,13 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
+                            },
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -502,21 +523,7 @@ export default function LandingGraphic() {
                       />
                       <Box
                         sx={{
-                          height: {
-                            desktop: "90%",
-                            laptop: "90%",
-                            tablet: "90%",
-                            mobile: "62%",
-                            min: "62%",
-                          },
-                          width: "100%",
-                          padding: {
-                            desktop: "0 8em",
-                            laptop: "0",
-                            tablet: "0",
-                            mobile: "0",
-                            min: "0",
-                          },
+                          height: "fit-content",
                         }}
                         className={styles.graphic}
                       >

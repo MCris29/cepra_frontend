@@ -46,9 +46,11 @@ const Graphic = (props) => {
       case "line":
         return <Line id="graphic_canvas" options={options} data={data} />;
       case "pie":
-        return <Pie id="graphic_canvas" data={data} />;
+        return <Pie id="graphic_canvas" options={optionsPie} data={data} />;
       case "doughnut":
-        return <Doughnut id="graphic_canvas" data={data} />;
+        return (
+          <Doughnut id="graphic_canvas" options={optionsPie} data={data} />
+        );
       case "radar":
         return <Radar id="graphic_canvas" options={options} data={data} />;
     }
@@ -111,24 +113,37 @@ const Graphic = (props) => {
     },
   };
 
+  const optionsPie = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+      },
+    },
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <Box
           sx={{
             width: {
-              desktop: "84%",
-              laptop: "84%",
-              tablet: "84%",
-              mobile: "90%",
-              min: "94%",
-            },
-            marginLeft: {
-              desktop: "8%",
-              laptop: "8%",
-              tablet: "8%",
-              mobile: "5%",
-              min: "3%",
+              desktop:
+                props.type == "pie" ||
+                props.type == "doughnut" ||
+                props.type == "radar"
+                  ? "42%"
+                  : "64%",
+              laptop:
+                props.type == "pie" ||
+                props.type == "doughnut" ||
+                props.type == "radar"
+                  ? "62%"
+                  : "82%",
+              tablet: "88%",
+              mobile: "92%",
+              min: "96%",
             },
           }}
         >

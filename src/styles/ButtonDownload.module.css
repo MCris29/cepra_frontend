@@ -1,11 +1,11 @@
 .btn_download {
-  margin: 12px 0;
+  margin: 8px 0;
 }
 .btn_download button {
   text-transform: none;
   padding: 6px 32px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid #c4c4c4;
   background-color: #fafafa;
   color: #2a2a2a;
 }

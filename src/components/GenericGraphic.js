@@ -79,7 +79,7 @@ const GenericGraphic = (props) => {
             <button onClick={() => setId(id + 1)}>Dato Siguiente</button>
           </div>
         ) : (
-          <div>Cargando...</div>
+          <div>Cargando gráfico...</div>
         )}
       </div>
     </>
