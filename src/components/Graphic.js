@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "@/styles/LandingGraphic.module.css";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -87,6 +86,20 @@ const Graphic = (props) => {
 
   const options = {
     responsive: true,
+    // scales: {
+    //   y: {
+    //     beginAtZero: true,
+    //     title: {
+    //       display: false,
+    //       text: "",
+    //     },
+    //     ticks: {
+    //       callback: function (value, index, ticks) {
+    //         return value + "%";
+    //       },
+    //     },
+    //   },
+    // },
     plugins: {
       title: {
         display: true,

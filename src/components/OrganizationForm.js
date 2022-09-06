@@ -45,8 +45,6 @@ const OrganizationForm = (props) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    // console.log("data", data);
-    console.log("city", city);
 
     const newOrganization = {
       itorg_ruc: data.itorg_ruc,
@@ -58,14 +56,11 @@ const OrganizationForm = (props) => {
       itorg_ubicacion: data.itorg_ubicacion,
     };
 
-    console.log(newOrganization);
-
     try {
       const OrganizationData = await Organizations.update(
         props.id,
         newOrganization
       );
-      console.log("Success", OrganizationData);
       setOpen(true);
     } catch (e) {
       console.log(e);
