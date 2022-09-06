@@ -30,6 +30,7 @@ import NotSelectedItem from "@/components/NotSelectedItem";
 import ThemeCepra from "@/constants/theme";
 import dayjs from "dayjs";
 import { ChartData } from "@/lib/ChartData";
+import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -104,7 +105,7 @@ export default function LandingGraphic() {
       .then((response) => {
         if (response.data) {
           setChartInformation(response.data.data);
-          setChartTitle("Muestra por provincias");
+          setChartTitle("Muestra por ciudad");
           setChartType("bar");
           setLoadingItem(false);
         }
@@ -122,7 +123,7 @@ export default function LandingGraphic() {
       .then((response) => {
         if (response.data) {
           setChartInformation(response.data.data);
-          setChartTitle("Muestra por provincias");
+          setChartTitle("Perfil por nivel de decisión");
           setChartType("pie");
           setLoadingItem(false);
         }
@@ -180,7 +181,7 @@ export default function LandingGraphic() {
           },
           "divider",
           {
-            label: "Muestra por provincias",
+            label: "Muestra por ciudad",
             name: "grafico_i2",
             onClick: () => orgGraficoCiudad(surveyId),
           },
@@ -277,6 +278,7 @@ export default function LandingGraphic() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
+                    margin: "12px 0 22px",
                   }}
                 >
                   <Typography
@@ -298,12 +300,13 @@ export default function LandingGraphic() {
                 <Box
                   sx={{
                     overflow: "auto",
-                    height: {
-                      desktop: "90%",
-                      laptop: "90%",
-                      tablet: "90%",
-                      mobile: "19%",
-                      min: "19%",
+                    height: "fit-content",
+                    maxHeight: {
+                      desktop: "71vh",
+                      laptop: "71vh",
+                      tablet: "71vh",
+                      mobile: "33vh",
+                      min: "33vh",
                     },
                     marginTop: {
                       desktop: "0%",
@@ -361,29 +364,23 @@ export default function LandingGraphic() {
                     <>
                       <Box
                         sx={{
-                          height: {
-                            desktop: "10%",
-                            laptop: "10%",
-                            tablet: "10%",
-                            mobile: "34%",
-                            min: "34%",
-                          },
                           marginTop: {
-                            desktop: "0%",
-                            laptop: "0%",
-                            tablet: "0%",
+                            desktop: "0",
+                            laptop: "0",
+                            tablet: "0",
                             mobile: "2%",
                             min: "2%",
                           },
                           marginBottom: {
-                            desktop: "0%",
-                            laptop: "0%",
-                            tablet: "0%",
+                            desktop: "0",
+                            laptop: "0",
+                            tablet: "0",
                             mobile: "1%",
                             min: "1%",
                           },
                           width: "100%",
                           display: "flex",
+                          justifyContent: "space-between",
                           flexDirection: {
                             desktop: "row",
                             laptop: "row",
@@ -409,12 +406,12 @@ export default function LandingGraphic() {
                               mobile: "34%",
                               min: "34%",
                             },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
                             },
                             display: "flex",
                             flexDirection: "column",
@@ -456,12 +453,12 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
                             },
                             display: "flex",
                             flexDirection: "column",
@@ -496,12 +493,12 @@ export default function LandingGraphic() {
                               mobile: "33%",
                               min: "33%",
                             },
-                            mr: {
-                              desktop: "2%",
-                              laptop: "2%",
-                              tablet: "2%",
-                              mobile: "0%",
-                              min: "0%",
+                            margin: {
+                              desktop: "0",
+                              laptop: "0",
+                              tablet: "0",
+                              mobile: "6px 0",
+                              min: "6px 0",
                             },
                             display: "flex",
                             flexDirection: "column",
@@ -521,17 +518,12 @@ export default function LandingGraphic() {
                           </LocalizationProvider>
                         </Box>
                       </Box>
+                      <ButtonDownloadGraphic
+                        title={chartTitle + " (" + chartType + ")"}
+                      />
                       <Box
                         sx={{
-                          overflow: "auto",
-                          height: {
-                            desktop: "90%",
-                            laptop: "90%",
-                            tablet: "90%",
-                            mobile: "62%",
-                            min: "62%",
-                          },
-                          width: "100%",
+                          height: "fit-content",
                         }}
                         className={styles.graphic}
                       >

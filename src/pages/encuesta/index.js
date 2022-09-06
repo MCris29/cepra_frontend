@@ -15,7 +15,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
 import RoutesCepra from "@/constants/routes";
 import ThemeCepra from "@/constants/theme";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 
@@ -67,8 +67,8 @@ export default function LandingSurvey() {
           )}/grafico/${data.row.itenc_codigo}`}
         >
           <IconButton>
-            <Tooltip title="Ver encuesta" placement="top-start" followCursor>
-              <VisibilityIcon />
+            <Tooltip title="Ver gráficos" placement="top-start" followCursor>
+              <BarChartIcon />
             </Tooltip>
           </IconButton>
         </Link>,
