@@ -8,7 +8,7 @@ const publicRoutes = {
   SURVEY: "/administracion/encuesta",
   ANSWER: "/administracion/respuesta",
   GRAPHIC: "/administracion/grafico",
-  GRAPHICAREA: "/administracion/area-geografica",
+  GRAPHICAREA: "/administracion/mapa",
   PROFILE: "/administracion/perfil",
 
   /** Observatorio **/
