@@ -31,11 +31,13 @@ const columns = [
             </Tooltip>
           </IconButton>
         </Link>
-        <IconButton>
-          <Tooltip title="Ver contactos" placement="top-start" followCursor>
-            <ContactsIcon />
-          </Tooltip>
-        </IconButton>
+        <Link href={`${Routes.ORGANIZATION}/${data.row.id}/contactos`}>
+          <IconButton>
+            <Tooltip title="Ver contactos" placement="top-start" followCursor>
+              <ContactsIcon />
+            </Tooltip>
+          </IconButton>
+        </Link>
       </div>,
     ],
   },
@@ -43,7 +45,6 @@ const columns = [
 
 const OrganizationList = () => {
   const { data, error } = useSWR("it/itorganizacion/", fetcher);
-  console.log("data", data);
 
   if (error) return <>Error</>;
   if (!data) return <LoadingInformation />;

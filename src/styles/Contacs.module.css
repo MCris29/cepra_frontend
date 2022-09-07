@@ -1,0 +1,28 @@
+.contacts {
+  display: grid;
+  grid-template-columns: [x0] 1fr [x1] 1fr [x2] 1fr [x3];
+}
+.contacts .card {
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  margin: 4px;
+  padding: 8px;
+  width: 18em;
+  min-width: 8em;
+}
+
+
+
+/*Responsive*/
+@media only screen and (max-width: 900px) {
+  .contacts {
+    display: grid;
+    grid-template-columns: [x0] 1fr [x2] 1fr;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .contacts {
+    display: grid;
+    grid-template-columns: [x0] 1fr;
+  }
+}

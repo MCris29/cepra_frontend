@@ -9,16 +9,16 @@ import OrganizationForm from "@/components/OrganizationForm";
 
 export default function OrganizationId() {
   const router = useRouter();
-  const { id } = router.query;
+  const { ruc } = router.query;
 
-  const { data, error } = useSWR(`it/itorganizacion/${id}`, fetcher);
+  const { data, error } = useSWR(`it/itorganizacion/${ruc}`, fetcher);
 
   if (!data) return <LoadingInformation />;
   if (error) return <ErrorInformation />;
 
   return (
     <>
-      <OrganizationForm data={data.data} id={id} />
+      <OrganizationForm data={data.data} id={ruc} />
     </>
   );
 }
