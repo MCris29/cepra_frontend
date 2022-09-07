@@ -40,7 +40,7 @@ const Menu = () => {
 
   const handleTadSelected = (tabSelected) => {
     const currentRoute = router.pathname;
-    if (tabSelected === currentRoute) return true;
+    if (currentRoute.includes(tabSelected)) return true;
     else return false;
   };
 

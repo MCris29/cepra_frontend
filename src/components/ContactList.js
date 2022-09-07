@@ -1,30 +1,47 @@
 import React from "react";
+import styles from "@/styles/Contacs.module.css";
+
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
-const ContactList = () => {
-  const { data, error } = useSWR("it/itcontacto/", fetcher);
-  console.log("data", data);
+import ErrorInformation from "./ErrorInformation";
+import LoadingInformation from "./LoadingInformation";
 
-  if (error) return <>Error</>;
-  if (!data) return <>Cargando...</>;
+const ContactList = (props) => {
+  const { data, error } = useSWR(
+    `it/contactosOrganizacion/${props.ruc}`,
+    fetcher
+  );
+
+  if (error) return <ErrorInformation />;
+  if (!data) return <LoadingInformation />;
 
   return (
     <>
-      Contactos
-      {data.contactos.map((contact, index) => (
-        <div key={index}>
-          {contact.itcon_codigo +
-            " - " +
-            contact.itcon_nombre +
-            " - " +
-            contact.itcon_email +
-            " - " +
-            contact.itcon_nivel_decision +
-            " - " +
-            contact.itcon_nivel_estudios}
-        </div>
-      ))}
+      <h4>Contactos de {props.organization}</h4>
+
+      <div className={styles.contacts}>
+        {data.data.map((contact, index) => (
+          <div key={index} className={styles.card}>
+            <p>
+              <strong>{contact.itcon_nombre}</strong>
+              <div>
+                <span>{contact.itcon_nivel_estudios}</span>
+              </div>
+            </p>
+            <p>
+              <div>
+                <strong>correo: </strong>
+                {contact.itcon_email}
+              </div>
+              <div>
+                <strong>Nivel de decisión: </strong>
+                {contact.itcon_nivel_decision}
+              </div>
+            </p>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
