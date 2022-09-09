@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import QuestionCard from "@/components/QuestionCard";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
+import ButtonAddQuestion from "@/components/ButtonAddQuestion";
 
 export default function SurveyId() {
   const router = useRouter();
@@ -88,6 +89,7 @@ export default function SurveyId() {
                   <QuestionCard question={question} index={index + 1} />
                 </div>
               ))}
+              <ButtonAddQuestion category={category.codigo_categoria} />
             </div>
           ))}
         </div>
