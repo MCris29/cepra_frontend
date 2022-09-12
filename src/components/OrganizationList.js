@@ -1,10 +1,11 @@
 import React from "react";
 import Routes from "@/constants/routes";
 import Link from "next/link";
+
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
-import { DataGrid } from "@mui/x-data-grid";
 
+import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ContactsIcon from "@mui/icons-material/Contacts";
