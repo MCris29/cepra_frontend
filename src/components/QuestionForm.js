@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -88,10 +89,21 @@ const QuestionForm = (props) => {
     document.getElementById("options-form").focus();
   };
 
+  const removeOption = (option) => {
+    if (option !== "") {
+      const newOptions = [...options];
+      newOptions.splice(option, 1);
+
+      setOptions(newOptions);
+    }
+    document.getElementById("options-form").focus();
+  };
+
   const Options = () => {
     return (
       <>
         <FormControlLabel
+          style={{ color: "#2a2a2a" }}
           control={<Checkbox checked={checked} onChange={handleCheck} />}
           label="Agregar opciones"
         />
@@ -136,7 +148,13 @@ const QuestionForm = (props) => {
             </div>
             {options.map((option, index) => (
               <div key={index} style={{ paddingLeft: "18px" }}>
-                {index + 1 + ". " + option}
+                <IconButton onClick={() => removeOption(index)}>
+                  <RemoveIcon />
+                </IconButton>
+                <span>
+                  <strong>{index + 1 + ". "}</strong>
+                </span>
+                {option}
               </div>
             ))}
           </div>
