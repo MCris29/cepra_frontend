@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
+
+import { Questions } from "@/lib/question";
+
 import {
   Button,
   TextField,
   MenuItem,
   Checkbox,
-  FormControlLabel,
   IconButton,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  Tooltip,
+  Divider,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -36,6 +44,7 @@ const QuestionForm = (props) => {
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [value, setValue] = React.useState("new options");
 
   const {
     control,
@@ -47,7 +56,7 @@ const QuestionForm = (props) => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    const NewData = {
+    const NewQuestionData = {
       codigo_encuesta: parseInt(props.survey_id),
       codigo_categoria: props.category_id,
       codigo_pregunta: "P1",
@@ -63,7 +72,8 @@ const QuestionForm = (props) => {
     };
 
     try {
-      console.log("Data", NewData);
+      const QuestionData = Questions.create(NewQuestionData);
+      console.log("Data", QuestionData);
       props.closeModal();
       props.openAlert();
     } catch (e) {
@@ -79,6 +89,10 @@ const QuestionForm = (props) => {
 
   const handleCheck = (event) => {
     setChecked(event.target.checked);
+  };
+
+  const handleChangeOption = (event) => {
+    setValue(event.target.value);
   };
 
   const addOption = (option) => {
@@ -109,54 +123,85 @@ const QuestionForm = (props) => {
         />
         {checked ? (
           <div>
-            <Controller
-              name="nombre_grupo_opcion"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  id="nombre-grupo-opcion-form"
-                  label="Nombre del grupo de opciones"
-                  variant="outlined"
-                  margin="dense"
-                  size="small"
-                  fullWidth
-                  error={Boolean(errors.nombre_grupo_opcion)}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            />
-            <div style={{ display: "flex" }}>
-              <TextField
-                id="options-form"
-                label="Agregar opción"
-                variant="outlined"
-                margin="dense"
-                size="small"
-                fullWidth
-              />
-              <IconButton
-                onClick={() =>
-                  addOption(document.getElementById("options-form").value)
-                }
+            <FormControl style={{ paddingLeft: "2em" }}>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={value}
+                onChange={handleChangeOption}
               >
-                <AddIcon />
-              </IconButton>
-            </div>
-            {options.map((option, index) => (
-              <div key={index} style={{ paddingLeft: "18px" }}>
-                <IconButton onClick={() => removeOption(index)}>
-                  <RemoveIcon />
-                </IconButton>
-                <span>
-                  <strong>{index + 1 + ". "}</strong>
-                </span>
-                {option}
+                <FormControlLabel
+                  value={"new options"}
+                  control={<Radio size="small" />}
+                  label="Opciones nuevas"
+                />
+                <FormControlLabel
+                  value={"old options"}
+                  control={<Radio size="small" />}
+                  label="Opciones existentes"
+                />
+              </RadioGroup>
+            </FormControl>
+            <Divider style={{ margin: "12px 0" }} />
+            {value === "new options" ? (
+              <div>
+                <Controller
+                  name="nombre_grupo_opcion"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="nombre-grupo-opcion-form"
+                      label="Nombre del grupo de opciones"
+                      variant="outlined"
+                      margin="dense"
+                      size="small"
+                      fullWidth
+                      error={Boolean(errors.nombre_grupo_opcion)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  )}
+                />
+                <div style={{ display: "flex" }}>
+                  <TextField
+                    id="options-form"
+                    label="Agregar opción"
+                    variant="outlined"
+                    margin="dense"
+                    size="small"
+                    fullWidth
+                  />
+                  <Tooltip title="Añadir opción">
+                    <IconButton
+                      onClick={() =>
+                        addOption(document.getElementById("options-form").value)
+                      }
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                {options.map((option, index) => (
+                  <div key={index} style={{ paddingLeft: "18px" }}>
+                    <Tooltip title="Eliminar opción">
+                      <IconButton onClick={() => removeOption(index)}>
+                        <RemoveIcon />
+                      </IconButton>
+                    </Tooltip>
+
+                    <span>
+                      <strong>{index + 1 + ". "}</strong>
+                    </span>
+                    {option}
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <div>Opciones existentes</div>
+            )}
           </div>
         ) : (
           <span></span>
@@ -240,6 +285,7 @@ const QuestionForm = (props) => {
             </TextField>
           )}
         />
+        <Divider style={{ margin: "12px 0" }} />
         <Options />
         <div className={styles.button_container}>
           <Button
