@@ -55,6 +55,8 @@ const QuestionForm = (props) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
+    props.closeErrorAlert();
+    props.closeAlert();
 
     const NewQuestionData = {
       codigo_encuesta: parseInt(props.survey_id),
@@ -66,19 +68,23 @@ const QuestionForm = (props) => {
       tipo_dato: typeData,
 
       grupo_opciones: {
-        nombre_grupo_opcion: data.nombre_grupo_opcion,
-        opciones: options,
+        nombre_grupo_opcion: data.nombre_grupo_opcion
+          ? data.nombre_grupo_opcion
+          : "",
+        opciones: options ? options : [],
       },
     };
 
     try {
-      const QuestionData = Questions.create(NewQuestionData);
+      const QuestionData = await Questions.create(NewQuestionData);
       console.log("Data", QuestionData);
+
       props.closeModal();
       props.openAlert();
     } catch (e) {
       setLoading(false);
       console.log(e);
+      props.openErrorAlert();
     }
     setLoading(false);
   };

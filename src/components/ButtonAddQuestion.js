@@ -26,6 +26,7 @@ const ButtonAddQuestion = (props) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = useState(false);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -36,11 +37,19 @@ const ButtonAddQuestion = (props) => {
   });
 
   const handleOpenAlert = () => setOpenAlert(true);
-  const handleClose = (event, reason) => {
+  const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
+  };
+
+  const handleOpenErrorAlert = () => setOpenErrorAlert(true);
+  const handleCloseErrorAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenErrorAlert(false);
   };
 
   return (
@@ -65,21 +74,38 @@ const ButtonAddQuestion = (props) => {
             survey_id={survey_id}
             closeModal={() => handleCloseModal()}
             openAlert={() => handleOpenAlert()}
+            closeAlert={() => handleCloseAlert()}
+            openErrorAlert={() => handleOpenErrorAlert()}
+            closeErrorAlert={() => handleCloseErrorAlert()}
           />
         </Box>
       </Modal>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
-          open={openAlert}
           autoHideDuration={6000}
-          onClose={handleClose}
+          open={openAlert}
+          onClose={handleCloseAlert}
         >
           <Alert
-            onClose={handleClose}
+            onClose={handleCloseAlert}
             severity={"success"}
             sx={{ width: "100%" }}
           >
             Pregunta guardada con exito
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          autoHideDuration={6000}
+          open={openErrorAlert}
+          onClose={handleCloseErrorAlert}
+        >
+          <Alert
+            onClose={handleCloseErrorAlert}
+            severity={"error"}
+            sx={{ width: "100%" }}
+          >
+            <strong>La pregunta ya existe</strong>
+            <div>¿Quieres intentar de nuevo?</div>
           </Alert>
         </Snackbar>
       </Stack>
