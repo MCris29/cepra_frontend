@@ -76,6 +76,7 @@ export default function SurveyId() {
   return (
     <>
       <h3>{data.encuesta_observacion}</h3>
+      <ButtonAddQuestion categories={data.categorias} />
       {data ? (
         <div>
           {/* categorias */}
@@ -89,7 +90,6 @@ export default function SurveyId() {
                   <QuestionCard question={question} index={index + 1} />
                 </div>
               ))}
-              <ButtonAddQuestion category={category.codigo_categoria} />
             </div>
           ))}
         </div>

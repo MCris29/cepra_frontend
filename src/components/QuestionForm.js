@@ -40,11 +40,12 @@ const schema = yup.object().shape({
 });
 
 const QuestionForm = (props) => {
+  const [category, setCategory] = useState();
   const [typeData, setTypeData] = useState("");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [value, setValue] = React.useState("new options");
+  const [value, setValue] = useState("new options");
 
   const {
     control,
@@ -60,7 +61,7 @@ const QuestionForm = (props) => {
 
     const NewQuestionData = {
       codigo_encuesta: parseInt(props.survey_id),
-      codigo_categoria: props.category_id,
+      codigo_categoria: category,
       codigo_pregunta: "P1",
       codigo_pregunta_padre: "",
       nombre_pregunta: data.nombre_pregunta,
@@ -87,6 +88,10 @@ const QuestionForm = (props) => {
       props.openErrorAlert();
     }
     setLoading(false);
+  };
+
+  const handleChangeCategory = (event) => {
+    setCategory(event.target.value);
   };
 
   const handleChange = (event) => {
@@ -220,6 +225,35 @@ const QuestionForm = (props) => {
     <>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
+          name="category_id"
+          control={control}
+          defaultValue=""
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id="category_id"
+              label="Categoria"
+              helperText="Por favor selecciona una categoría"
+              variant="outlined"
+              margin="dense"
+              size="small"
+              select
+              required
+              fullWidth
+              value={category}
+              onChange={handleChangeCategory}
+            >
+              {props.categories.map((category, index) => (
+                <MenuItem key={index} value={category.codigo_categoria}>
+                  {category.nombre_categoria}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+        <Divider style={{ margin: "12px 0" }} />
+        <Controller
           name="nombre_pregunta"
           control={control}
           defaultValue=""
@@ -277,7 +311,6 @@ const QuestionForm = (props) => {
               label="Tipo de dato"
               helperText="Por favor selecciona un tipo de dato"
               variant="outlined"
-              type="date"
               margin="dense"
               size="small"
               select

@@ -70,7 +70,7 @@ const ButtonAddQuestion = (props) => {
         <Box sx={styleModal}>
           <h4>Añadir pregunta</h4>
           <QuestionForm
-            category_id={props.category}
+            categories={props.categories}
             survey_id={survey_id}
             closeModal={() => handleCloseModal()}
             openAlert={() => handleOpenAlert()}
