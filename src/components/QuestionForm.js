@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
 
 import { Questions } from "@/lib/question";
+import { fetcher } from "@/lib/utils";
+import useSWR from "swr";
 
 import {
   Button,
@@ -40,8 +42,9 @@ const schema = yup.object().shape({
 });
 
 const QuestionForm = (props) => {
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("");
   const [typeData, setTypeData] = useState("");
+  const [groupOptions, setGroupOptions] = useState("");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -53,6 +56,11 @@ const QuestionForm = (props) => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const { data, error } = useSWR(`it/itgrupoopcion`, fetcher);
+
+  if (error) return <>Ocurrio un error</>;
+  if (!data) return <>Espere un momento, por favor...</>;
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -71,6 +79,8 @@ const QuestionForm = (props) => {
       grupo_opciones: {
         nombre_grupo_opcion: data.nombre_grupo_opcion
           ? data.nombre_grupo_opcion
+          : groupOptions
+          ? groupOptions
           : "",
         opciones: options ? options : [],
       },
@@ -93,17 +103,30 @@ const QuestionForm = (props) => {
   const handleChangeCategory = (event) => {
     setCategory(event.target.value);
   };
-
   const handleChange = (event) => {
     setTypeData(event.target.value);
   };
-
   const handleCheck = (event) => {
     setChecked(event.target.checked);
   };
-
   const handleChangeOption = (event) => {
+    setOptions([]);
+    setGroupOptions("");
     setValue(event.target.value);
+  };
+  const handleChangeGroupOptions = (event) => {
+    const newGroupOptions = event.target.value;
+    setGroupOptions(newGroupOptions);
+
+    const group_options = data.data.find(
+      (nextGroupOptions) => nextGroupOptions.itgop_nombre === newGroupOptions
+    );
+
+    const newOptions = [];
+    group_options.opciones.forEach((element) => {
+      newOptions.push(element.itopc_nombre);
+    });
+    setOptions(newOptions);
   };
 
   const addOption = (option) => {
@@ -113,7 +136,6 @@ const QuestionForm = (props) => {
     }
     document.getElementById("options-form").focus();
   };
-
   const removeOption = (option) => {
     if (option !== "") {
       const newOptions = [...options];
@@ -160,6 +182,7 @@ const QuestionForm = (props) => {
                   name="nombre_grupo_opcion"
                   control={control}
                   defaultValue=""
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <TextField
                       {...field}
@@ -169,6 +192,7 @@ const QuestionForm = (props) => {
                       margin="dense"
                       size="small"
                       fullWidth
+                      required
                       error={Boolean(errors.nombre_grupo_opcion)}
                       InputLabelProps={{
                         shrink: true,
@@ -204,14 +228,51 @@ const QuestionForm = (props) => {
                     </Tooltip>
 
                     <span>
-                      <strong>{index + 1 + ". "}</strong>
+                      <span>{"• "}</span>
                     </span>
                     {option}
                   </div>
                 ))}
               </div>
             ) : (
-              <div>Opciones existentes</div>
+              <div>
+                <Controller
+                  name="nombre_grupo_opcion"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="nombre-grupo-opcion-form"
+                      label="Grupo de opciones"
+                      helperText="Por favor selecciona un grupo de opción"
+                      variant="outlined"
+                      margin="dense"
+                      size="small"
+                      select
+                      required
+                      fullWidth
+                      value={groupOptions}
+                      onChange={handleChangeGroupOptions}
+                    >
+                      {data.data.map((option, index) => (
+                        <MenuItem key={index} value={option.itgop_nombre}>
+                          {option.itgop_nombre}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+                <div style={{ paddingLeft: "12px" }}>
+                  {options.map((option, index) => (
+                    <div key={index}>
+                      <span>{"• "}</span>
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         ) : (
