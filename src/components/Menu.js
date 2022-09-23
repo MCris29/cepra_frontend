@@ -21,6 +21,7 @@ const menuItems = [
     to: Routes.ORGANIZATION,
   },
   { title: "Encuesta", icon: <ArticleOutlinedIcon />, to: Routes.SURVEY },
+  { title: "Respuestas", icon: <BallotOutlinedIcon />, to: Routes.ANSWERS },
   { title: "Respuesta", icon: <BallotOutlinedIcon />, to: Routes.ANSWER },
 ];
 
@@ -40,7 +41,7 @@ const Menu = () => {
 
   const handleTadSelected = (tabSelected) => {
     const currentRoute = router.pathname;
-    if (currentRoute.includes(tabSelected)) return true;
+    if (currentRoute === tabSelected) return true;
     else return false;
   };
 

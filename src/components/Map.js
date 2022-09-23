@@ -4,6 +4,24 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import {useState} from "react";
 
+function MarkerItem(props) {
+    const [marker] = useState(props.data)
+    return (
+        marker.position.length > 0 ? (
+            <Marker position={marker.position}>
+                <Popup >
+                    <b>Organización: </b> {marker.nombre} <br />
+                    <b>Sector: </b> {marker.sector} <br />
+                    <b>Subsector: </b> {marker.subsector} <br />
+                    <b>Núm. Empleados: </b> {marker.num_empleados} <br />
+                </Popup>
+            </Marker>
+        ) : (
+            <></>
+        )
+    );
+}
+
 const Map = (props) => {
     const positionInitialMap = [-1.80, -78.51];
     const [mapMarkers] = useState(props.data);
@@ -16,18 +34,7 @@ const Map = (props) => {
             />
             {
                 mapMarkers.map((marker, index) => (
-                    marker.position.length > 0 ? (
-                        <Marker key={index}  position={marker.position}>
-                            <Popup>
-                                <b>Organización: </b> {marker.nombre} <br />
-                                <b>Sector: </b> {marker.sector} <br />
-                                <b>Subsector: </b> {marker.subsector} <br />
-                                <b>Núm. Empleados: </b> {marker.num_empleados} <br />
-                            </Popup>
-                        </Marker>
-                    ) : (
-                        <></>
-                    )
+                    <MarkerItem key={index} data={marker} />
                 ))
             }
             {/*<Marker position={[-0.1860160474609731,-78.67458062644613]}>*/}
