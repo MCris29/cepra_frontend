@@ -21,8 +21,15 @@ async function create(data) {
   return await api.post(`it/encuesta/`, data);
 }
 
+async function getWithCategoriesById(id) {
+  return await api.get(`it/encuesta/${id}`)
+      .then((response) => {
+        return response.data
+      });
+}
 export const SurveyTemplates = {
   getAll,
   getById,
   create,
+  getWithCategoriesById,
 };

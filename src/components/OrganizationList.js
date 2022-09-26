@@ -1,10 +1,11 @@
 import React from "react";
 import Routes from "@/constants/routes";
 import Link from "next/link";
+
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
-import { DataGrid } from "@mui/x-data-grid";
 
+import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ContactsIcon from "@mui/icons-material/Contacts";
@@ -48,7 +49,7 @@ const OrganizationList = () => {
 
   if (error) return <>Error</>;
   if (!data) return <LoadingInformation />;
-  if (data) {
+  if (data.data) {
     data.data.map((item) => {
       item.id = item.itorg_ruc;
     });
@@ -57,7 +58,7 @@ const OrganizationList = () => {
   return (
     <>
       <h4>Lista de organizaciones</h4>
-      {data ? (
+      {data.data ? (
         <DataGrid
           rows={data.data}
           columns={columns}
@@ -67,7 +68,7 @@ const OrganizationList = () => {
           sx={{ marginTop: "20px" }}
         />
       ) : (
-        <span>Cargando...</span>
+        <div>No existen registros</div>
       )}
     </>
   );

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import QuestionCard from "@/components/QuestionCard";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
+import ButtonAddQuestion from "@/components/ButtonAddQuestion";
 
 export default function SurveyId() {
   const router = useRouter();
@@ -75,6 +76,7 @@ export default function SurveyId() {
   return (
     <>
       <h3>{data.encuesta_observacion}</h3>
+      <ButtonAddQuestion categories={data.categorias} />
       {data ? (
         <div>
           {/* categorias */}

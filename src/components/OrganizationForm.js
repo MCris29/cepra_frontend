@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/Organization.module.css";
 import { Organizations } from "@/lib/organization";
+
+import { fetcher } from "@/lib/utils";
+import useSWR from "swr";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,6 +13,7 @@ import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 import Saving from "@/components/Saving";
+import LoadingInformation from "@/components/LoadingInformation";
 
 const schema = yup.object().shape({
   itorg_ruc: yup.string().required("Debe ingresar el Ruc de la organización"),
@@ -32,6 +36,9 @@ const schema = yup.object().shape({
 });
 
 const OrganizationForm = (props) => {
+  const [province, setProvince] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [cityListState, setCityListState] = useState(false);
   const [city, setCity] = useState(props.data.itopc_codigo_ciudad);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,6 +49,11 @@ const OrganizationForm = (props) => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const { data, error } = useSWR("it/provinciaCiudadGrafico/", fetcher);
+
+  if (error) return <>Error</>;
+  if (!data) return <LoadingInformation />;
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -80,7 +92,26 @@ const OrganizationForm = (props) => {
     setOpen(false);
   };
 
-  const handleChange = (event) => {
+  const handleCityList = () => {
+    let cities = [];
+    data.data.map((province) => {
+      cities = [...cities, province.ciudades];
+    });
+
+    return cities.flat();
+  };
+
+  const handleChangeProvince = (event) => {
+    const newProvince = event.target.value;
+    setProvince(newProvince);
+    const newCity = data.data.find(
+      (nextProvince) => nextProvince.itgop_codigo === newProvince
+    );
+    setCityList(newCity.ciudades);
+    setCityListState(true);
+  };
+
+  const handleChangeCity = (event) => {
     setCity(event.target.value);
   };
 
@@ -129,6 +160,37 @@ const OrganizationForm = (props) => {
           />
           <span className={styles.error}>{errors.itorg_nombre?.message}</span>
           <Controller
+            name="itgop_codigo"
+            control={control}
+            defaultValue={props.data.itgop_codigo}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="itgop_codigo"
+                label="Provincia"
+                helperText="Por favor selecciona una provincia"
+                variant="outlined"
+                margin="dense"
+                size="small"
+                select
+                fullWidth
+                value={province}
+                onChange={handleChangeProvince}
+              >
+                {data ? (
+                  data.data.map((item, index) => (
+                    <MenuItem key={index} value={item.itgop_codigo}>
+                      {item.itopc_nombre}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <span>Cargando...</span>
+                )}
+              </TextField>
+            )}
+          />
+          <Controller
             name="itopc_codigo"
             control={control}
             defaultValue={props.data.itopc_codigo_ciudad}
@@ -146,20 +208,19 @@ const OrganizationForm = (props) => {
                 required
                 fullWidth
                 value={city}
-                onChange={handleChange}
+                onChange={handleChangeCity}
               >
-                {/* {data ? (
-                    data.data.map((item, index) => (
+                {cityListState
+                  ? cityList.map((item, index) => (
                       <MenuItem key={index} value={item.itopc_codigo}>
                         {item.itopc_nombre}
                       </MenuItem>
                     ))
-                  ) : (
-                    <span>Cargando...</span>
-                  )} */}
-                <MenuItem value={1}>Tungurahua</MenuItem>
-                <MenuItem value={2}>Ambato</MenuItem>
-                <MenuItem value={3}>Tisaleo</MenuItem>
+                  : handleCityList().map((item, index) => (
+                      <MenuItem key={index} value={item.itopc_codigo}>
+                        {item.itopc_nombre}
+                      </MenuItem>
+                    ))}
               </TextField>
             )}
           />
