@@ -49,7 +49,7 @@ const OrganizationList = () => {
 
   if (error) return <>Error</>;
   if (!data) return <LoadingInformation />;
-  if (data) {
+  if (data.data) {
     data.data.map((item) => {
       item.id = item.itorg_ruc;
     });
@@ -58,7 +58,7 @@ const OrganizationList = () => {
   return (
     <>
       <h4>Lista de organizaciones</h4>
-      {data ? (
+      {data.data ? (
         <DataGrid
           rows={data.data}
           columns={columns}
@@ -68,7 +68,7 @@ const OrganizationList = () => {
           sx={{ marginTop: "20px" }}
         />
       ) : (
-        <span>Cargando...</span>
+        <div>No existen registros</div>
       )}
     </>
   );
