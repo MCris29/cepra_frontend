@@ -14,7 +14,7 @@ export default function Mapa() {
     if(data) {
         if(data.data) {
             const markersMap = [];
-            data.data.map((organizacion) => {
+            data.data.map((organizacion, index) => {
                 let ubicacion = [];
                 if(organizacion.itorg_ubicacion.length>0) {
                     organizacion.itorg_ubicacion.split(",").map((coordenadas) => {
@@ -29,7 +29,6 @@ export default function Mapa() {
                     position: ubicacion
                 })
             });
-
             return (
                 <>
 

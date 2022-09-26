@@ -6,6 +6,7 @@ const publicRoutes = {
   MANAGEMENT: "/administracion",
   ORGANIZATION: "/administracion/organizacion",
   SURVEY: "/administracion/encuesta",
+  ANSWERS: "/administracion/respuestas",
   ANSWER: "/administracion/respuesta",
   GRAPHIC: "/administracion/grafico",
   GRAPHICAREA: "/administracion/mapa",
