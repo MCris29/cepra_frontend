@@ -22,7 +22,6 @@ const menuItems = [
   },
   { title: "Encuesta", icon: <ArticleOutlinedIcon />, to: Routes.SURVEY },
   { title: "Respuestas", icon: <BallotOutlinedIcon />, to: Routes.ANSWERS },
-  { title: "Respuesta", icon: <BallotOutlinedIcon />, to: Routes.ANSWER },
 ];
 
 const indicatorsItems = [

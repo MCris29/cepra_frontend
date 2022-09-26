@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
-import PropTypes from 'prop-types';
-import LinearProgress from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import PropTypes from "prop-types";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import { useForm, Controller, set } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,8 +30,8 @@ import { SurveyReply } from "@/models/surveyReply";
 import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { SurveyReplys } from "@/lib/surveyReply";
 import ErrorInformation from "@/components/ErrorInformation";
-import {ThemeProvider} from "@mui/material/styles";
-import {DataGrid} from "@mui/x-data-grid";
+import { ThemeProvider } from "@mui/material/styles";
+import { DataGrid } from "@mui/x-data-grid";
 import LoadingInformation from "@/components/LoadingInformation";
 
 const schema = yup.object().shape({
@@ -42,13 +42,13 @@ const schema = yup.object().shape({
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" {...props}>{`${Math.round(
-            props.value
+          props.value
         )}%`}</Typography>
       </Box>
     </Box>
@@ -61,11 +61,10 @@ LinearProgressWithLabel.propTypes = {
    * Value between 0 and 100.
    */
   value: PropTypes.number.isRequired,
-  color: PropTypes.string
+  color: PropTypes.string,
 };
 
 const RepliesForm = () => {
-  
   const [progress, setProgress] = React.useState(0);
   const [showProgress, setShowProgress] = React.useState(false);
   const [colorProgress, setColorProgress] = React.useState("primary");
@@ -80,7 +79,7 @@ const RepliesForm = () => {
     const newTypeSurvey = event.target.value;
     setTypeSurvey(newTypeSurvey);
     const newSurvey = data.data.find(
-        (nextTypeSurvey) => nextTypeSurvey.tipoEncuesta === newTypeSurvey
+      (nextTypeSurvey) => nextTypeSurvey.tipoEncuesta === newTypeSurvey
     );
     setSurveyList(newSurvey.encuestas);
     setSurveyTemplateId("");
@@ -212,15 +211,15 @@ const RepliesForm = () => {
               respuestas: newQuestionReplyArray,
             };
             const surveyData = await SurveyReplys.create(newSurveyReply);
-            let nextProgress = (index*100)/surveyReplyArray.length;
+            let nextProgress = (index * 100) / surveyReplyArray.length;
 
-            console.log(nextProgress)
+            console.log(nextProgress);
             //setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
             setProgress(nextProgress);
             setErrorTemplate("");
           }
           setProgress(100);
-          console.log("Respuestas guardadas con exito")
+          console.log("Respuestas guardadas con exito");
           setOpen(true);
           setLoading(false);
           setShowProgress(false);
@@ -332,7 +331,7 @@ const RepliesForm = () => {
           const newSurveyReplyArray = [];
           const newCellUndefinedArray = [];
           const newCellEmptyArray = [];
-          const rowHeaders = 0
+          const rowHeaders = 0;
 
           setQuestionReplyArray([]);
           setSurveyReplyArray([]);
@@ -344,11 +343,7 @@ const RepliesForm = () => {
           //Recorre la primera fila del excel
           //almacenando las preguntas de la
           //encuesta en un array
-          for (
-            let index = 12;
-            index < data[rowHeaders].length;
-            index++
-          ) {
+          for (let index = 12; index < data[rowHeaders].length; index++) {
             let cellData = data[rowHeaders][index];
             let cellName = findCellName(rowHeaders + 1, index + 1);
 
@@ -401,20 +396,20 @@ const RepliesForm = () => {
 
           for (let indexRow = 1; indexRow < data.length; indexRow++) {
             const organization = new Organization(
-              data[indexRow][0]?data[indexRow][0].toString().trim():"", //itorg_ruc
-              data[indexRow][1]?data[indexRow][1].toString().trim():"", //itorg_nombre
-              data[indexRow][2]?data[indexRow][2].toString().trim():"", //itorg_sector
-              data[indexRow][3]?data[indexRow][3].toString().trim():"", //itorg_subsector
-              data[indexRow][4]?data[indexRow][4].toString().trim():"", //itorg_num_empleados
-              data[indexRow][5]?data[indexRow][5].toString().trim():"", //itorg_ubicacion
-              data[indexRow][6]?data[indexRow][6].toString().trim():"",  //itorg_provincia
-                data[indexRow][7]?data[indexRow][7].toString().trim():""  //itorg_ciudad
+              data[indexRow][0] ? data[indexRow][0].toString().trim() : "", //itorg_ruc
+              data[indexRow][1] ? data[indexRow][1].toString().trim() : "", //itorg_nombre
+              data[indexRow][2] ? data[indexRow][2].toString().trim() : "", //itorg_sector
+              data[indexRow][3] ? data[indexRow][3].toString().trim() : "", //itorg_subsector
+              data[indexRow][4] ? data[indexRow][4].toString().trim() : "", //itorg_num_empleados
+              data[indexRow][5] ? data[indexRow][5].toString().trim() : "", //itorg_ubicacion
+              data[indexRow][6] ? data[indexRow][6].toString().trim() : "", //itorg_provincia
+              data[indexRow][7] ? data[indexRow][7].toString().trim() : "" //itorg_ciudad
             );
             const contact = new Contact(
-              data[indexRow][8]?data[indexRow][8].toString().trim():"", //itcon_nombre
-              data[indexRow][9]?data[indexRow][9].toString().trim():"", //itcon_email
-              data[indexRow][10]?data[indexRow][10].toString().trim():"", //itcon_nivel_estudios
-              data[indexRow][11]?data[indexRow][11].toString().trim():""  //itcon_nivel_decision
+              data[indexRow][8] ? data[indexRow][8].toString().trim() : "", //itcon_nombre
+              data[indexRow][9] ? data[indexRow][9].toString().trim() : "", //itcon_email
+              data[indexRow][10] ? data[indexRow][10].toString().trim() : "", //itcon_nivel_estudios
+              data[indexRow][11] ? data[indexRow][11].toString().trim() : "" //itcon_nivel_decision
             );
 
             const questionReplyArray = [];
@@ -422,7 +417,7 @@ const RepliesForm = () => {
             //almacenando las respuestas de la
             //encuesta de la organizacion en un array
             newQuestionReplyArray.forEach((questionReply, indexCol) => {
-              let cellData = data[indexRow][12+indexCol];
+              let cellData = data[indexRow][12 + indexCol];
               let cellHeader = questionReply.question;
               //Verifica si existe la celda
               if (cellData) {
@@ -479,157 +474,170 @@ const RepliesForm = () => {
         typeSurveyList.push(nextTypeSurvey.tipoEncuesta);
       });
       return (
-          <>
-            <h4>Datos de encuesta respuesta</h4>
-            <form id="form-encuesta-respuesta" onSubmit={handleSubmit(onSubmit)}>
-              <Controller
-                  name="typeSurvey"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                      <TextField
-                          id="typeSurvey"
-                          label="Tipo de encuesta"
-                          helperText="Selecciona un tipo de encuesta"
-                          variant="outlined"
-                          type="date"
-                          margin="dense"
-                          size="small"
-                          select
-                          required
-                          fullWidth
-                          value={typeSurvey}
-                          onChange={handleChangeTypeSurvey}
-                      >
-                        {typeSurveyList.map((_typeSurvey, index) => (
-                            <MenuItem key={index} value={_typeSurvey}>
-                              {_typeSurvey}
-                            </MenuItem>
-                        ))}
-                      </TextField>
-                  )}
-              />
-              <Controller
-                  name="itenc_codigo"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                      <TextField
-                          {...field}
-                          id="itenc_codigo"
-                          label="Encuesta"
-                          helperText="Por favor selecciona una encuesta"
-                          variant="outlined"
-                          type="date"
-                          margin="dense"
-                          size="small"
-                          select
-                          required
-                          fullWidth
-                          value={surveyTemplateId}
-                          onChange={handleChange}
-                      >
-                        {
-                          surveyList.map((type, index) => (
-                              <MenuItem key={index} value={type.itenc_codigo}>
-                                {type.itenc_observacion}
-                              </MenuItem>
-                          ))
-                        }
-                      </TextField>
-                  )}
-              />
-              <Controller
-                  name="itres_fecha_test"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                      <TextField
-                          {...field}
-                          id="date-form"
-                          label="Fecha test"
-                          variant="outlined"
-                          type="date"
-                          margin="dense"
-                          size="small"
-                          required
-                          fullWidth
-                          error={Boolean(errors.itres_fecha_test)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                      />
-                  )}
-              />
-              <span className={styles.error}>{errors.itres_fecha_test?.message}</span>
-
-              <label htmlFor="button-file" className={styles.button_template_survey}>
-                <input
-                    className={styles.input_file}
-                    accept=".csv, .xlsx"
-                    id="button-file"
-                    type="file"
-                    multiple
-                    onChange={(e) => handleFile(e)}
-                />
-                <span id="file-span">Selecciona un archivo *</span>
-              </label>
-              <div className={styles.error}>{errorTemplate ? errorTemplate : ""}</div>
-              <Box sx={{ width: '100%'}} style={{display:showProgress?'block':'none'}} className={styles.error}>
-                <LinearProgressWithLabel value={progress} color={colorProgress}/>
-              </Box>
-              <div className={styles.button_container}>
-                <Button
-                    type="submit"
-                    variant="outlined"
-                    disabled={loading}
-                    className={styles.button}
+        <>
+          <h4>Respuestas en bloque</h4>
+          <p>
+            En esta sección se suben las respuestas en bloque, para ello debe
+            seleccionar una encuesta y subir un archivo en formato .xlsx con las
+            respuestas de la encuesta.
+          </p>
+          <form id="form-encuesta-respuesta" onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="typeSurvey"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  id="typeSurvey"
+                  label="Tipo de encuesta"
+                  helperText="Selecciona un tipo de encuesta"
+                  variant="outlined"
+                  type="date"
+                  margin="dense"
+                  size="small"
+                  select
+                  required
+                  fullWidth
+                  value={typeSurvey}
+                  onChange={handleChangeTypeSurvey}
                 >
-                  Guardar
-                </Button>
-              </div>
-            </form>
-            <Stack spacing={2} sx={{ width: "100%" }}>
-              <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert
-                    onClose={handleClose}
-                    severity={"success"}
-                    sx={{ width: "100%" }}
+                  {typeSurveyList.map((_typeSurvey, index) => (
+                    <MenuItem key={index} value={_typeSurvey}>
+                      {_typeSurvey}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+            <Controller
+              name="itenc_codigo"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="itenc_codigo"
+                  label="Encuesta"
+                  helperText="Por favor selecciona una encuesta"
+                  variant="outlined"
+                  type="date"
+                  margin="dense"
+                  size="small"
+                  select
+                  required
+                  fullWidth
+                  value={surveyTemplateId}
+                  onChange={handleChange}
                 >
-                  Encuesta guardada con exito
-                </Alert>
-              </Snackbar>
-            </Stack>
-            <Stack spacing={2} sx={{ width: "100%" }}>
-              <Snackbar
-                  open={openError}
-                  autoHideDuration={6000}
-                  onClose={() => {
-                    setOpenError(false);
+                  {surveyList.map((type, index) => (
+                    <MenuItem key={index} value={type.itenc_codigo}>
+                      {type.itenc_observacion}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+            <Controller
+              name="itres_fecha_test"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="date-form"
+                  label="Fecha test"
+                  variant="outlined"
+                  type="date"
+                  margin="dense"
+                  size="small"
+                  required
+                  fullWidth
+                  error={Boolean(errors.itres_fecha_test)}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
+                />
+              )}
+            />
+            <span className={styles.error}>
+              {errors.itres_fecha_test?.message}
+            </span>
+
+            <label
+              htmlFor="button-file"
+              className={styles.button_template_survey}
+            >
+              <input
+                className={styles.input_file}
+                accept=".csv, .xlsx"
+                id="button-file"
+                type="file"
+                multiple
+                onChange={(e) => handleFile(e)}
+              />
+              <span id="file-span">Selecciona un archivo *</span>
+            </label>
+            <div className={styles.error}>
+              {errorTemplate ? errorTemplate : ""}
+            </div>
+            <Box
+              sx={{ width: "100%" }}
+              style={{ display: showProgress ? "block" : "none" }}
+              className={styles.error}
+            >
+              <LinearProgressWithLabel value={progress} color={colorProgress} />
+            </Box>
+            <div className={styles.button_container}>
+              <Button
+                type="submit"
+                variant="outlined"
+                disabled={loading}
+                className={styles.button}
               >
-                <Alert
-                    onClose={() => {
-                      setOpenError(false);
-                    }}
-                    severity={"error"}
-                    sx={{ width: "100%" }}
-                >
-                  <AlertTitle>Error</AlertTitle>
-                  {messageError}
-                </Alert>
-              </Snackbar>
-            </Stack>
-          </>
+                Guardar
+              </Button>
+            </div>
+          </form>
+          <Stack spacing={2} sx={{ width: "100%" }}>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity={"success"}
+                sx={{ width: "100%" }}
+              >
+                Encuesta guardada con exito
+              </Alert>
+            </Snackbar>
+          </Stack>
+          <Stack spacing={2} sx={{ width: "100%" }}>
+            <Snackbar
+              open={openError}
+              autoHideDuration={6000}
+              onClose={() => {
+                setOpenError(false);
+              }}
+            >
+              <Alert
+                onClose={() => {
+                  setOpenError(false);
+                }}
+                severity={"error"}
+                sx={{ width: "100%" }}
+              >
+                <AlertTitle>Error</AlertTitle>
+                {messageError}
+              </Alert>
+            </Snackbar>
+          </Stack>
+        </>
       );
     } else {
       return <LoadingInformation />;
     }
   }
-
 };
 
 export default RepliesForm;
