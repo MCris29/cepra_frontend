@@ -206,6 +206,11 @@ const SurveyForm = () => {
   return (
     <>
       <h4>Datos de encuesta</h4>
+      <p>
+        En esta sección se sube una plantilla de encuesta, para ello debe
+        seleccionar un tipo de encuesta, llenar los demás campos y subir un
+        archivo en formato .xlsx o .csv con la plantilla de la encuesta.
+      </p>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_codigo"
