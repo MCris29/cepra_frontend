@@ -37,7 +37,10 @@ const columns = [
     type: "actions",
     width: 100,
     getActions: (data) => [
-      <Link key={`${Routes.SURVEY}/${data.row.id}`} href={`${Routes.SURVEY}/${data.row.id}`}>
+      <Link
+        key={`${Routes.SURVEY}/${data.row.id}`}
+        href={`${Routes.SURVEY}/${data.row.id}`}
+      >
         <IconButton>
           <Tooltip title="Ver encuesta" placement="top-start" followCursor>
             <VisibilityIcon />
@@ -62,6 +65,11 @@ const SurveyList = () => {
   return (
     <>
       <h4>Lista de encuestas</h4>
+      <p>
+        En esta tabla se presentan todas las encuestas guardadas, presiona el
+        botón <VisibilityIcon sx={{ margin: "-3px 0" }} fontSize="x-small" />{" "}
+        para visualizar la encuesta.
+      </p>
       {data ? (
         <DataGrid
           rows={data.data}

@@ -7,7 +7,6 @@ export default function Answers() {
   return (
     <>
       <div className={styles.forms_container}>
-        <h3>Datos de encuesta</h3>
         <RepliesForm />
         <ReplyForm />
       </div>

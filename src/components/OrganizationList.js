@@ -58,6 +58,10 @@ const OrganizationList = () => {
   return (
     <>
       <h4>Lista de organizaciones</h4>
+      <p>
+        En esta tabla se presentan las organizaciones que han respondido una o
+        más encuestas.
+      </p>
       {data.data ? (
         <DataGrid
           rows={data.data}
