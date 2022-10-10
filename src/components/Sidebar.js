@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -8,7 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 
 function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = useState(true);
   const { label, items, Icon, onClick: onClickProp } = item;
 
   function toggleCollapse() {
@@ -52,7 +52,7 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
         {Array.isArray(items) ? (
           <List disablePadding dense>
             {items.map((subItem, index) => (
-              <React.Fragment key={`${subItem.name}${index}`}>
+              <div key={`${subItem.name}${index}`}>
                 {subItem === "divider" ? (
                   <Divider style={{ margin: "6px 0" }} />
                 ) : (
@@ -62,7 +62,7 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
                     item={subItem}
                   />
                 )}
-              </React.Fragment>
+              </div>
             ))}
           </List>
         ) : null}
@@ -76,7 +76,7 @@ function Sidebar({ items, depthStep, depth, expanded }) {
     <div className="sidebar">
       <List disablePadding dense>
         {items.map((sidebarItem, index) => (
-          <React.Fragment key={`${sidebarItem.name}${index}`}>
+          <div key={`${sidebarItem.name}${index}`}>
             {sidebarItem === "divider" ? (
               <Divider style={{ margin: "6px 3px" }} />
             ) : (
@@ -87,7 +87,7 @@ function Sidebar({ items, depthStep, depth, expanded }) {
                 item={sidebarItem}
               />
             )}
-          </React.Fragment>
+          </div>
         ))}
       </List>
     </div>

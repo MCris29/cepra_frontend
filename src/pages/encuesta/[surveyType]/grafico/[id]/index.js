@@ -53,6 +53,61 @@ export default function LandingGraphic() {
   const [errordItem, setErrorItem] = useState(false);
   const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
 
+  function handleData(survey) {
+    let newCategories = [];
+
+    survey.categorias.map((category) => {
+      let questionParent = [];
+      let positionParent = 0;
+
+      let newCategory = {
+        codigo_categoria: category.codigo_categoria,
+        nombre_categoria: category.nombre_categoria,
+        observacion_categoria: category.observacion_categoria,
+        preguntas: [],
+      };
+
+      category.preguntas.map((question, index) => {
+        if (question.codigo_pregunta_padre === null) {
+          question.preguntas_hija = [];
+          questionParent.push(question);
+        } else {
+          positionParent = binarySearch(
+            question.codigo_pregunta_padre,
+            questionParent
+          );
+          questionParent[positionParent].preguntas_hija.push(question);
+        }
+      });
+      newCategory.preguntas = questionParent;
+      newCategories.push(newCategory);
+    });
+
+    return newCategories;
+  }
+
+  // Algoritmo de busqueda Binaria
+  function binarySearch(value, list) {
+    let first = 0;
+    let last = list.length - 1;
+    let position = -1;
+    let found = false;
+    let middle;
+
+    while (found === false && first <= last) {
+      middle = Math.floor((first + last) / 2);
+      if (list[middle].codigo_pregunta == value) {
+        found = true;
+        position = middle;
+      } else if (list[middle].codigo_pregunta > value) {
+        last = middle - 1;
+      } else {
+        first = middle + 1;
+      }
+    }
+    return position;
+  }
+
   const handleChange = (newValue) => {
     setValue(newValue);
   };
@@ -222,21 +277,41 @@ export default function LandingGraphic() {
   }
   if (data) {
     if (data.id_encuesta && data.encuesta_observacion && data.categorias) {
-      let surveyCategoryList = data.categorias;
+      let surveyCategoryList = handleData(data);
       let categoryList = [];
+
       for (let index = 0; index < surveyCategoryList.length; index++) {
         let questionList = [];
         categoryList.push("divider");
         surveyCategoryList[index].preguntas.forEach((nextQuestion) => {
+          let sub_questions = [];
+          // Añade las preguntas hijas dentro de un array en el pregunta padre
+          nextQuestion.preguntas_hija.map((sub_question) => {
+            sub_questions.push("divider");
+            sub_questions.push({
+              name: sub_question.nombre_pregunta,
+              label: sub_question.nombre_pregunta,
+              id: sub_question.codigo_categoria,
+              onClick,
+            });
+          });
+
+          // Añade las preguntas padre
           let question = {
             name: nextQuestion.nombre_pregunta,
             label: nextQuestion.nombre_pregunta,
-            id: nextQuestion.codigo_pregunta,
-            onClick,
+            id: nextQuestion.encuesta_pregunta_codigo,
+            items: sub_questions,
           };
+
+          // Verifica si no tiene preguntas hijas para añadir la función onClick
+          if (sub_questions.length === 0) {
+            question = { ...question, onClick };
+          }
           questionList.push("divider");
           questionList.push(question);
         });
+
         let category = {
           name: surveyCategoryList[index].nombre_categoria,
           label: surveyCategoryList[index].nombre_categoria,
