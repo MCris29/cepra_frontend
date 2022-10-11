@@ -209,6 +209,9 @@ const Graphic = (props) => {
           }}
         >
           {handleGraphic(props.type)}
+          <div>
+            <p>{props.observation}</p>
+          </div>
         </Box>
       </ThemeProvider>
     </>

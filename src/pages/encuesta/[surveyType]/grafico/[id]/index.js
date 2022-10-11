@@ -49,6 +49,7 @@ export default function LandingGraphic() {
   const [chartType, setChartType] = useState("bar");
   const [chartInformation, setChartInformation] = useState(undefined);
   const [chartTitle, setChartTitle] = useState(undefined);
+  const [observation, setObservation] = useState(undefined);
   const [loadingdItem, setLoadingItem] = useState(false);
   const [errordItem, setErrorItem] = useState(false);
   const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
@@ -126,6 +127,7 @@ export default function LandingGraphic() {
           setChartTitle(item.label);
           setChartType("bar");
           setLoadingItem(false);
+          setObservation(item.observation);
         }
       })
       .catch((error) => {
@@ -291,6 +293,7 @@ export default function LandingGraphic() {
             sub_questions.push({
               name: sub_question.nombre_pregunta,
               label: sub_question.nombre_pregunta,
+              observation: nextQuestion.observacion_pregunta,
               id: sub_question.codigo_categoria,
               onClick,
             });
@@ -300,6 +303,7 @@ export default function LandingGraphic() {
           let question = {
             name: nextQuestion.nombre_pregunta,
             label: nextQuestion.nombre_pregunta,
+            observation: nextQuestion.observacion_pregunta,
             id: nextQuestion.encuesta_pregunta_codigo,
             items: sub_questions,
           };
@@ -605,6 +609,7 @@ export default function LandingGraphic() {
                         <Graphic
                           type={chartType}
                           title={chartTitle}
+                          observation={observation}
                           data={chartInformation}
                         />
                       </Box>
