@@ -62,7 +62,6 @@ const SurveyForm = () => {
 
       try {
         const surveyData = await Surveys.create(newSurvey);
-        console.log("Success survey", surveyData);
 
         submitTemplate(surveyData.data.idEncuesta);
         setErrorTemplate("");

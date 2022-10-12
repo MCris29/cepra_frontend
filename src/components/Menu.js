@@ -13,6 +13,7 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 
 const menuItems = [
   {
@@ -22,10 +23,15 @@ const menuItems = [
   },
   { title: "Encuesta", icon: <ArticleOutlinedIcon />, to: Routes.SURVEY },
   { title: "Respuestas", icon: <BallotOutlinedIcon />, to: Routes.ANSWERS },
+  {
+    title: "Gráficos estáticos",
+    icon: <UploadFileOutlinedIcon />,
+    to: Routes.STATIC_GRAPHICS,
+  },
 ];
 
 const indicatorsItems = [
-  { title: "Gráfico", icon: <PollOutlinedIcon />, to: Routes.GRAPHIC },
+  // { title: "Gráfico", icon: <PollOutlinedIcon />, to: Routes.GRAPHIC },
   {
     title: "Área Geográfica",
     icon: <PublicOutlinedIcon />,
