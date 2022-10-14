@@ -19,6 +19,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
+import GraphicsList from "@/components/GraphicsList.js";
 import Graphic from "@/components/Graphic";
 import Sidebar from "@/components/Sidebar";
 import LoadingSelectedItem from "@/components/LoadingSelectedItem";
@@ -53,6 +54,15 @@ export default function LandingGraphic() {
   const [loadingdItem, setLoadingItem] = useState(false);
   const [errordItem, setErrorItem] = useState(false);
   const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
+  const [dashboard, setDashboard] = useState(false);
+
+  // Sección de dashboard de imagenes
+  const handleOpenDashboard = () => {
+    setDashboard(true);
+  };
+  const handleCloseDashboard = () => {
+    setDashboard(false);
+  };
 
   function handleData(survey) {
     let newCategories = [];
@@ -117,6 +127,7 @@ export default function LandingGraphic() {
   };
 
   const onClick = (e, item) => {
+    handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.getGraphic3ById(item.id)
@@ -138,6 +149,7 @@ export default function LandingGraphic() {
 
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
+    handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoSector(id)
@@ -156,6 +168,7 @@ export default function LandingGraphic() {
   };
   //Datos de gráfico de organizaciones por provincias
   const orgGraficoCiudad = (id) => {
+    handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoCiudad(id)
@@ -174,6 +187,7 @@ export default function LandingGraphic() {
   };
   //Datos de gráfico de contactos por nivel de decisión
   const contactoGraficoDes = (id) => {
+    handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoDes(id)
@@ -192,6 +206,7 @@ export default function LandingGraphic() {
   };
   //Datos de gráfico de contactos por nivel de estudios
   const contactoGraficoEst = (id) => {
+    handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoEst(id)
@@ -216,15 +231,9 @@ export default function LandingGraphic() {
         return [
           "divider",
           {
-            name: "Energia 1",
-            label: "Energia 1",
-            onClick: () => console.log("Aquí va una función"),
-          },
-          "divider",
-          {
-            name: "Energia 2",
-            label: "Energia 2",
-            onClick: () => console.log("Aquí va una función"),
+            name: "Lista de gráficos",
+            label: "Lista de gráficos",
+            onClick: () => handleOpenDashboard(),
           },
         ];
 
@@ -254,21 +263,21 @@ export default function LandingGraphic() {
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
+          "divider",
+          {
+            name: "Lista de gráficos",
+            label: "Lista de gráficos",
+            onClick: () => handleOpenDashboard(),
+          },
         ];
 
       case "desempeno":
         return [
           "divider",
           {
-            name: "desempeno 1",
-            label: "desempeño 1",
-            onClick: () => console.log("Aquí va una función"),
-          },
-          "divider",
-          {
-            name: "desempeno 2",
-            label: "desempeño 2",
-            onClick: () => console.log("Aquí va una función"),
+            name: "Lista de gráficos",
+            label: "Lista de gráficos",
+            onClick: () => handleOpenDashboard(),
           },
         ];
     }
@@ -439,203 +448,209 @@ export default function LandingGraphic() {
                     },
                   }}
                 >
-                  {chartInformation ? (
-                    <>
-                      <Box
-                        sx={{
-                          marginTop: {
-                            desktop: "0",
-                            laptop: "0",
-                            tablet: "0",
-                            mobile: "2%",
-                            min: "2%",
-                          },
-                          marginBottom: {
-                            desktop: "0",
-                            laptop: "0",
-                            tablet: "0",
-                            mobile: "1%",
-                            min: "1%",
-                          },
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          flexDirection: {
-                            desktop: "row",
-                            laptop: "row",
-                            tablet: "row",
-                            mobile: "column",
-                            min: "column",
-                          },
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: {
-                              desktop: "32%",
-                              laptop: "32%",
-                              tablet: "32%",
-                              mobile: "100%",
-                              min: "100%",
-                            },
-                            height: {
-                              desktop: "100%",
-                              laptop: "100%",
-                              tablet: "100%",
-                              mobile: "34%",
-                              min: "34%",
-                            },
-                            margin: {
-                              desktop: "0",
-                              laptop: "0",
-                              tablet: "0",
-                              mobile: "6px 0",
-                              min: "6px 0",
-                            },
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <FormControl size="small">
-                            <InputLabel id="demo-simple-select-label">
-                              Tipo de gráfico
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              value={chartType}
-                              label="Tipo de gráfico"
-                              onChange={handleTypeChart}
-                            >
-                              <MenuItem value={"bar"}>Barras</MenuItem>
-                              <MenuItem value={"line"}>Lineal</MenuItem>
-                              <MenuItem value={"pie"}>Pastel</MenuItem>
-                              <MenuItem value={"doughnut"}>Dona</MenuItem>
-                              <MenuItem value={"radar"}>Radar</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </Box>
-                        <Box
-                          sx={{
-                            width: {
-                              desktop: "32%",
-                              laptop: "32%",
-                              tablet: "32%",
-                              mobile: "100%",
-                              min: "100%",
-                            },
-                            height: {
-                              desktop: "100%",
-                              laptop: "100%",
-                              tablet: "100%",
-                              mobile: "33%",
-                              min: "33%",
-                            },
-                            margin: {
-                              desktop: "0",
-                              laptop: "0",
-                              tablet: "0",
-                              mobile: "6px 0",
-                              min: "6px 0",
-                            },
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DesktopDatePicker
-                              label="Fecha inicio"
-                              inputFormat="MM/DD/YYYY"
-                              value={value}
-                              onChange={handleChange}
-                              renderInput={(params) => (
-                                <TextField size="small" {...params} />
-                              )}
-                            />
-                          </LocalizationProvider>
-                        </Box>
-                        <Box
-                          sx={{
-                            width: {
-                              desktop: "32%",
-                              laptop: "32%",
-                              tablet: "32%",
-                              mobile: "100%",
-                              min: "100%",
-                            },
-                            height: {
-                              desktop: "100%",
-                              laptop: "100%",
-                              tablet: "100%",
-                              mobile: "33%",
-                              min: "33%",
-                            },
-                            margin: {
-                              desktop: "0",
-                              laptop: "0",
-                              tablet: "0",
-                              mobile: "6px 0",
-                              min: "6px 0",
-                            },
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DesktopDatePicker
-                              label="Fecha fin"
-                              inputFormat="MM/DD/YYYY"
-                              value={value}
-                              onChange={handleChange}
-                              renderInput={(params) => (
-                                <TextField size="small" {...params} />
-                              )}
-                            />
-                          </LocalizationProvider>
-                        </Box>
-                      </Box>
-                      <ButtonDownloadGraphic
-                        title={chartTitle + " (" + chartType + ")"}
-                      />
-                      <Box
-                        sx={{
-                          height: "fit-content",
-                        }}
-                        className={styles.graphic}
-                      >
-                        <Graphic
-                          type={chartType}
-                          title={chartTitle}
-                          observation={observation}
-                          data={chartInformation}
-                        />
-                      </Box>
-                    </>
+                  {dashboard ? (
+                    <GraphicsList id={surveyId} />
                   ) : (
-                    <>
-                      {loadingdItem ? (
+                    <div>
+                      {chartInformation ? (
                         <>
-                          <LoadingSelectedItem />
+                          <Box
+                            sx={{
+                              marginTop: {
+                                desktop: "0",
+                                laptop: "0",
+                                tablet: "0",
+                                mobile: "2%",
+                                min: "2%",
+                              },
+                              marginBottom: {
+                                desktop: "0",
+                                laptop: "0",
+                                tablet: "0",
+                                mobile: "1%",
+                                min: "1%",
+                              },
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexDirection: {
+                                desktop: "row",
+                                laptop: "row",
+                                tablet: "row",
+                                mobile: "column",
+                                min: "column",
+                              },
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: {
+                                  desktop: "32%",
+                                  laptop: "32%",
+                                  tablet: "32%",
+                                  mobile: "100%",
+                                  min: "100%",
+                                },
+                                height: {
+                                  desktop: "100%",
+                                  laptop: "100%",
+                                  tablet: "100%",
+                                  mobile: "34%",
+                                  min: "34%",
+                                },
+                                margin: {
+                                  desktop: "0",
+                                  laptop: "0",
+                                  tablet: "0",
+                                  mobile: "6px 0",
+                                  min: "6px 0",
+                                },
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <FormControl size="small">
+                                <InputLabel id="demo-simple-select-label">
+                                  Tipo de gráfico
+                                </InputLabel>
+                                <Select
+                                  labelId="demo-simple-select-label"
+                                  id="demo-simple-select"
+                                  value={chartType}
+                                  label="Tipo de gráfico"
+                                  onChange={handleTypeChart}
+                                >
+                                  <MenuItem value={"bar"}>Barras</MenuItem>
+                                  <MenuItem value={"line"}>Lineal</MenuItem>
+                                  <MenuItem value={"pie"}>Pastel</MenuItem>
+                                  <MenuItem value={"doughnut"}>Dona</MenuItem>
+                                  <MenuItem value={"radar"}>Radar</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </Box>
+                            <Box
+                              sx={{
+                                width: {
+                                  desktop: "32%",
+                                  laptop: "32%",
+                                  tablet: "32%",
+                                  mobile: "100%",
+                                  min: "100%",
+                                },
+                                height: {
+                                  desktop: "100%",
+                                  laptop: "100%",
+                                  tablet: "100%",
+                                  mobile: "33%",
+                                  min: "33%",
+                                },
+                                margin: {
+                                  desktop: "0",
+                                  laptop: "0",
+                                  tablet: "0",
+                                  mobile: "6px 0",
+                                  min: "6px 0",
+                                },
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DesktopDatePicker
+                                  label="Fecha inicio"
+                                  inputFormat="MM/DD/YYYY"
+                                  value={value}
+                                  onChange={handleChange}
+                                  renderInput={(params) => (
+                                    <TextField size="small" {...params} />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                            <Box
+                              sx={{
+                                width: {
+                                  desktop: "32%",
+                                  laptop: "32%",
+                                  tablet: "32%",
+                                  mobile: "100%",
+                                  min: "100%",
+                                },
+                                height: {
+                                  desktop: "100%",
+                                  laptop: "100%",
+                                  tablet: "100%",
+                                  mobile: "33%",
+                                  min: "33%",
+                                },
+                                margin: {
+                                  desktop: "0",
+                                  laptop: "0",
+                                  tablet: "0",
+                                  mobile: "6px 0",
+                                  min: "6px 0",
+                                },
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DesktopDatePicker
+                                  label="Fecha fin"
+                                  inputFormat="MM/DD/YYYY"
+                                  value={value}
+                                  onChange={handleChange}
+                                  renderInput={(params) => (
+                                    <TextField size="small" {...params} />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                          </Box>
+                          <ButtonDownloadGraphic
+                            title={chartTitle + " (" + chartType + ")"}
+                          />
+                          <Box
+                            sx={{
+                              height: "fit-content",
+                            }}
+                            className={styles.graphic}
+                          >
+                            <Graphic
+                              type={chartType}
+                              title={chartTitle}
+                              observation={observation}
+                              data={chartInformation}
+                            />
+                          </Box>
                         </>
                       ) : (
                         <>
-                          {errordItem ? (
+                          {loadingdItem ? (
                             <>
-                              <ErrorSelectedItem />
+                              <LoadingSelectedItem />
                             </>
                           ) : (
                             <>
-                              <NotSelectedItem
-                                message={"Item no seleccionado"}
-                              />
+                              {errordItem ? (
+                                <>
+                                  <ErrorSelectedItem />
+                                </>
+                              ) : (
+                                <>
+                                  <NotSelectedItem
+                                    message={"Item no seleccionado"}
+                                  />
+                                </>
+                              )}
                             </>
                           )}
                         </>
                       )}
-                    </>
+                    </div>
                   )}
                 </Box>
               </Box>
