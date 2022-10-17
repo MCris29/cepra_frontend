@@ -8,7 +8,8 @@ export default function StaticGraphics() {
       <h4>Graficos estáticos</h4>
       <p>
         En esta sección se suben imágenes que se muestran en la sección de
-        gráficos estáticos.
+        gráficos estáticos, para ello debe seleccionar la encuesta a la que
+        pertenece el gráfico y llenar los demás campos.
       </p>
       <StaticGraphicForm />
     </div>
