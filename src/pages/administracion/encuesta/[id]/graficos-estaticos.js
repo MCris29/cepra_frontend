@@ -36,7 +36,9 @@ export default function AdminGraphics() {
       {newData ? (
         <div>
           {newData.length === 0 ? (
-            <div>No existen gráficos</div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              No existen gráficos estáticos
+            </div>
           ) : (
             <div>
               {newData.map((item, index) => (

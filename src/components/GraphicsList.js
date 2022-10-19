@@ -23,13 +23,23 @@ const DashboardGraphics = (props) => {
     <>
       {newData ? (
         <div>
-          {newData.map((item, index) => (
-            <div key={index}>
-              <h5>{item.itegr_titulo}</h5>
-              <p>{item.itegr_observacion}</p>
-              <img src={item.itegr_url} />
+          {newData.length === 0 ? (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              No existen gráficos estáticos
             </div>
-          ))}
+          ) : (
+            <div style={{ paddingLeft: "4em" }}>
+              <div>
+                {newData.map((item, index) => (
+                  <div key={index}>
+                    <h5>{item.itegr_titulo}</h5>
+                    <p>{item.itegr_observacion}</p>
+                    <img src={item.itegr_url} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div>Cargando...</div>
