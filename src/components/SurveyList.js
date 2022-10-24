@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import InsertChartOutlinedTwoToneIcon from "@mui/icons-material/InsertChartOutlinedTwoTone";
 
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
@@ -36,17 +37,35 @@ const columns = [
     headerName: "",
     type: "actions",
     width: 100,
-    getActions: (data) => [
-      <Link
-        key={`${Routes.SURVEY}/${data.row.id}`}
-        href={`${Routes.SURVEY}/${data.row.id}`}
-      >
-        <IconButton>
-          <Tooltip title="Ver encuesta" placement="top-start" followCursor>
-            <VisibilityIcon />
-          </Tooltip>
-        </IconButton>
-      </Link>,
+    renderCell: (data) => [
+      <div key={data.row.id}>
+        {/* Redirecciona a una página para visualizar las preguntas de la encuesta seleccionada */}
+        <Link
+          key={`${Routes.SURVEY}/${data.row.id}`}
+          href={`${Routes.SURVEY}/${data.row.id}`}
+        >
+          <IconButton>
+            <Tooltip title="Ver encuesta" placement="top-start" followCursor>
+              <VisibilityIcon />
+            </Tooltip>
+          </IconButton>
+        </Link>
+        {/* Redirecciona a una página para visualizar los gráficos estáticos de cada encuesta */}
+        <Link
+          key={`${Routes.SURVEY}/${data.row.id}/graficos-estaticos`}
+          href={`${Routes.SURVEY}/${data.row.id}/graficos-estaticos`}
+        >
+          <IconButton>
+            <Tooltip
+              title="Ver gráficos estáticos"
+              placement="top-start"
+              followCursor
+            >
+              <InsertChartOutlinedTwoToneIcon />
+            </Tooltip>
+          </IconButton>
+        </Link>
+      </div>,
     ],
   },
 ];

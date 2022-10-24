@@ -210,7 +210,13 @@ const Graphic = (props) => {
         >
           {handleGraphic(props.type)}
           <div>
-            <p>{props.observation}</p>
+            <pre
+              style={{
+                fontFamily: "'Roboto', 'Helvetica', 'Arial', san-serif ",
+              }}
+            >
+              {props.observation}
+            </pre>
           </div>
         </Box>
       </ThemeProvider>

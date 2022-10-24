@@ -295,7 +295,6 @@ const OrganizationForm = (props) => {
                 variant="outlined"
                 margin="dense"
                 size="small"
-                type="number"
                 fullWidth
                 error={Boolean(errors.itorg_num_empleados)}
               />
