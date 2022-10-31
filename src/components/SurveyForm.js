@@ -37,6 +37,8 @@ const SurveyForm = () => {
   const [errorTemplate, setErrorTemplate] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [errorSubmit, SetErrorSubmit] = useState("");
+  const [openError, setOpenError] = useState(false);
 
   const {
     control,
@@ -62,7 +64,6 @@ const SurveyForm = () => {
 
       try {
         const surveyData = await Surveys.create(newSurvey);
-
         submitTemplate(surveyData.data.idEncuesta);
         setErrorTemplate("");
       } catch (e) {
@@ -89,10 +90,13 @@ const SurveyForm = () => {
       deleteFile();
       setLoading(false);
       setOpen(true);
+      handleNameFile("Selecciona un archivo*");
     } catch (e) {
-      setLoading(false);
       console.log(e);
-      setErrorTemplate(e.response.data.message);
+
+      SetErrorSubmit(e.response.data.error);
+      setLoading(false);
+      setOpenError(true);
       const surveyError = await Surveys.deleteSurvey(surveyId);
     }
   };
@@ -101,9 +105,8 @@ const SurveyForm = () => {
     setTypeSurvey(event.target.value);
   };
 
-  const handleNameFile = (e) => {
-    const nameFile = e.target.files[0].name;
-    document.getElementById("file-span").innerHTML = nameFile;
+  const handleNameFile = (name) => {
+    document.getElementById("file-span").innerHTML = name;
   };
 
   const deleteFile = () => {
@@ -112,10 +115,11 @@ const SurveyForm = () => {
   };
 
   const handleFile = (e) => {
+    setErrorTemplate("");
     const [file] = e.target.files;
 
     if (e.target.files.length != 0) {
-      handleNameFile(e);
+      handleNameFile(e.target.files[0].name);
 
       const reader = new FileReader();
 
@@ -141,14 +145,23 @@ const SurveyForm = () => {
           let groupOptions = "";
 
           if (data[index][7]) {
-            optionArray = data[index][8].split(";");
-            optionArray.forEach((option, index) => {
-              optionArray[index] = option.toString().trim();
-            });
-            groupOptions = new GroupOptions(
-              data[index][7].toString().trim(), // nombre_grupo_opcion
-              optionArray // array opciones
-            );
+            try {
+              optionArray = data[index][8].split(";");
+              optionArray.forEach((option, index) => {
+                optionArray[index] = option.toString().trim();
+              });
+              groupOptions = new GroupOptions(
+                data[index][7].toString().trim(), // nombre_grupo_opcion
+                optionArray // array opciones
+              );
+            } catch (error) {
+              console.error(error);
+              handleNameFile("Selecciona un archivo*");
+
+              setErrorTemplate(
+                "La plantilla tiene fallas, asegurese de que las preguntas tengan dos o más opciones, si es pregunta abierta los campos nombre_grupo_opcion y opciones deben quedar vacíos."
+              );
+            }
           }
 
           if (category) {
@@ -198,8 +211,14 @@ const SurveyForm = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
+  };
+
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
   };
 
   return (
@@ -323,6 +342,20 @@ const SurveyForm = () => {
             sx={{ width: "100%" }}
           >
             Encuesta guardada con exito
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert
+            onClose={handleCloseError}
+            severity={"error"}
+            sx={{ width: "100%" }}
+          >
+            {errorSubmit}
           </Alert>
         </Snackbar>
       </Stack>
