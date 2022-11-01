@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer,Marker,Popup } from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup, Polygon} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
@@ -22,21 +22,47 @@ function MarkerItem(props) {
     );
 }
 
+function setColor(value) {
+    let color = "#3ac02c";
+    if(value < 5) {
+        color = "#3ac02c"
+    } else if(value < 10) {
+        color = "#c2b80d"
+    } else if(value < 15) {
+        color = "#349bd3"
+    } else if(value < 20) {
+        color = "#d54949"
+    } else {
+        color = "#e51a39"
+    }
+    return color;
+}
 const Map = (props) => {
-    const positionInitialMap = [-1.80, -78.51];
-    const [mapMarkers] = useState(props.data);
+    // const positionInitialMap = [-1.80, -78.51];
+    const [dataMap] = useState(props.data);
+    const [markersMap] = useState(props.markers);
     return (
-        <MapContainer center={positionInitialMap} zoom={7} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={dataMap.positionMap} zoom={dataMap.zoomMap} scrollWheelZoom={true} style={{ height: "100%", width: "100%" }}>
             <TileLayer
                 // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 attribution='&copy; <a href="https://www.cedia.edu.ec/">CEDIA</a> UTA - UTC'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-                mapMarkers.map((marker, index) => (
+                markersMap.map((marker, index) => (
                     <MarkerItem key={index} data={marker} />
                 ))
             }
+            {
+                dataMap.isMultipolygon ? (
+                    dataMap.multipolygonMap.map((polygon, index) => (
+                        <Polygon key={index} color={setColor(polygon.total)} positions={polygon.polygon} />
+                    ))
+                ) : (
+                    <Polygon color={dataMap.color} positions={dataMap.polygonMap} />
+                )
+            }
+
             {/*<Marker position={[-0.1860160474609731,-78.67458062644613]}>*/}
             {/*    <Popup>*/}
             {/*        /!*<b>Organización: </b> {marker.nombre} <br />*!/*/}
