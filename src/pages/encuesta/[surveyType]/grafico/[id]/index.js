@@ -313,7 +313,7 @@ export default function LandingGraphic() {
               name: sub_question.nombre_pregunta,
               label: sub_question.nombre_pregunta,
               observation: sub_question.observacion_pregunta,
-              id: sub_question.codigo_pregunta,
+              id: sub_question.encuesta_pregunta_codigo,
               onClick,
             });
           });
