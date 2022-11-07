@@ -360,12 +360,13 @@ const ReplyForm = () => {
     );
     const surveyQuestions = await SurveyTemplates.getById(survey);
     const newQuestionReplyArray = [];
+
     Object.keys(data).map((reply) => {
       //Busca la pregunta de la organizacion en las
       //preguntas de la plantilla
       let questionTemplate = surveyQuestions.preguntas.find(
         (_questionTemplate) =>
-          reply === _questionTemplate.itepr_codigo.toString()
+          reply === _questionTemplate.itpre_codigo.toString()
       );
       if (questionTemplate) {
         let itopc_codigo = "";
