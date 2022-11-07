@@ -159,6 +159,7 @@ export default function LandingGraphic() {
           setChartTitle("Sectores económicos");
           setChartType("bar");
           setLoadingItem(false);
+          setObservation("");
         }
       })
       .catch((error) => {
@@ -178,6 +179,7 @@ export default function LandingGraphic() {
           setChartTitle("Muestra por ciudad");
           setChartType("bar");
           setLoadingItem(false);
+          setObservation("");
         }
       })
       .catch((error) => {
@@ -197,6 +199,7 @@ export default function LandingGraphic() {
           setChartTitle("Perfil por nivel de decisión");
           setChartType("pie");
           setLoadingItem(false);
+          setObservation("");
         }
       })
       .catch((error) => {
@@ -216,6 +219,7 @@ export default function LandingGraphic() {
           setChartTitle("Perfil por nivel de estudios");
           setChartType("pie");
           setLoadingItem(false);
+          setObservation("");
         }
       })
       .catch((error) => {
@@ -231,6 +235,12 @@ export default function LandingGraphic() {
         return [
           "divider",
           {
+            name: "sectores_economicos",
+            label: "Sectores económicos",
+            onClick: () => orgGraficoSector(surveyId),
+          },
+          "divider",
+          {
             name: "Lista de gráficos",
             label: "Lista de gráficos",
             onClick: () => handleOpenDashboard(),
@@ -241,7 +251,7 @@ export default function LandingGraphic() {
         return [
           "divider",
           {
-            name: "grafico_i1",
+            name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
@@ -303,7 +313,7 @@ export default function LandingGraphic() {
               name: sub_question.nombre_pregunta,
               label: sub_question.nombre_pregunta,
               observation: sub_question.observacion_pregunta,
-              id: sub_question.codigo_pregunta,
+              id: sub_question.encuesta_pregunta_codigo,
               onClick,
             });
           });
