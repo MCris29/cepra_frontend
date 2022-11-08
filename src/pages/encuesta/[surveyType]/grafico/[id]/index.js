@@ -19,6 +19,7 @@ import NotSelectedItem from "@/components/NotSelectedItem";
 
 import ThemeCepra from "@/constants/theme";
 // import dayjs from "dayjs";
+import { filters } from "@/lib/filterGraphic";
 import { ChartData } from "@/lib/ChartData";
 import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 import FilterIndicators from "@/components/FilterIndicators";
@@ -43,13 +44,15 @@ export default function LandingGraphic() {
   const [chartInformation, setChartInformation] = useState(undefined);
   const [chartTitle, setChartTitle] = useState(undefined);
   const [observation, setObservation] = useState("");
+  const [itemId, setItemId] = useState("");
   const [loadingdItem, setLoadingItem] = useState(false);
+  const [loadingFilter, setLoadingFilter] = useState(false);
   const [errordItem, setErrorItem] = useState(false);
   // const [dateInit, setDateInit] = useState(dayjs("2014-08-18T21:11:54"));
   // const [dateEnd, setDateEnd] = useState(dayjs("2014-08-18T21:11:54"));
   const [dashboard, setDashboard] = useState(false);
 
-  // Sección de dashboard de imagenes
+  // Función que muestra el dashboard de imagenes
   const handleOpenDashboard = () => {
     setDashboard(true);
   };
@@ -57,20 +60,19 @@ export default function LandingGraphic() {
     setDashboard(false);
   };
 
+  // Función que arma el SideBar con preguntas padre e hija
   function handleData(survey) {
     let newCategories = [];
 
     survey.categorias.map((category) => {
       let questionParent = [];
       let positionParent = 0;
-
       let newCategory = {
         codigo_categoria: category.codigo_categoria,
         nombre_categoria: category.nombre_categoria,
         observacion_categoria: category.observacion_categoria,
         preguntas: [],
       };
-
       category.preguntas.map((question, index) => {
         if (question.codigo_pregunta_padre === null) {
           question.preguntas_hija = [];
@@ -86,7 +88,6 @@ export default function LandingGraphic() {
       newCategory.preguntas = questionParent;
       newCategories.push(newCategory);
     });
-
     return newCategories;
   }
 
@@ -112,20 +113,11 @@ export default function LandingGraphic() {
     return position;
   }
 
-  // const handleDateInit = (date) => {
-  //   setDateInit(date);
-  // };
-  // const handleDateEnd = (date) => {
-  //   setDateEnd(date);
-  // };
-  const handleTypeChart = (event) => {
-    setChartType(event.target.value);
-  };
-
   const onClick = (e, item) => {
     handleCloseDashboard();
     setLoadingItem(true);
     setChartInformation(undefined);
+    setItemId(item.id);
     ChartData.getGraphic3ById(item.id)
       .then((response) => {
         if (response.data) {
@@ -142,7 +134,6 @@ export default function LandingGraphic() {
         setErrorItem(true);
       });
   };
-
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
     handleCloseDashboard();
@@ -222,6 +213,81 @@ export default function LandingGraphic() {
         setLoadingItem(false);
         setErrorItem(true);
       });
+  };
+
+  // Filtros
+  // Filtro de Fecha
+  // const handleDateInit = (date) => {
+  //   setDateInit(date);
+  // };
+  // const handleDateEnd = (date) => {
+  //   setDateEnd(date);
+  // };
+
+  // Filtro de tipo de gráfico
+  const handleTypeChart = (event) => {
+    setChartType(event.target.value);
+  };
+  // Filtro de indicadores
+  const handleFilter = (filter, fil_data) => {
+    let questionId = itemId;
+
+    handleCloseDashboard();
+    setLoadingFilter(true);
+    switch (filter) {
+      case "sector":
+        filters
+          .getBySector(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "subsector":
+        filters
+          .getBySubsector(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "ciudad":
+        filters
+          .getByCity(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "all":
+        ChartData.getGraphic3ById(questionId)
+          .then((response) => {
+            if (response.data) {
+              setChartInformation(response.data.data);
+              setLoadingFilter(false);
+            }
+          })
+          .catch((error) => {
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+    }
   };
 
   //Esta función arma el menu de gráficos estáticos dependiendo del tipo de encuesta
@@ -313,7 +379,6 @@ export default function LandingGraphic() {
               onClick,
             });
           });
-
           // Añade las preguntas padre
           let question = {
             name: nextQuestion.nombre_pregunta,
@@ -322,7 +387,6 @@ export default function LandingGraphic() {
             id: nextQuestion.encuesta_pregunta_codigo,
             items: sub_questions,
           };
-
           // Verifica si no tiene preguntas hijas para añadir la función onClick
           if (sub_questions.length === 0) {
             question = { ...question, onClick };
@@ -375,7 +439,10 @@ export default function LandingGraphic() {
                               chartType={chartType}
                               handleTypeChart={handleTypeChart}
                             />
-                            <FilterIndicators />
+                            <FilterIndicators
+                              surveyId={surveyId}
+                              handleFilter={handleFilter}
+                            />
                             <FilterDate
                               handleDateInit={() => {}}
                               handleDateEnd={() => {}}
@@ -387,15 +454,18 @@ export default function LandingGraphic() {
                             />
                           </div>
                         </Box>
-
-                        <Box className={styles.graphic}>
-                          <Graphic
-                            type={chartType}
-                            title={chartTitle}
-                            observation={observation}
-                            data={chartInformation}
-                          />
-                        </Box>
+                        {loadingFilter ? (
+                          <LoadingInformation />
+                        ) : (
+                          <Box className={styles.graphic}>
+                            <Graphic
+                              type={chartType}
+                              title={chartTitle}
+                              observation={observation}
+                              data={chartInformation}
+                            />
+                          </Box>
+                        )}
                       </>
                     ) : (
                       <>
