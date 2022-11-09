@@ -7,10 +7,15 @@ import { fetcher } from "@/lib/utils";
 
 import { Typography, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import dayjs from "dayjs";
 
 import GraphicsList from "@/components/GraphicsList.js";
 import Graphic from "@/components/Graphic";
 import Sidebar from "@/components/Sidebar";
+import FilterIndicators from "@/components/FilterIndicators";
+import FilterTypeChart from "@/components/FilterTyChart";
+import FilterDate from "@/components/FilterDate";
+import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 import LoadingSelectedItem from "@/components/LoadingSelectedItem";
 import ErrorSelectedItem from "@/components/ErrorSelectedItem";
 import ErrorInformation from "@/components/ErrorInformation";
@@ -18,13 +23,8 @@ import LoadingInformation from "@/components/LoadingInformation";
 import NotSelectedItem from "@/components/NotSelectedItem";
 
 import ThemeCepra from "@/constants/theme";
-// import dayjs from "dayjs";
 import { filters } from "@/lib/filterGraphic";
 import { ChartData } from "@/lib/ChartData";
-import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
-import FilterIndicators from "@/components/FilterIndicators";
-import FilterTypeChart from "@/components/FilterTyChart";
-import FilterDate from "@/components/FilterDate";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -32,7 +32,6 @@ const theme = createTheme({
 
 export default function LandingGraphic() {
   const router = useRouter();
-
   const surveyId = router.query.id;
   const surveyType = router.query.surveyType;
 
@@ -51,8 +50,12 @@ export default function LandingGraphic() {
   // const [dateInit, setDateInit] = useState(dayjs("2014-08-18T21:11:54"));
   // const [dateEnd, setDateEnd] = useState(dayjs("2014-08-18T21:11:54"));
   const [dashboard, setDashboard] = useState(false);
+  const [showStaticGraphic, setShowStaticGraphic] = useState(false);
 
-  // Función que muestra el dashboard de imagenes
+  if (error && surveyId) return <ErrorInformation />;
+  if (!data) return <LoadingInformation />;
+
+  // Abre y cierra el Dashboard de imagenes
   const handleOpenDashboard = () => {
     setDashboard(true);
   };
@@ -60,7 +63,15 @@ export default function LandingGraphic() {
     setDashboard(false);
   };
 
-  // Función que arma el SideBar con preguntas padre e hija
+  // Abre y cierra los gráficos estáticos
+  const handleOpenStaticGraphic = () => {
+    setShowStaticGraphic(true);
+  };
+  const handleCloseStaticGraphic = () => {
+    setShowStaticGraphic(false);
+  };
+
+  // Arma el SideBar con preguntas padre e hija
   function handleData(survey) {
     let newCategories = [];
 
@@ -90,7 +101,6 @@ export default function LandingGraphic() {
     });
     return newCategories;
   }
-
   // Algoritmo de busqueda Binaria
   function binarySearch(value, list) {
     let first = 0;
@@ -113,8 +123,10 @@ export default function LandingGraphic() {
     return position;
   }
 
+  // Datos de gráficos dinámicos
   const onClick = (e, item) => {
     handleCloseDashboard();
+    handleCloseStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     setItemId(item.id);
@@ -137,6 +149,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoSector(id)
@@ -157,6 +170,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de organizaciones por provincias
   const orgGraficoCiudad = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoCiudad(id)
@@ -177,6 +191,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de contactos por nivel de decisión
   const contactoGraficoDes = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoDes(id)
@@ -197,6 +212,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de contactos por nivel de estudios
   const contactoGraficoEst = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoEst(id)
@@ -215,7 +231,7 @@ export default function LandingGraphic() {
       });
   };
 
-  // Filtros
+  // ******** Filtros *********
   // Filtro de Fecha
   // const handleDateInit = (date) => {
   //   setDateInit(date);
@@ -290,7 +306,7 @@ export default function LandingGraphic() {
     }
   };
 
-  //Esta función arma el menu de gráficos estáticos dependiendo del tipo de encuesta
+  //Arma el menú de gráficos estáticos dependiendo del tipo de encuesta
   const handleItems = () => {
     switch (surveyType) {
       case "energia":
@@ -355,9 +371,6 @@ export default function LandingGraphic() {
     }
   };
 
-  if (error && surveyId) {
-    return <ErrorInformation />;
-  }
   if (data) {
     if (data.id_encuesta && data.encuesta_observacion && data.categorias) {
       let surveyCategoryList = handleData(data);
@@ -427,44 +440,77 @@ export default function LandingGraphic() {
                 <Sidebar items={sidebarItems} />
               </Box>
               <Box className={styles.dashboard}>
+                {/* Se muestra del dashboard de imagenes */}
                 {dashboard ? (
                   <GraphicsList id={surveyId} />
                 ) : (
-                  <div>
+                  <>
                     {chartInformation ? (
                       <>
-                        <Box className={styles.filter}>
-                          <div className={styles.filter_section}>
-                            <FilterTypeChart
-                              chartType={chartType}
-                              handleTypeChart={handleTypeChart}
-                            />
-                            <FilterIndicators
-                              surveyId={surveyId}
-                              handleFilter={handleFilter}
-                            />
-                            <FilterDate
-                              handleDateInit={() => {}}
-                              handleDateEnd={() => {}}
-                            />
-                          </div>
-                          <div className={styles.filter_section}>
-                            <ButtonDownloadGraphic
-                              title={chartTitle + " (" + chartType + ")"}
-                            />
-                          </div>
-                        </Box>
-                        {loadingFilter ? (
-                          <LoadingInformation />
+                        {showStaticGraphic ? (
+                          <>
+                            {/* Se muestran los gráficos estáticos sin filtro */}
+                            <Box className={styles.filter}>
+                              <div className={styles.filter_section}>
+                                <FilterTypeChart
+                                  chartType={chartType}
+                                  handleTypeChart={handleTypeChart}
+                                />
+                              </div>
+                              <div className={styles.filter_section}>
+                                <ButtonDownloadGraphic
+                                  title={chartTitle + " (" + chartType + ")"}
+                                />
+                              </div>
+                            </Box>
+                            <Box className={styles.graphic}>
+                              <Graphic
+                                type={chartType}
+                                title={chartTitle}
+                                observation={observation}
+                                data={chartInformation}
+                              />
+                            </Box>
+                          </>
                         ) : (
-                          <Box className={styles.graphic}>
-                            <Graphic
-                              type={chartType}
-                              title={chartTitle}
-                              observation={observation}
-                              data={chartInformation}
-                            />
-                          </Box>
+                          <>
+                            {/* Se muestran los gráficos dinámicos con el filtro */}
+                            <Box className={styles.filter}>
+                              <div className={styles.filter_section}>
+                                <FilterTypeChart
+                                  chartType={chartType}
+                                  handleTypeChart={handleTypeChart}
+                                />
+                                <FilterIndicators
+                                  surveyId={surveyId}
+                                  handleFilter={handleFilter}
+                                />
+                                <FilterDate
+                                  handleDateInit={() => {}}
+                                  handleDateEnd={() => {}}
+                                />
+                              </div>
+                              <div className={styles.filter_section}>
+                                <ButtonDownloadGraphic
+                                  title={chartTitle + " (" + chartType + ")"}
+                                />
+                              </div>
+                            </Box>
+                            {loadingFilter ? (
+                              <LoadingInformation />
+                            ) : (
+                              <>
+                                <Box className={styles.graphic}>
+                                  <Graphic
+                                    type={chartType}
+                                    title={chartTitle}
+                                    observation={observation}
+                                    data={chartInformation}
+                                  />
+                                </Box>
+                              </>
+                            )}
+                          </>
                         )}
                       </>
                     ) : (
@@ -484,15 +530,13 @@ export default function LandingGraphic() {
                         )}
                       </>
                     )}
-                  </div>
+                  </>
                 )}
               </Box>
             </Box>
           </ThemeProvider>
         </>
       );
-    } else {
-      return <LoadingInformation />;
     }
   }
 }
