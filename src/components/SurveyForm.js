@@ -84,13 +84,13 @@ const SurveyForm = () => {
 
     try {
       const surveyTemplateData = await SurveyTemplates.create(SurveyTemplate);
-      console.log(SurveyTemplate);
 
       reset();
       deleteFile();
       setLoading(false);
       setOpen(true);
       handleNameFile("Selecciona un archivo*");
+      setTypeSurvey("");
     } catch (e) {
       console.log(e);
 
@@ -144,14 +144,14 @@ const SurveyForm = () => {
           let optionArray = [];
           let groupOptions = "";
 
-          if (data[index][7]) {
+          if (data[index][8]) {
             try {
-              optionArray = data[index][8].split(";");
+              optionArray = data[index][9].split(";");
               optionArray.forEach((option, index) => {
                 optionArray[index] = option.toString().trim();
               });
               groupOptions = new GroupOptions(
-                data[index][7].toString().trim(), // nombre_grupo_opcion
+                data[index][8].toString().trim(), // nombre_grupo_opcion
                 optionArray // array opciones
               );
             } catch (error) {
