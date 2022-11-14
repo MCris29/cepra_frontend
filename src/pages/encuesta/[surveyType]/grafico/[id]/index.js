@@ -135,7 +135,7 @@ export default function LandingGraphic() {
         if (response.data) {
           response.data.data.title = item.label;
           setChartInformation(response.data.data);
-          setChartTitle(item.label);
+          setChartTitle(item.name);
           setChartType("bar");
           setLoadingItem(false);
           setObservation(item.observation);
@@ -386,7 +386,7 @@ export default function LandingGraphic() {
             sub_questions.push("divider");
             sub_questions.push({
               name: sub_question.nombre_pregunta,
-              label: sub_question.nombre_pregunta,
+              label: sub_question.titulo_pregunta,
               observation: sub_question.observacion_pregunta,
               id: sub_question.encuesta_pregunta_codigo,
               onClick,
@@ -395,7 +395,7 @@ export default function LandingGraphic() {
           // Añade las preguntas padre
           let question = {
             name: nextQuestion.nombre_pregunta,
-            label: nextQuestion.nombre_pregunta,
+            label: nextQuestion.titulo_pregunta,
             observation: nextQuestion.observacion_pregunta,
             id: nextQuestion.encuesta_pregunta_codigo,
             items: sub_questions,
