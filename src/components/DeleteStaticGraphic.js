@@ -14,7 +14,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 500,
   bgcolor: "background.paper",
-  borderRadius: "5px",
+  borderRadius: 0,
   boxShadow: 24,
   p: 4,
 };
@@ -56,6 +56,7 @@ const DeleteStaticGraphic = (props) => {
         variant="outlined"
         size="small"
         color="error"
+        style={{ borderRadius: 0 }}
         onClick={handleOpenModal}
       >
         <DeleteIcon />

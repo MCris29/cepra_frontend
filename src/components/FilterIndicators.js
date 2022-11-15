@@ -51,6 +51,7 @@ const FilterIndicators = (props) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          style={{ borderRadius: 0 }}
           value={filter}
           label="Indicador"
           onChange={handleFilterIndicator}
@@ -71,6 +72,7 @@ const FilterIndicators = (props) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          style={{ borderRadius: 0 }}
           value={filterData}
           label="Dato"
           onChange={handleFilterData}
@@ -99,6 +101,7 @@ const FilterIndicators = (props) => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              style={{ borderRadius: 0 }}
               value={"all"}
               label="Indicador"
             >
@@ -111,6 +114,7 @@ const FilterIndicators = (props) => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              style={{ borderRadius: 0 }}
               value={"all"}
               label="Dato"
             ></Select>

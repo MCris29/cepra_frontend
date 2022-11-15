@@ -87,7 +87,12 @@ const SurveyList = () => {
       <p>
         En esta tabla se presentan todas las encuestas guardadas, presiona el
         botón <VisibilityIcon sx={{ margin: "-3px 0" }} fontSize="x-small" />{" "}
-        para visualizar la encuesta.
+        para visualizar la encuesta y{" "}
+        <InsertChartOutlinedTwoToneIcon
+          sx={{ margin: "-3px 0" }}
+          fontSize="x-small"
+        />{" "}
+        para visualizar los gráficos estáticos.
       </p>
       {data ? (
         <DataGrid
@@ -96,7 +101,7 @@ const SurveyList = () => {
           pageSize={10}
           rowsPerPageOptions={[10]}
           autoHeight={true}
-          sx={{ marginTop: "20px" }}
+          sx={{ marginTop: "20px", borderRadius: 0 }}
         />
       ) : (
         <div>Cargando...</div>

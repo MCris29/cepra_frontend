@@ -21,12 +21,12 @@ import { Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 const graphicBackgroundColor = [
   "rgba(55, 160, 235, 0.5)",
   "rgba(255, 100, 135, 0.5)",
-  "rgba(255, 225, 100, 0.5)",
+  "rgba(234, 134, 27, 0.5)",
   "rgba(75, 255, 25, 0.5)",
   "rgba(155, 100, 255, 0.5)",
-  "rgba(200, 95, 25, 0.5)",
+  "rgba(255, 225, 100, 0.5)",
 
-  "rgba(40, 20, 190, 0.5)",
+  "rgba(31, 62, 92, 0.5)",
   "rgba(200, 2, 25, 0.5)",
   "rgba(255, 222, 10, 0.5)",
   "rgba(30, 155, 65, 0.5)",
@@ -36,12 +36,12 @@ const graphicBackgroundColor = [
 const graphicBorderColor = [
   "rgba(55, 160, 235, 1)",
   "rgba(255, 100, 135, 1)",
-  "rgba(255, 225, 100, 1)",
+  "rgba(234, 134, 27, 1)",
   "rgba(75, 255, 25, 1)",
   "rgba(155, 100, 255, 1)",
-  "rgba(200, 95, 25, 1)",
+  "rgba(255, 225, 100, 1)",
 
-  "rgba(40, 20, 190, 1)",
+  "rgba(31, 62, 92, 1)",
   "rgba(200, 2, 25, 1)",
   "rgba(255, 222, 10, 1)",
   "rgba(30, 155, 65, 1)",
@@ -80,11 +80,11 @@ const Graphic = (props) => {
           backgroundColor:
             graphic === "pie" || graphic === "doughnut"
               ? graphicBackgroundColor
-              : "rgba(55, 165, 235, 0.5)",
+              : "rgba(234, 134, 27, 0.7)",
           borderColor:
             graphic === "pie" || graphic === "doughnut"
               ? graphicBorderColor
-              : "rgba(55, 165, 235, 1)",
+              : "rgba(234, 134, 27, 1)",
         },
       ],
     };

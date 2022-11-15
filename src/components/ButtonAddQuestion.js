@@ -14,7 +14,6 @@ const styleModal = {
   width: 400,
   bgcolor: "background.paper",
   border: "1px solid #c4c4c4",
-  borderRadius: "4px",
   boxShadow: 24,
   padding: "12px 32px",
   overflow: "auto",

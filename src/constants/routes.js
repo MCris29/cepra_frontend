@@ -1,5 +1,5 @@
 const publicRoutes = {
-  HOME: "/",
+  HOME: "/encuesta",
 
   /* Rutas privadas para cambiar al implementar el Login*/
   /** Administración **/

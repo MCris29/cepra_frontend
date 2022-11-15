@@ -23,13 +23,13 @@ const ContactList = (props) => {
       <div className={styles.contacts}>
         {data.data.map((contact, index) => (
           <div key={index} className={styles.card}>
-            <p>
+            <div>
               <strong>{contact.itcon_nombre}</strong>
               <div>
                 <span>{contact.itcon_nivel_estudios}</span>
               </div>
-            </p>
-            <p>
+            </div>
+            <div>
               <div>
                 <strong>correo: </strong>
                 {contact.itcon_email}
@@ -38,7 +38,7 @@ const ContactList = (props) => {
                 <strong>Nivel de decisión: </strong>
                 {contact.itcon_nivel_decision}
               </div>
-            </p>
+            </div>
           </div>
         ))}
       </div>

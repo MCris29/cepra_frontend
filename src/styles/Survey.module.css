@@ -4,16 +4,15 @@
   padding: 0 0 15px 5px;
   min-width: 100%;
 }
-
 .button {
   text-transform: none;
+  border-radius: 0;
 }
 
 /*Formulario  de encuesta*/
 .forms_container {
   max-width: 40em;
 }
-
 input[type="file"].input_file {
   display: none;
 }
@@ -22,12 +21,11 @@ input[type="file"].input_file {
   display: flex;
   justify-content: flex-end;
 }
-
 .button_template_survey {
   padding: 8.5px 14px;
   margin: 8px 0 4px 0;
   border: 1px solid #c4c4c4;
-  border-radius: 5px;
+  border-radius: 0;
   min-width: 100%;
   display: inline-block;
   cursor: pointer;
@@ -42,20 +40,17 @@ input[type="file"].input_file {
   margin: 8px 0;
   padding: 12px;
   border: 1px solid #c4c4c4;
-  border-radius: 5px;
+  border-radius: 0;
 }
-
 .cardChild {
   margin: 8px 0 0 35px;
   padding: 12px;
   border: 1px solid #c4c4c4;
-  border-radius: 5px;
+  border-radius: 0;
 }
-
 .cardOption {
   padding-left: 18px;
 }
-
 .cardOption .options {
   padding: 0 0 0 16px;
 }

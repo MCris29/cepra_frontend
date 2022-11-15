@@ -4,7 +4,7 @@
 }
 .contacts .card {
   border: 1px solid #c4c4c4;
-  border-radius: 8px;
+  border-radius: 0;
   margin: 4px;
   padding: 8px;
   width: 18em;

@@ -70,7 +70,7 @@ const OrganizationList = () => {
           pageSize={10}
           rowsPerPageOptions={[10]}
           autoHeight={true}
-          sx={{ marginTop: "20px" }}
+          sx={{ marginTop: "20px", borderRadius: 0 }}
         />
       ) : (
         <div>No existen registros</div>
