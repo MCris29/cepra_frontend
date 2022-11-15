@@ -10,7 +10,10 @@ const QuestionCard = (props) => {
         {
           /* Si la pregunta tiene opciones */
           props.question.grupo_opciones ? (
-            <OptionCard option={props.question.grupo_opciones} />
+            <OptionCard
+              option={props.question.grupo_opciones}
+              observation={props.question.observacion_pregunta}
+            />
           ) : (
             <span></span>
           )

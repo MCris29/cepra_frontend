@@ -14,6 +14,14 @@ const OptionCard = (props) => {
       ) : (
         <span></span>
       )}
+      {props.observation ? (
+        <div className={styles.observation}>
+          <strong>Observación:</strong>
+          <div>{props.observation}</div>
+        </div>
+      ) : (
+        <span></span>
+      )}
     </div>
   );
 };
