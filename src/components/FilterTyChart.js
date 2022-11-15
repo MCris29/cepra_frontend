@@ -16,6 +16,7 @@ const FilterTypeChart = (props) => {
       >
         <MenuItem value={"bar"}>Barras</MenuItem>
         <MenuItem value={"line"}>Lineal</MenuItem>
+        <MenuItem value={"area"}>Área</MenuItem>
         <MenuItem value={"pie"}>Pastel</MenuItem>
         <MenuItem value={"doughnut"}>Dona</MenuItem>
         <MenuItem value={"radar"}>Radar</MenuItem>

@@ -10,13 +10,14 @@ import {
   Legend,
   Title,
   Tooltip,
+  Filler,
   CategoryScale,
   LinearScale,
 } from "chart.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import ThemeCepra from "@/constants/theme";
-import { Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
+import { Chart, Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 
 const graphicBackgroundColor = [
   "rgba(55, 160, 235, 0.5)",
@@ -59,6 +60,7 @@ ChartJS.register(
   Legend,
   Title,
   Tooltip,
+  Filler,
   CategoryScale,
   LinearScale
 );
@@ -75,6 +77,7 @@ const Graphic = (props) => {
       labels: chartInformation.labels,
       datasets: [
         {
+          fill: graphic === "area" ? true : false,
           label: chartInformation.title,
           data: chartInformation.data,
           backgroundColor:
@@ -172,6 +175,8 @@ const Graphic = (props) => {
       case "bar":
         return <Bar id="graphic_canvas" options={options} data={data} />;
       case "line":
+        return <Line id="graphic_canvas" options={options} data={data} />;
+      case "area":
         return <Line id="graphic_canvas" options={options} data={data} />;
       case "pie":
         return <Pie id="graphic_canvas" options={optionsPie} data={data} />;
