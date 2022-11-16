@@ -484,7 +484,7 @@ const ReplyForm = () => {
                 )}
               </section>
               <br />
-              <hr />
+              {/* <hr /> */}
               <div className={styles.button_container}>
                 <Button
                   type="submit"
@@ -563,7 +563,7 @@ const ReplyForm = () => {
                 </section>
               ))}
               <br />
-              <hr />
+              {/* <hr /> */}
               <Box
                 component="span"
                 m={1}
@@ -604,17 +604,26 @@ const ReplyForm = () => {
                         <section style={{ marginBottom: "10px" }}>
                           <label>{question.label}</label>
                           <div>
-                            <span>
-                              <strong>Observación: </strong>
-                              <pre
+                            {question.observation ? (
+                              <span
                                 style={{
-                                  fontFamily: "'Montserrat', sans-serif ",
-                                  margin: 0,
+                                  fontSize: "small",
+                                  lineHeight: "initial",
                                 }}
                               >
-                                {question.observation}
-                              </pre>
-                            </span>
+                                <strong>Observación: </strong>
+                                <pre
+                                  style={{
+                                    fontFamily: "'Montserrat', sans-serif ",
+                                    margin: 0,
+                                  }}
+                                >
+                                  {question.observation}
+                                </pre>
+                              </span>
+                            ) : (
+                              <span></span>
+                            )}
                           </div>
                           {question.type === "text" ? (
                             <>
@@ -703,7 +712,7 @@ const ReplyForm = () => {
                   </Box>
                 ))}
                 <br />
-                <hr />
+                {/* <hr /> */}
                 <Box
                   component="span"
                   m={1}

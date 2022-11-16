@@ -57,8 +57,11 @@ const Menu = () => {
       <div
         className={styles.tab}
         style={{
-          backgroundColor:
-            isSelected || tabHover == index ? "#1f3e5c" : "transparent",
+          backgroundColor: isSelected
+            ? "#1f3e5c"
+            : tabHover == index
+            ? "#a3a5a8"
+            : "transparent",
           color: isSelected || tabHover == index ? "#f7f7f7 " : "#28333e",
         }}
         onMouseEnter={() => setTabHover(index)}
