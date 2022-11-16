@@ -9,6 +9,7 @@ import {
   LineElement,
   Legend,
   Title,
+  SubTitle,
   Tooltip,
   Filler,
   CategoryScale,
@@ -59,6 +60,7 @@ ChartJS.register(
   LineElement,
   Legend,
   Title,
+  SubTitle,
   Tooltip,
   Filler,
   CategoryScale,
@@ -101,6 +103,10 @@ const Graphic = (props) => {
             display: false,
             text: "",
           },
+          subTitle: {
+            display: false,
+            text: "",
+          },
           ticks: {
             callback: function (value, index, ticks) {
               return value + "%";
@@ -112,6 +118,11 @@ const Graphic = (props) => {
         title: {
           display: true,
           text: props.title,
+        },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
         },
         legend: {
           display: false,
@@ -132,6 +143,11 @@ const Graphic = (props) => {
         title: {
           display: true,
           text: props.title,
+        },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
         },
         legend: {
           display: true,
@@ -156,6 +172,11 @@ const Graphic = (props) => {
         title: {
           display: true,
           text: props.title,
+        },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
         },
         legend: {
           display: false,
@@ -200,7 +221,7 @@ const Graphic = (props) => {
                 props.type == "doughnut" ||
                 props.type == "radar"
                   ? "42%"
-                  : "64%",
+                  : "66%",
               laptop:
                 props.type == "pie" ||
                 props.type == "doughnut" ||
@@ -214,15 +235,6 @@ const Graphic = (props) => {
           }}
         >
           {handleGraphic(props.type)}
-          <div>
-            <pre
-              style={{
-                fontFamily: "'Roboto', 'Helvetica', 'Arial', san-serif ",
-              }}
-            >
-              {props.observation}
-            </pre>
-          </div>
         </Box>
       </ThemeProvider>
     </>
