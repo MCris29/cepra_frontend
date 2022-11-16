@@ -5,23 +5,17 @@ import styles from "@/styles/LandingGraphic.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import dayjs from "dayjs";
 
 import GraphicsList from "@/components/GraphicsList.js";
 import Graphic from "@/components/Graphic";
 import Sidebar from "@/components/Sidebar";
+import FilterIndicators from "@/components/FilterIndicators";
+import FilterTypeChart from "@/components/FilterTyChart";
+import FilterDate from "@/components/FilterDate";
+import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 import LoadingSelectedItem from "@/components/LoadingSelectedItem";
 import ErrorSelectedItem from "@/components/ErrorSelectedItem";
 import ErrorInformation from "@/components/ErrorInformation";
@@ -29,9 +23,8 @@ import LoadingInformation from "@/components/LoadingInformation";
 import NotSelectedItem from "@/components/NotSelectedItem";
 
 import ThemeCepra from "@/constants/theme";
-import dayjs from "dayjs";
+import { filters } from "@/lib/filterGraphic";
 import { ChartData } from "@/lib/ChartData";
-import ButtonDownloadGraphic from "@/components/ButtonDownloadGraphic";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -39,7 +32,6 @@ const theme = createTheme({
 
 export default function LandingGraphic() {
   const router = useRouter();
-
   const surveyId = router.query.id;
   const surveyType = router.query.surveyType;
 
@@ -51,12 +43,19 @@ export default function LandingGraphic() {
   const [chartInformation, setChartInformation] = useState(undefined);
   const [chartTitle, setChartTitle] = useState(undefined);
   const [observation, setObservation] = useState("");
+  const [itemId, setItemId] = useState("");
   const [loadingdItem, setLoadingItem] = useState(false);
+  const [loadingFilter, setLoadingFilter] = useState(false);
   const [errordItem, setErrorItem] = useState(false);
-  const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
+  // const [dateInit, setDateInit] = useState(dayjs("2014-08-18T21:11:54"));
+  // const [dateEnd, setDateEnd] = useState(dayjs("2014-08-18T21:11:54"));
   const [dashboard, setDashboard] = useState(false);
+  const [showStaticGraphic, setShowStaticGraphic] = useState(false);
 
-  // Sección de dashboard de imagenes
+  if (error && surveyId) return <ErrorInformation />;
+  if (!data) return <LoadingInformation />;
+
+  // Abre y cierra el Dashboard de imagenes
   const handleOpenDashboard = () => {
     setDashboard(true);
   };
@@ -64,20 +63,27 @@ export default function LandingGraphic() {
     setDashboard(false);
   };
 
+  // Abre y cierra los gráficos estáticos
+  const handleOpenStaticGraphic = () => {
+    setShowStaticGraphic(true);
+  };
+  const handleCloseStaticGraphic = () => {
+    setShowStaticGraphic(false);
+  };
+
+  // Arma el SideBar con preguntas padre e hija
   function handleData(survey) {
     let newCategories = [];
 
     survey.categorias.map((category) => {
       let questionParent = [];
       let positionParent = 0;
-
       let newCategory = {
         codigo_categoria: category.codigo_categoria,
         nombre_categoria: category.nombre_categoria,
         observacion_categoria: category.observacion_categoria,
         preguntas: [],
       };
-
       category.preguntas.map((question, index) => {
         if (question.codigo_pregunta_padre === null) {
           question.preguntas_hija = [];
@@ -93,10 +99,8 @@ export default function LandingGraphic() {
       newCategory.preguntas = questionParent;
       newCategories.push(newCategory);
     });
-
     return newCategories;
   }
-
   // Algoritmo de busqueda Binaria
   function binarySearch(value, list) {
     let first = 0;
@@ -119,23 +123,19 @@ export default function LandingGraphic() {
     return position;
   }
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-  const handleTypeChart = (event) => {
-    setChartType(event.target.value);
-  };
-
+  // Datos de gráficos dinámicos
   const onClick = (e, item) => {
     handleCloseDashboard();
+    handleCloseStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
+    setItemId(item.id);
     ChartData.getGraphic3ById(item.id)
       .then((response) => {
         if (response.data) {
           response.data.data.title = item.label;
           setChartInformation(response.data.data);
-          setChartTitle(item.label);
+          setChartTitle(item.name);
           setChartType("bar");
           setLoadingItem(false);
           setObservation(item.observation);
@@ -146,10 +146,10 @@ export default function LandingGraphic() {
         setErrorItem(true);
       });
   };
-
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoSector(id)
@@ -170,6 +170,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de organizaciones por provincias
   const orgGraficoCiudad = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.orgGraficoCiudad(id)
@@ -190,6 +191,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de contactos por nivel de decisión
   const contactoGraficoDes = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoDes(id)
@@ -210,6 +212,7 @@ export default function LandingGraphic() {
   //Datos de gráfico de contactos por nivel de estudios
   const contactoGraficoEst = (id) => {
     handleCloseDashboard();
+    handleOpenStaticGraphic();
     setLoadingItem(true);
     setChartInformation(undefined);
     ChartData.contactoGraficoEst(id)
@@ -228,7 +231,82 @@ export default function LandingGraphic() {
       });
   };
 
-  //Esta función arma el menu de gráficos estáticos dependiendo del tipo de encuesta
+  // ******** Filtros *********
+  // Filtro de Fecha
+  // const handleDateInit = (date) => {
+  //   setDateInit(date);
+  // };
+  // const handleDateEnd = (date) => {
+  //   setDateEnd(date);
+  // };
+
+  // Filtro de tipo de gráfico
+  const handleTypeChart = (event) => {
+    setChartType(event.target.value);
+  };
+  // Filtro de indicadores
+  const handleFilter = (filter, fil_data) => {
+    let questionId = itemId;
+
+    handleCloseDashboard();
+    setLoadingFilter(true);
+    switch (filter) {
+      case "sector":
+        filters
+          .getBySector(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "subsector":
+        filters
+          .getBySubsector(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "ciudad":
+        filters
+          .getByCity(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+      case "all":
+        ChartData.getGraphic3ById(questionId)
+          .then((response) => {
+            if (response.data) {
+              setChartInformation(response.data.data);
+              setLoadingFilter(false);
+            }
+          })
+          .catch((error) => {
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
+    }
+  };
+
+  //Arma el menú de gráficos estáticos dependiendo del tipo de encuesta
   const handleItems = () => {
     switch (surveyType) {
       case "energia":
@@ -293,9 +371,6 @@ export default function LandingGraphic() {
     }
   };
 
-  if (error && surveyId) {
-    return <ErrorInformation />;
-  }
   if (data) {
     if (data.id_encuesta && data.encuesta_observacion && data.categorias) {
       let surveyCategoryList = handleData(data);
@@ -311,22 +386,20 @@ export default function LandingGraphic() {
             sub_questions.push("divider");
             sub_questions.push({
               name: sub_question.nombre_pregunta,
-              label: sub_question.nombre_pregunta,
+              label: sub_question.titulo_pregunta,
               observation: sub_question.observacion_pregunta,
               id: sub_question.encuesta_pregunta_codigo,
               onClick,
             });
           });
-
           // Añade las preguntas padre
           let question = {
             name: nextQuestion.nombre_pregunta,
-            label: nextQuestion.nombre_pregunta,
+            label: nextQuestion.titulo_pregunta,
             observation: nextQuestion.observacion_pregunta,
             id: nextQuestion.encuesta_pregunta_codigo,
             items: sub_questions,
           };
-
           // Verifica si no tiene preguntas hijas para añadir la función onClick
           if (sub_questions.length === 0) {
             question = { ...question, onClick };
@@ -359,317 +432,111 @@ export default function LandingGraphic() {
       return (
         <>
           <ThemeProvider theme={theme}>
-            <div className={styles.container}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  flexDirection: "row",
-                  height: "100%",
-                  width: "100%",
-                }}
-              >
-                <Box
-                  sx={{
-                    height: "9%",
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    margin: "12px 0 22px",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      fontSize: {
-                        desktop: "2em",
-                        laptop: "1.5em",
-                        tablet: "1.5em",
-                        mobile: "1.5em",
-                        min: "1.5em",
-                      },
-                    }}
-                  >
-                    <span>{data.encuesta_observacion}</span>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    overflow: "auto",
-                    height: "fit-content",
-                    maxHeight: {
-                      desktop: "71vh",
-                      laptop: "71vh",
-                      tablet: "71vh",
-                      mobile: "33vh",
-                      min: "33vh",
-                    },
-                    marginTop: {
-                      desktop: "0%",
-                      laptop: "0%",
-                      tablet: "0%",
-                      mobile: "1%",
-                      min: "1%",
-                    },
-                    width: {
-                      desktop: "20%",
-                      laptop: "25%",
-                      tablet: "30%",
-                      mobile: "100%",
-                      min: "100%",
-                    },
-                  }}
-                  className={styles.sidebar}
-                >
-                  <Sidebar items={sidebarItems} />
-                </Box>
-                <Box
-                  sx={{
-                    overflow: "none",
-                    marginLeft: {
-                      desktop: "1%",
-                      laptop: "1%",
-                      tablet: "1%",
-                      mobile: "0%",
-                      min: "0%",
-                    },
-                    marginTop: {
-                      desktop: "0%",
-                      laptop: "0%",
-                      tablet: "0%",
-                      mobile: "1%",
-                      min: "1%",
-                    },
-                    height: {
-                      desktop: "90%",
-                      laptop: "90%",
-                      tablet: "90%",
-                      mobile: "69%",
-                      min: "69%",
-                    },
-                    width: {
-                      desktop: "79%",
-                      laptop: "74%",
-                      tablet: "69%",
-                      mobile: "100%",
-                      min: "100%",
-                    },
-                  }}
-                >
-                  {dashboard ? (
-                    <GraphicsList id={surveyId} />
-                  ) : (
-                    <div>
-                      {chartInformation ? (
-                        <>
-                          <Box
-                            sx={{
-                              marginTop: {
-                                desktop: "0",
-                                laptop: "0",
-                                tablet: "0",
-                                mobile: "2%",
-                                min: "2%",
-                              },
-                              marginBottom: {
-                                desktop: "0",
-                                laptop: "0",
-                                tablet: "0",
-                                mobile: "1%",
-                                min: "1%",
-                              },
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: {
-                                desktop: "row",
-                                laptop: "row",
-                                tablet: "row",
-                                mobile: "column",
-                                min: "column",
-                              },
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                width: {
-                                  desktop: "32%",
-                                  laptop: "32%",
-                                  tablet: "32%",
-                                  mobile: "100%",
-                                  min: "100%",
-                                },
-                                height: {
-                                  desktop: "100%",
-                                  laptop: "100%",
-                                  tablet: "100%",
-                                  mobile: "34%",
-                                  min: "34%",
-                                },
-                                margin: {
-                                  desktop: "0",
-                                  laptop: "0",
-                                  tablet: "0",
-                                  mobile: "6px 0",
-                                  min: "6px 0",
-                                },
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <FormControl size="small">
-                                <InputLabel id="demo-simple-select-label">
-                                  Tipo de gráfico
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-simple-select-label"
-                                  id="demo-simple-select"
-                                  value={chartType}
-                                  label="Tipo de gráfico"
-                                  onChange={handleTypeChart}
-                                >
-                                  <MenuItem value={"bar"}>Barras</MenuItem>
-                                  <MenuItem value={"line"}>Lineal</MenuItem>
-                                  <MenuItem value={"pie"}>Pastel</MenuItem>
-                                  <MenuItem value={"doughnut"}>Dona</MenuItem>
-                                  <MenuItem value={"radar"}>Radar</MenuItem>
-                                </Select>
-                              </FormControl>
-                            </Box>
-                            <Box
-                              sx={{
-                                width: {
-                                  desktop: "32%",
-                                  laptop: "32%",
-                                  tablet: "32%",
-                                  mobile: "100%",
-                                  min: "100%",
-                                },
-                                height: {
-                                  desktop: "100%",
-                                  laptop: "100%",
-                                  tablet: "100%",
-                                  mobile: "33%",
-                                  min: "33%",
-                                },
-                                margin: {
-                                  desktop: "0",
-                                  laptop: "0",
-                                  tablet: "0",
-                                  mobile: "6px 0",
-                                  min: "6px 0",
-                                },
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DesktopDatePicker
-                                  label="Fecha inicio"
-                                  inputFormat="MM/DD/YYYY"
-                                  value={value}
-                                  onChange={handleChange}
-                                  renderInput={(params) => (
-                                    <TextField size="small" {...params} />
-                                  )}
-                                />
-                              </LocalizationProvider>
-                            </Box>
-                            <Box
-                              sx={{
-                                width: {
-                                  desktop: "32%",
-                                  laptop: "32%",
-                                  tablet: "32%",
-                                  mobile: "100%",
-                                  min: "100%",
-                                },
-                                height: {
-                                  desktop: "100%",
-                                  laptop: "100%",
-                                  tablet: "100%",
-                                  mobile: "33%",
-                                  min: "33%",
-                                },
-                                margin: {
-                                  desktop: "0",
-                                  laptop: "0",
-                                  tablet: "0",
-                                  mobile: "6px 0",
-                                  min: "6px 0",
-                                },
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DesktopDatePicker
-                                  label="Fecha fin"
-                                  inputFormat="MM/DD/YYYY"
-                                  value={value}
-                                  onChange={handleChange}
-                                  renderInput={(params) => (
-                                    <TextField size="small" {...params} />
-                                  )}
-                                />
-                              </LocalizationProvider>
-                            </Box>
-                          </Box>
-                          <ButtonDownloadGraphic
-                            title={chartTitle + " (" + chartType + ")"}
-                          />
-                          <Box
-                            sx={{
-                              height: "fit-content",
-                            }}
-                            className={styles.graphic}
-                          >
-                            <Graphic
-                              type={chartType}
-                              title={chartTitle}
-                              observation={observation}
-                              data={chartInformation}
-                            />
-                          </Box>
-                        </>
-                      ) : (
-                        <>
-                          {loadingdItem ? (
-                            <>
-                              <LoadingSelectedItem />
-                            </>
-                          ) : (
-                            <>
-                              {errordItem ? (
-                                <>
-                                  <ErrorSelectedItem />
-                                </>
-                              ) : (
-                                <>
-                                  <NotSelectedItem
-                                    message={"Item no seleccionado"}
-                                  />
-                                </>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  )}
-                </Box>
+            <Box className={styles.container}>
+              <Box className={styles.title_container}>
+                <Typography>{data.encuesta_observacion}</Typography>
               </Box>
-            </div>
+              <Box className={styles.sidebar}>
+                <Sidebar items={sidebarItems} />
+              </Box>
+              <Box className={styles.dashboard}>
+                {/* Se muestra del dashboard de imagenes */}
+                {dashboard ? (
+                  <GraphicsList id={surveyId} />
+                ) : (
+                  <>
+                    {chartInformation ? (
+                      <>
+                        {showStaticGraphic ? (
+                          <>
+                            {/* Se muestran los gráficos estáticos sin filtro */}
+                            <Box className={styles.filter}>
+                              <div className={styles.filter_section}>
+                                <FilterTypeChart
+                                  chartType={chartType}
+                                  handleTypeChart={handleTypeChart}
+                                />
+                              </div>
+                              <div className={styles.filter_section}>
+                                <ButtonDownloadGraphic
+                                  title={chartTitle + " (" + chartType + ")"}
+                                />
+                              </div>
+                            </Box>
+                            <Box className={styles.graphic}>
+                              <Graphic
+                                type={chartType}
+                                title={chartTitle}
+                                observation={observation}
+                                data={chartInformation}
+                              />
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            {/* Se muestran los gráficos dinámicos con el filtro */}
+                            <Box className={styles.filter}>
+                              <div className={styles.filter_section}>
+                                <FilterTypeChart
+                                  chartType={chartType}
+                                  handleTypeChart={handleTypeChart}
+                                />
+                                <FilterIndicators
+                                  surveyId={surveyId}
+                                  handleFilter={handleFilter}
+                                />
+                                <FilterDate
+                                  handleDateInit={() => {}}
+                                  handleDateEnd={() => {}}
+                                />
+                              </div>
+                              <div className={styles.filter_section}>
+                                <ButtonDownloadGraphic
+                                  title={chartTitle + " (" + chartType + ")"}
+                                />
+                              </div>
+                            </Box>
+                            {loadingFilter ? (
+                              <LoadingInformation />
+                            ) : (
+                              <>
+                                <Box className={styles.graphic}>
+                                  <Graphic
+                                    type={chartType}
+                                    title={chartTitle}
+                                    observation={observation}
+                                    data={chartInformation}
+                                  />
+                                </Box>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {loadingdItem ? (
+                          <LoadingSelectedItem />
+                        ) : (
+                          <>
+                            {errordItem ? (
+                              <ErrorSelectedItem />
+                            ) : (
+                              <NotSelectedItem
+                                message={"Item no seleccionado"}
+                              />
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </Box>
+            </Box>
           </ThemeProvider>
         </>
       );
-    } else {
-      return <LoadingInformation />;
     }
   }
 }

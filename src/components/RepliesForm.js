@@ -7,13 +7,12 @@ import {
   Stack,
   Snackbar,
   AlertTitle,
+  LinearProgress,
+  Typography,
+  Box,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-
 import PropTypes from "prop-types";
-import LinearProgress from "@mui/material/LinearProgress";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import { useForm, Controller, set } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,8 +29,6 @@ import { SurveyReply } from "@/models/surveyReply";
 import { SurveyTemplates } from "@/lib/SurveyTemplate";
 import { SurveyReplys } from "@/lib/surveyReply";
 import ErrorInformation from "@/components/ErrorInformation";
-import { ThemeProvider } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
 import LoadingInformation from "@/components/LoadingInformation";
 
 const schema = yup.object().shape({
@@ -65,25 +62,12 @@ LinearProgressWithLabel.propTypes = {
 };
 
 const RepliesForm = () => {
-  const [progress, setProgress] = React.useState(0);
-  const [showProgress, setShowProgress] = React.useState(false);
-  const [colorProgress, setColorProgress] = React.useState("primary");
-  const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
-    shouldRetryOnError: false,
-  });
+  const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
+  const [colorProgress, setColorProgress] = useState("primary");
 
   const [typeSurvey, setTypeSurvey] = useState("");
   const [surveyList, setSurveyList] = useState([]);
-
-  const handleChangeTypeSurvey = (event) => {
-    const newTypeSurvey = event.target.value;
-    setTypeSurvey(newTypeSurvey);
-    const newSurvey = data.data.find(
-      (nextTypeSurvey) => nextTypeSurvey.tipoEncuesta === newTypeSurvey
-    );
-    setSurveyList(newSurvey.encuestas);
-    setSurveyTemplateId("");
-  };
 
   const [surveyTemplateId, setSurveyTemplateId] = useState("");
   const [surveyReplyArray, setSurveyReplyArray] = useState([]);
@@ -96,6 +80,21 @@ const RepliesForm = () => {
   const [messageError, setMessageError] = useState("");
   const [errorTemplate, setErrorTemplate] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
+    shouldRetryOnError: false,
+  });
+
+  const handleChangeTypeSurvey = (event) => {
+    const newTypeSurvey = event.target.value;
+    setTypeSurvey(newTypeSurvey);
+    const newSurvey = data.data.find(
+      (nextTypeSurvey) => nextTypeSurvey.tipoEncuesta === newTypeSurvey
+    );
+    setSurveyList(newSurvey.encuestas);
+    setSurveyTemplateId("");
+  };
+
   const {
     control,
     handleSubmit,
@@ -213,16 +212,18 @@ const RepliesForm = () => {
             const surveyData = await SurveyReplys.create(newSurveyReply);
             let nextProgress = (index * 100) / surveyReplyArray.length;
 
-            console.log(nextProgress);
             //setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
             setProgress(nextProgress);
             setErrorTemplate("");
           }
           setProgress(100);
-          console.log("Respuestas guardadas con exito");
           setOpen(true);
           setLoading(false);
           setShowProgress(false);
+          setTypeSurvey("");
+          setSurveyTemplateId("");
+          reset();
+          deleteFile();
         } catch (error) {
           setLoading(false);
           if (axios.isAxiosError(error)) {
@@ -244,7 +245,7 @@ const RepliesForm = () => {
   const axiosErrorHandler = (error) => {
     const nameRequest = `"${error.config.baseURL}${error.config.url}" `;
     let message = "";
-    setColorProgress("secondary");
+    setColorProgress("danger");
     if (error.code == "ERR_NETWORK") {
       message = "No se ha podido establecer conexión con el servidor.";
     } else if (error.code == "ERR_BAD_REQUEST") {
@@ -478,8 +479,8 @@ const RepliesForm = () => {
           <h4>Respuestas en bloque</h4>
           <p>
             En esta sección se suben las respuestas en bloque, para ello debe
-            seleccionar una encuesta y subir un archivo en formato .xlsx o .csv con las
-            respuestas de la encuesta.
+            seleccionar una encuesta y subir un archivo en formato .xlsx o .csv
+            con las respuestas de la encuesta.
           </p>
           <form id="form-encuesta-respuesta" onSubmit={handleSubmit(onSubmit)}>
             <Controller

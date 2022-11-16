@@ -4,7 +4,7 @@
 .btn_download button {
   text-transform: none;
   padding: 6px 32px;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px solid #c4c4c4;
   background-color: #fafafa;
   color: #2a2a2a;

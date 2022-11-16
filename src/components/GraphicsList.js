@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import { StaticGraphics } from "@/lib/staticGraphic";
+import LoadingInformation from "@/components/LoadingInformation";
 
 const DashboardGraphics = (props) => {
   const [newData, setNewData] = useState();
@@ -42,7 +42,7 @@ const DashboardGraphics = (props) => {
           )}
         </div>
       ) : (
-        <div>Cargando...</div>
+        <LoadingInformation />
       )}
     </>
   );

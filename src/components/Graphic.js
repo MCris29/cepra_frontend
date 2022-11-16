@@ -9,24 +9,26 @@ import {
   LineElement,
   Legend,
   Title,
+  SubTitle,
   Tooltip,
+  Filler,
   CategoryScale,
   LinearScale,
 } from "chart.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import ThemeCepra from "@/constants/theme";
-import { Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
+import { Chart, Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 
 const graphicBackgroundColor = [
   "rgba(55, 160, 235, 0.5)",
   "rgba(255, 100, 135, 0.5)",
-  "rgba(255, 225, 100, 0.5)",
+  "rgba(234, 134, 27, 0.5)",
   "rgba(75, 255, 25, 0.5)",
   "rgba(155, 100, 255, 0.5)",
-  "rgba(200, 95, 25, 0.5)",
+  "rgba(255, 225, 100, 0.5)",
 
-  "rgba(40, 20, 190, 0.5)",
+  "rgba(31, 62, 92, 0.5)",
   "rgba(200, 2, 25, 0.5)",
   "rgba(255, 222, 10, 0.5)",
   "rgba(30, 155, 65, 0.5)",
@@ -36,12 +38,12 @@ const graphicBackgroundColor = [
 const graphicBorderColor = [
   "rgba(55, 160, 235, 1)",
   "rgba(255, 100, 135, 1)",
-  "rgba(255, 225, 100, 1)",
+  "rgba(234, 134, 27, 1)",
   "rgba(75, 255, 25, 1)",
   "rgba(155, 100, 255, 1)",
-  "rgba(200, 95, 25, 1)",
+  "rgba(255, 225, 100, 1)",
 
-  "rgba(40, 20, 190, 1)",
+  "rgba(31, 62, 92, 1)",
   "rgba(200, 2, 25, 1)",
   "rgba(255, 222, 10, 1)",
   "rgba(30, 155, 65, 1)",
@@ -58,7 +60,9 @@ ChartJS.register(
   LineElement,
   Legend,
   Title,
+  SubTitle,
   Tooltip,
+  Filler,
   CategoryScale,
   LinearScale
 );
@@ -75,16 +79,17 @@ const Graphic = (props) => {
       labels: chartInformation.labels,
       datasets: [
         {
+          fill: graphic === "area" ? true : false,
           label: chartInformation.title,
           data: chartInformation.data,
           backgroundColor:
             graphic === "pie" || graphic === "doughnut"
               ? graphicBackgroundColor
-              : "rgba(55, 165, 235, 0.5)",
+              : "rgba(234, 134, 27, 0.7)",
           borderColor:
             graphic === "pie" || graphic === "doughnut"
               ? graphicBorderColor
-              : "rgba(55, 165, 235, 1)",
+              : "rgba(234, 134, 27, 1)",
         },
       ],
     };
@@ -95,6 +100,10 @@ const Graphic = (props) => {
         y: {
           beginAtZero: true,
           title: {
+            display: false,
+            text: "",
+          },
+          subTitle: {
             display: false,
             text: "",
           },
@@ -109,6 +118,11 @@ const Graphic = (props) => {
         title: {
           display: true,
           text: props.title,
+        },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
         },
         legend: {
           display: false,
@@ -129,6 +143,11 @@ const Graphic = (props) => {
         title: {
           display: true,
           text: props.title,
+        },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
         },
         legend: {
           display: true,
@@ -154,6 +173,11 @@ const Graphic = (props) => {
           display: true,
           text: props.title,
         },
+        subtitle: {
+          display: true,
+          position: "bottom",
+          text: props.observation,
+        },
         legend: {
           display: false,
         },
@@ -172,6 +196,8 @@ const Graphic = (props) => {
       case "bar":
         return <Bar id="graphic_canvas" options={options} data={data} />;
       case "line":
+        return <Line id="graphic_canvas" options={options} data={data} />;
+      case "area":
         return <Line id="graphic_canvas" options={options} data={data} />;
       case "pie":
         return <Pie id="graphic_canvas" options={optionsPie} data={data} />;
@@ -195,7 +221,7 @@ const Graphic = (props) => {
                 props.type == "doughnut" ||
                 props.type == "radar"
                   ? "42%"
-                  : "64%",
+                  : "66%",
               laptop:
                 props.type == "pie" ||
                 props.type == "doughnut" ||
@@ -209,15 +235,6 @@ const Graphic = (props) => {
           }}
         >
           {handleGraphic(props.type)}
-          <div>
-            <pre
-              style={{
-                fontFamily: "'Roboto', 'Helvetica', 'Arial', san-serif ",
-              }}
-            >
-              {props.observation}
-            </pre>
-          </div>
         </Box>
       </ThemeProvider>
     </>

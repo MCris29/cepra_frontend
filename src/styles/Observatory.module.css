@@ -1,6 +1,6 @@
 .item {
   border: 1px solid #c4c4c4;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 6px;
   margin: 6px 0;
   cursor: pointer;

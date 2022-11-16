@@ -13,7 +13,9 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+
+import Logo from "@/components/Logo";
 
 const menuItems = [
   {
@@ -55,10 +57,12 @@ const Menu = () => {
       <div
         className={styles.tab}
         style={{
-          backgroundColor:
-            isSelected || tabHover == index ? "#D9D9D9" : "transparent",
-          color: isSelected || tabHover == index ? "#0070f3 " : "#2A2A2A",
-          fontWeight: isSelected ? "bold" : "normal",
+          backgroundColor: isSelected
+            ? "#1f3e5c"
+            : tabHover == index
+            ? "#a3a5a8"
+            : "transparent",
+          color: isSelected || tabHover == index ? "#f7f7f7 " : "#28333e",
         }}
         onMouseEnter={() => setTabHover(index)}
         onMouseLeave={() => setTabHover(-1)}
@@ -78,7 +82,7 @@ const Menu = () => {
       className={styles.tab}
       style={{
         backgroundColor: "transparent",
-        color: "#2A2A2A",
+        color: "#28333e",
       }}
     >
       <span>
@@ -95,8 +99,7 @@ const Menu = () => {
       <div className={styles.container}>
         <div className={styles.tabs}>
           <div className={styles.tabLogo}>
-            <BarChartIcon />
-            <Link href={Routes.HOME}>CEPRA</Link>
+            <Logo />
           </div>
           <div className={styles.tabTitle}>Datos</div>
           {menuItems.map((item, index) => (

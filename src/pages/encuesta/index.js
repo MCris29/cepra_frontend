@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import styles from "@/styles/LandingSurvey.module.css";
+import Link from "next/link";
 import {
   Box,
   IconButton,
   MenuItem,
-  TextField,
+  FormControl,
+  InputLabel,
+  Select,
   Tooltip,
   Typography,
 } from "@mui/material";
+
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
-import Link from "next/link";
+import BarChartIcon from "@mui/icons-material/BarChart";
+
 import RoutesCepra from "@/constants/routes";
 import ThemeCepra from "@/constants/theme";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 
@@ -36,7 +41,7 @@ export default function LandingSurvey() {
   const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
     shouldRetryOnError: false,
   });
-  const [typeSurvey, setTypeSurvey] = useState("");
+  const [typeSurvey, setTypeSurvey] = useState("Selecciona una encuesta");
   const typeSurveyUrl = new Map([
     ["Energía", "energia"],
     ["Innovación", "innovacion"],
@@ -120,25 +125,28 @@ export default function LandingSurvey() {
                     },
                   }}
                 >
-                  <TextField
-                    id="typeSurvey"
-                    label="Tipo de encuesta"
-                    helperText="Selecciona un tipo de encuesta"
-                    variant="outlined"
-                    type="date"
-                    margin="dense"
-                    size="small"
-                    select
-                    fullWidth
-                    value={typeSurvey}
-                    onChange={handleChangeTypeSurvey}
-                  >
-                    {typeSurveyList.map((_typeSurvey, index) => (
-                      <MenuItem key={index} value={_typeSurvey}>
-                        {_typeSurvey}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <FormControl size="small" style={{ width: "100%" }}>
+                    <InputLabel id="type-survey-select-label">
+                      Tipo de encuesta
+                    </InputLabel>
+                    <Select
+                      id="type-survey-select-label"
+                      labelId="type-survey-select-label"
+                      label="Tipo de encuesta"
+                      margin="dense"
+                      size="small"
+                      fullWidth
+                      style={{ borderRadius: 0 }}
+                      value={typeSurvey}
+                      onChange={handleChangeTypeSurvey}
+                    >
+                      {typeSurveyList.map((_typeSurvey, index) => (
+                        <MenuItem key={index} value={_typeSurvey}>
+                          {_typeSurvey}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Box>
                 <Box
                   sx={{
@@ -158,7 +166,7 @@ export default function LandingSurvey() {
                       pageSize={10}
                       rowsPerPageOptions={[10]}
                       autoHeight={true}
-                      sx={{ marginTop: "20px" }}
+                      sx={{ marginTop: "20px", borderRadius: 0 }}
                     />
                   ) : (
                     <LoadingInformation />

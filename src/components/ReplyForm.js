@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/Organization.module.css";
 import { useForm, Controller } from "react-hook-form";
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  TextField,
+  Stack,
+  Snackbar,
+} from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
@@ -83,75 +91,6 @@ const formOrganization = {
   },
 };
 
-// const formOrganization = {
-//     itorg_ruc: {
-//         label: "RUC",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//             pattern: {value: /^[0-9]+$/, message: "RUC no válido!"}
-//         },
-//     },
-//     itorg_nombre: {
-//         label: "Nombre",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itorg_sector: {
-//         label: "Sector",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itorg_subsector: {
-//         label: "Subsector",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itorg_num_empleados: {
-//         label: "Número de empleados",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//             pattern: {value: /^[0-9]+$/, message: "Número no válido!"}
-//         },
-//     },
-//     itorg_ubicacion: {
-//         label: "Ubicación",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itorg_provincia: {
-//         label: "Provincia",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itorg_ciudad: {
-//         label: "Ciudad",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     }
-// };
-
 const formContact = {
   itcon_nombre: {
     label: "Nombre",
@@ -191,42 +130,6 @@ const formContact = {
   },
 };
 
-// const formContact = {
-//     itcon_nombre: {
-//         label: "Nombre",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itcon_email: {
-//         label: "Correo electrónico",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//             pattern: {value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i , message: "Correo electrónico no válido!"}
-//         },
-//     },
-//     itcon_nivel_estudios: {
-//         label: "Nivel de estudios",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-//     itcon_nivel_decision: {
-//         label: "Nivel de decisión",
-//         type: "text",
-//         defaultValue: "",
-//         rules: {
-//             required: "Campo obligatorio!",
-//         },
-//     },
-// };
-
 const ReplyForm = () => {
   const [showSurveyForm, setShowSurveyForm] = useState(true);
   const [showOrganizationForm, setShowOrganizationForm] = useState(false);
@@ -238,6 +141,28 @@ const ReplyForm = () => {
   const [surveyTemplate, setSurveyTemplate] = useState();
   const [organizationForm, setOrganizationForm] = useState();
   const [formInputsReply, setFormInputsReply] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [errorReply, setErrorReply] = useState("");
+
+  //Cierra el mesnaje de exito al guardar
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  //Mensaje de alerta
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
 
   const handleChangeSurveyType = (type) => {
     setSurveyType(type);
@@ -283,6 +208,7 @@ const ReplyForm = () => {
           questions.push({
             id: question.codigo_pregunta,
             label: question.nombre_pregunta,
+            observation: question.observacion_pregunta,
             type: "text",
             defaultValue: "",
             rules: {
@@ -300,6 +226,7 @@ const ReplyForm = () => {
           questions.push({
             id: question.codigo_pregunta,
             label: question.nombre_pregunta,
+            observation: question.observacion_pregunta,
             type: "options",
             defaultValue: "",
             rules: {
@@ -318,6 +245,7 @@ const ReplyForm = () => {
   };
 
   const onSubmitSurvey = async (data) => {
+    setLoading(true);
     data = {
       ...data,
       typeSurveyId: surveyList.find((item) => item.itenc_codigo === survey)
@@ -327,13 +255,16 @@ const ReplyForm = () => {
     setSurveyTemplate(await SurveyTemplates.getWithCategoriesById(survey));
     setShowSurveyForm(false);
     setShowOrganizationForm(true);
+    setLoading(false);
   };
 
   const onSubmitOrganization = (data) => {
+    setLoading(true);
     setOrganizationForm(data);
     loadFormDataSurvey();
     setShowOrganizationForm(false);
     setShowReplyForm(true);
+    setLoading(false);
   };
 
   const onReturnOrganization = () => {
@@ -342,6 +273,7 @@ const ReplyForm = () => {
   };
 
   const onSubmitReply = async (data) => {
+    setLoading(true);
     const organization = new Organization(
       organizationForm.itorg_ruc.toString().trim(), //itorg_ruc
       organizationForm.itorg_nombre.toString().trim(), //itorg_nombre
@@ -402,8 +334,15 @@ const ReplyForm = () => {
       contacto: contact,
       respuestas: newQuestionReplyArray,
     };
-    const surveyData = await SurveyReplys.create(newSurveyReply);
-    console.log(surveyData);
+    try {
+      const surveyData = await SurveyReplys.create(newSurveyReply);
+      setOpen(true);
+    } catch (error) {
+      console.log(error);
+      setErrorReply(errorReply);
+      setOpenError(true);
+    }
+    setLoading(false);
   };
 
   const onReturnReply = () => {
@@ -545,11 +484,12 @@ const ReplyForm = () => {
                 )}
               </section>
               <br />
-              <hr />
+              {/* <hr /> */}
               <div className={styles.button_container}>
                 <Button
                   type="submit"
                   variant="outlined"
+                  disabled={loading}
                   className={styles.button}
                 >
                   Llenar encuesta
@@ -623,7 +563,7 @@ const ReplyForm = () => {
                 </section>
               ))}
               <br />
-              <hr />
+              {/* <hr /> */}
               <Box
                 component="span"
                 m={1}
@@ -642,6 +582,7 @@ const ReplyForm = () => {
                 <Button
                   type="submit"
                   variant="outlined"
+                  disabled={loading}
                   className={styles.button}
                 >
                   <div>Siguiente</div>
@@ -652,124 +593,180 @@ const ReplyForm = () => {
             <></>
           )}
           {showReplyForm ? (
-            <form key="formReply" onSubmit={handleSubmitReply(onSubmitReply)}>
-              <h2 key="titleReply">{surveyTemplate.encuesta_observacion}</h2>
-              {formInputsReply.map((category, indexCategory) => (
-                <Box key={indexCategory}>
-                  <h3>{category.name}</h3>
-                  {category.questions.map((question, indexQuestion) => (
-                    <Box key={indexQuestion}>
-                      <section style={{ marginBottom: "10px" }}>
-                        <label>{question.label}</label>
-                        {question.type === "text" ? (
-                          <>
-                            <Controller
-                              name={question.id.toString()}
-                              control={controlReply}
-                              rules={question.rules}
-                              defaultValue={question.defaultValue}
-                              render={({ field }) => (
-                                <TextField
-                                  {...field}
-                                  hiddenLabel
-                                  variant="outlined"
-                                  margin="dense"
-                                  size="small"
-                                  fullWidth
-                                  value={field.value}
-                                  onChange={(event) =>
-                                    field.onChange(event.target.value)
-                                  }
-                                  error={Boolean(
-                                    errorsReply[question.id.toString()]
-                                  )}
-                                />
-                              )}
-                            />
-                            {errorsReply[question.id.toString()] && (
+            <>
+              <form key="formReply" onSubmit={handleSubmitReply(onSubmitReply)}>
+                <h2 key="titleReply">{surveyTemplate.encuesta_observacion}</h2>
+                {formInputsReply.map((category, indexCategory) => (
+                  <Box key={indexCategory}>
+                    <h3>{category.name}</h3>
+                    {category.questions.map((question, indexQuestion) => (
+                      <Box key={indexQuestion}>
+                        <section style={{ marginBottom: "10px" }}>
+                          <label>{question.label}</label>
+                          <div>
+                            {question.observation ? (
                               <span
-                                key={`s-${question.id}`}
-                                style={{ color: "red" }}
+                                style={{
+                                  fontSize: "small",
+                                  lineHeight: "initial",
+                                }}
                               >
-                                {errorsReply[question.id.toString()].message}
-                              </span>
-                            )}
-                          </>
-                        ) : question.type === "options" ? (
-                          <>
-                            <Controller
-                              name={question.id.toString()}
-                              control={controlReply}
-                              rules={question.rules}
-                              defaultValue={question.defaultValue}
-                              render={({ field }) => (
-                                <TextField
-                                  {...field}
-                                  hiddenLabel
-                                  variant="outlined"
-                                  margin="dense"
-                                  size="small"
-                                  fullWidth
-                                  select
-                                  value={field.value}
-                                  onChange={(event) =>
-                                    field.onChange(event.target.value)
-                                  }
-                                  error={Boolean(
-                                    errorsReply[question.id.toString()]
-                                  )}
+                                <strong>Observación: </strong>
+                                <pre
+                                  style={{
+                                    fontFamily: "'Montserrat', sans-serif ",
+                                    margin: 0,
+                                  }}
                                 >
-                                  {question.options.map((option, index) => (
-                                    <MenuItem key={index} value={option.value}>
-                                      {option.label}
-                                    </MenuItem>
-                                  ))}
-                                </TextField>
-                              )}
-                            />
-                            {errorsReply[question.id.toString()] && (
-                              <span
-                                key={`s-${question.id}`}
-                                style={{ color: "red" }}
-                              >
-                                {errorsReply[question.id.toString()].message}
+                                  {question.observation}
+                                </pre>
                               </span>
+                            ) : (
+                              <span></span>
                             )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </section>
-                    </Box>
-                  ))}
-                </Box>
-              ))}
-              <br />
-              <hr />
-              <Box
-                component="span"
-                m={1}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Button
-                  variant="outlined"
-                  className={styles.button}
-                  onClick={onReturnReply}
+                          </div>
+                          {question.type === "text" ? (
+                            <>
+                              <Controller
+                                name={question.id.toString()}
+                                control={controlReply}
+                                rules={question.rules}
+                                defaultValue={question.defaultValue}
+                                render={({ field }) => (
+                                  <TextField
+                                    {...field}
+                                    hiddenLabel
+                                    variant="outlined"
+                                    margin="dense"
+                                    size="small"
+                                    fullWidth
+                                    value={field.value}
+                                    onChange={(event) =>
+                                      field.onChange(event.target.value)
+                                    }
+                                    error={Boolean(
+                                      errorsReply[question.id.toString()]
+                                    )}
+                                  />
+                                )}
+                              />
+                              {errorsReply[question.id.toString()] && (
+                                <span
+                                  key={`s-${question.id}`}
+                                  style={{ color: "red" }}
+                                >
+                                  {errorsReply[question.id.toString()].message}
+                                </span>
+                              )}
+                            </>
+                          ) : question.type === "options" ? (
+                            <>
+                              <Controller
+                                name={question.id.toString()}
+                                control={controlReply}
+                                rules={question.rules}
+                                defaultValue={question.defaultValue}
+                                render={({ field }) => (
+                                  <TextField
+                                    {...field}
+                                    hiddenLabel
+                                    variant="outlined"
+                                    margin="dense"
+                                    size="small"
+                                    fullWidth
+                                    select
+                                    value={field.value}
+                                    onChange={(event) =>
+                                      field.onChange(event.target.value)
+                                    }
+                                    error={Boolean(
+                                      errorsReply[question.id.toString()]
+                                    )}
+                                  >
+                                    {question.options.map((option, index) => (
+                                      <MenuItem
+                                        key={index}
+                                        value={option.value}
+                                      >
+                                        {option.label}
+                                      </MenuItem>
+                                    ))}
+                                  </TextField>
+                                )}
+                              />
+                              {errorsReply[question.id.toString()] && (
+                                <span
+                                  key={`s-${question.id}`}
+                                  style={{ color: "red" }}
+                                >
+                                  {errorsReply[question.id.toString()].message}
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </section>
+                      </Box>
+                    ))}
+                  </Box>
+                ))}
+                <br />
+                {/* <hr /> */}
+                <Box
+                  component="span"
+                  m={1}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  <div>Regresar</div>
-                </Button>
+                  <Button
+                    variant="outlined"
+                    className={styles.button}
+                    onClick={onReturnReply}
+                  >
+                    <div>Regresar</div>
+                  </Button>
 
-                <Button
-                  type="submit"
-                  variant="outlined"
-                  className={styles.button}
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    disabled={loading}
+                    className={styles.button}
+                  >
+                    <div>Guardar</div>
+                  </Button>
+                </Box>
+              </form>
+              <Stack spacing={2} sx={{ width: "100%" }}>
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
                 >
-                  <div>Guardar</div>
-                </Button>
-              </Box>
-            </form>
+                  <Alert
+                    onClose={handleClose}
+                    severity={"success"}
+                    sx={{ width: "100%" }}
+                  >
+                    Respuesta guardada con exito
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={openError}
+                  autoHideDuration={6000}
+                  onClose={handleCloseError}
+                >
+                  <Alert
+                    onClose={handleCloseError}
+                    severity={"error"}
+                    sx={{ width: "100%" }}
+                  >
+                    {errorReply}
+                  </Alert>
+                </Snackbar>
+              </Stack>
+            </>
           ) : (
             <></>
           )}

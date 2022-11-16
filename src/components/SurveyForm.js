@@ -84,13 +84,13 @@ const SurveyForm = () => {
 
     try {
       const surveyTemplateData = await SurveyTemplates.create(SurveyTemplate);
-      console.log("Success template", surveyTemplateData);
 
       reset();
       deleteFile();
       setLoading(false);
       setOpen(true);
       handleNameFile("Selecciona un archivo*");
+      setTypeSurvey("");
     } catch (e) {
       console.log(e);
 
@@ -144,14 +144,14 @@ const SurveyForm = () => {
           let optionArray = [];
           let groupOptions = "";
 
-          if (data[index][7]) {
+          if (data[index][8]) {
             try {
-              optionArray = data[index][8].split(";");
+              optionArray = data[index][9].split(";");
               optionArray.forEach((option, index) => {
                 optionArray[index] = option.toString().trim();
               });
               groupOptions = new GroupOptions(
-                data[index][7].toString().trim(), // nombre_grupo_opcion
+                data[index][8].toString().trim(), // nombre_grupo_opcion
                 optionArray // array opciones
               );
             } catch (error) {
@@ -169,9 +169,10 @@ const SurveyForm = () => {
               new Question(
                 data[index][2] ? data[index][2].toString().trim() : "", // codigo_pregunta
                 data[index][3] ? data[index][3].toString().trim() : "", // codigo_pregunta_padre
-                data[index][4] ? data[index][4].toString().trim() : "", // nombre_pregunta
-                data[index][5] ? data[index][5].toString().trim() : "", // observacion_pregunta
-                data[index][6] ? data[index][6].toString().trim() : "", // tipo_dato
+                data[index][4] ? data[index][4].toString().trim() : "", // titulo_pregunta
+                data[index][5] ? data[index][5].toString().trim() : "", // nombre_pregunta
+                data[index][6] ? data[index][6].toString().trim() : "", // observacion_pregunta
+                data[index][7] ? data[index][7].toString().trim() : "", // tipo_dato
                 groupOptions // grupo_opciones
               )
             );
@@ -180,9 +181,10 @@ const SurveyForm = () => {
               new Question(
                 data[index][2] ? data[index][2].toString().trim() : "", // codigo_pregunta
                 data[index][3] ? data[index][3].toString().trim() : "", // codigo_pregunta_padre
-                data[index][4] ? data[index][4].toString().trim() : "", // nombre_pregunta
-                data[index][5] ? data[index][5].toString().trim() : "", // observacion_pregunta
-                data[index][6] ? data[index][6].toString().trim() : "", // tipo_dato
+                data[index][4] ? data[index][4].toString().trim() : "", // titulo_pregunta
+                data[index][5] ? data[index][5].toString().trim() : "", // nombre_pregunta
+                data[index][6] ? data[index][6].toString().trim() : "", // observacion_pregunta
+                data[index][7] ? data[index][7].toString().trim() : "", // tipo_dato
                 groupOptions // grupo_opciones
               )
             );
