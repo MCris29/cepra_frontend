@@ -136,7 +136,15 @@ export default function LandingGraphic() {
           response.data.data.title = item.label;
           setChartInformation(response.data.data);
           setChartTitle(item.name);
-          setChartType("bar");
+          if (
+            item.data_type === "continua" ||
+            item.data_type === "variable continua"
+          ) {
+            setChartType("boxplot");
+          } else {
+            setChartType("bar");
+          }
+
           setLoadingItem(false);
           setObservation(item.observation);
         }
@@ -388,6 +396,7 @@ export default function LandingGraphic() {
               name: sub_question.nombre_pregunta,
               label: sub_question.titulo_pregunta,
               observation: sub_question.observacion_pregunta,
+              data_type: sub_question.tipo_dato,
               id: sub_question.encuesta_pregunta_codigo,
               onClick,
             });
@@ -397,6 +406,7 @@ export default function LandingGraphic() {
             name: nextQuestion.nombre_pregunta,
             label: nextQuestion.titulo_pregunta,
             observation: nextQuestion.observacion_pregunta,
+            data_type: nextQuestion.tipo_dato,
             id: nextQuestion.encuesta_pregunta_codigo,
             items: sub_questions,
           };
@@ -475,27 +485,32 @@ export default function LandingGraphic() {
                         ) : (
                           <>
                             {/* Se muestran los gráficos dinámicos con el filtro */}
-                            <Box className={styles.filter}>
-                              <div className={styles.filter_section}>
-                                <FilterTypeChart
-                                  chartType={chartType}
-                                  handleTypeChart={handleTypeChart}
-                                />
-                                <FilterIndicators
-                                  surveyId={surveyId}
-                                  handleFilter={handleFilter}
-                                />
-                                <FilterDate
-                                  handleDateInit={() => {}}
-                                  handleDateEnd={() => {}}
-                                />
-                              </div>
-                              <div className={styles.filter_section}>
-                                <ButtonDownloadGraphic
-                                  title={chartTitle + " (" + chartType + ")"}
-                                />
-                              </div>
-                            </Box>
+                            {chartType === "boxplot" ? (
+                              <span></span>
+                            ) : (
+                              <Box className={styles.filter}>
+                                <div className={styles.filter_section}>
+                                  <FilterTypeChart
+                                    chartType={chartType}
+                                    handleTypeChart={handleTypeChart}
+                                  />
+                                  <FilterIndicators
+                                    surveyId={surveyId}
+                                    handleFilter={handleFilter}
+                                  />
+                                  <FilterDate
+                                    handleDateInit={() => {}}
+                                    handleDateEnd={() => {}}
+                                  />
+                                </div>
+                                <div className={styles.filter_section}>
+                                  <ButtonDownloadGraphic
+                                    title={chartTitle + " (" + chartType + ")"}
+                                  />
+                                </div>
+                              </Box>
+                            )}
+
                             {loadingFilter ? (
                               <LoadingInformation />
                             ) : (
@@ -523,7 +538,7 @@ export default function LandingGraphic() {
                               <ErrorSelectedItem />
                             ) : (
                               <NotSelectedItem
-                                message={"Item no seleccionado"}
+                                message={"Seleccione un indicador"}
                               />
                             )}
                           </>

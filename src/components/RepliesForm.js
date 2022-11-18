@@ -245,7 +245,7 @@ const RepliesForm = () => {
   const axiosErrorHandler = (error) => {
     const nameRequest = `"${error.config.baseURL}${error.config.url}" `;
     let message = "";
-    setColorProgress("danger");
+    setColorProgress("secondary");
     if (error.code == "ERR_NETWORK") {
       message = "No se ha podido establecer conexión con el servidor.";
     } else if (error.code == "ERR_BAD_REQUEST") {
