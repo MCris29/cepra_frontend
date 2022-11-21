@@ -26,7 +26,7 @@ import * as XLSX from "xlsx";
 import { Organization } from "@/models/organization";
 import { Contact } from "@/models/contact";
 import { SurveyReply } from "@/models/surveyReply";
-import { SurveyTemplates } from "@/lib/SurveyTemplate";
+import { SurveyTemplates } from "@/lib/surveyTemplate";
 import { SurveyReplys } from "@/lib/surveyReply";
 import ErrorInformation from "@/components/ErrorInformation";
 import LoadingInformation from "@/components/LoadingInformation";
