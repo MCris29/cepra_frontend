@@ -14,7 +14,7 @@ import MuiAlert from "@mui/material/Alert";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 
-import { SurveyTemplates } from "@/lib/SurveyTemplate";
+import { SurveyTemplates } from "@/lib/surveyTemplate";
 import { Organization } from "@/models/organization";
 import { Contact } from "@/models/contact";
 import { SurveyReplys } from "@/lib/surveyReply";
