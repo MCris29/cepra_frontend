@@ -12,6 +12,7 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { StaticGraphics } from "@/lib/staticGraphic";
+import ErrorInformation from "@/components/ErrorInformation";
 
 const schema = yup.object().shape({
   itegr_titulo: yup
