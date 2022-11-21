@@ -77,11 +77,15 @@ const FilterIndicators = (props) => {
           label="Dato"
           onChange={handleFilterData}
         >
-          {arrayData.map((item, index) => (
-            <MenuItem key={index} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
+          {arrayData.map((item, index) => {
+            if (item.label) {
+              return (
+                <MenuItem key={index} value={item.value}>
+                  {item.label}
+                </MenuItem>
+              );
+            }
+          })}
         </Select>
       </FormControl>
     );

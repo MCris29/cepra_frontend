@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -19,6 +20,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import ThemeCepra from "@/constants/theme";
 import { Chart, Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
+import LoadingInformation from "@/components/LoadingInformation";
+
+//Carga dinámica de Boxplot
+const Boxplot = dynamic(() => import("@/components/Boxplot"), {
+  ssr: false,
+  loading: () => <LoadingInformation />,
+});
 
 const graphicBackgroundColor = [
   "rgba(55, 160, 235, 0.5)",
@@ -207,6 +215,8 @@ const Graphic = (props) => {
         );
       case "radar":
         return <Radar id="graphic_canvas" options={optionsRadar} data={data} />;
+      case "boxplot":
+        return <Boxplot data={data} title={props.title} />;
     }
   };
 
