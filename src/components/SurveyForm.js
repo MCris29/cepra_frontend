@@ -11,7 +11,7 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { Surveys } from "@/lib/survey";
-import { SurveyTemplates } from "@/lib/SurveyTemplate";
+import { SurveyTemplates } from "@/lib/surveyTemplate";
 import { Question } from "@/models/question";
 import { GroupOptions } from "@/models/groupOption";
 import { Category } from "@/models/category";
