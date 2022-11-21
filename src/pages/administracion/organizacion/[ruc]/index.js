@@ -6,6 +6,7 @@ import useSWR from "swr";
 
 import LoadingInformation from "@/components/LoadingInformation";
 import OrganizationForm from "@/components/OrganizationForm";
+import ErrorInformation from "@/components/ErrorInformation";
 
 export default function OrganizationId() {
   const router = useRouter();
