@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 export default function Management() {
   return (
@@ -11,7 +10,7 @@ export default function Management() {
         alignItems: "center",
       }}
     >
-      <Image
+      <img
         src="/Logo propuestavf-02.png"
         height={150}
         width={560}
