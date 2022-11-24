@@ -11,7 +11,7 @@ export default function Management() {
       }}
     >
       <img
-        src="/Logo propuestavf-02.png"
+        src={`${process.env.NEXT_PUBLIC_ROUTE}Logo propuestavf-02.png`}
         height={150}
         width={560}
         style={{ opacity: "0.4" }}

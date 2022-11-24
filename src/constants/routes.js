@@ -1,5 +1,5 @@
 const publicRoutes = {
-  HOME: `${process.env.NEXT_PUBLIC_ROUTE}encuesta`,
+  HOME: `${process.env.NEXT_PUBLIC_ROUTE}resultados`,
 
   /* Rutas privadas para cambiar al implementar el Login*/
   /** Administración **/
@@ -13,7 +13,7 @@ const publicRoutes = {
   PROFILE: `${process.env.NEXT_PUBLIC_ROUTE}administracion/perfil`,
 
   /** Observatorio **/
-  OBS_SURVEY: `${process.env.NEXT_PUBLIC_ROUTE}encuesta`,
+  OBS_SURVEY: `${process.env.NEXT_PUBLIC_ROUTE}resultados`,
   OBS_GRAPHIC: `${process.env.NEXT_PUBLIC_ROUTE}encuesta/:id/innovacion`,
   /* */
 };
