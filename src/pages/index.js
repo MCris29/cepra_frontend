@@ -10,7 +10,11 @@ export default function Home() {
         alignItems: "center",
       }}
     >
-      <img src="/Logo propuestavf-02.png" height={150} width={560} />
+      <img
+        src={`${process.env.NEXT_PUBLIC_ROUTE}Logo propuestavf-02.png`}
+        height={150}
+        width={560}
+      />
     </div>
   );
 }

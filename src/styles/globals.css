@@ -75,10 +75,16 @@ a {
     margin-left: 6em;
     padding: 40px;
   }
+
+  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+    border-radius: 0;
+    margin: 3px 0;
+  }
 }
 
 .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
   border-radius: 0;
+  margin: 0 3px;
 }
 .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
   border-radius: 0;

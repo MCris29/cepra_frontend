@@ -7,8 +7,8 @@ const Logo = () => {
     <Link href={Routes.HOME}>
       <div>
         <img
-          src="/Logo-o2i.png"
-          alt="Picture of the author"
+          src={`${process.env.NEXT_PUBLIC_ROUTE}Logo-o2i.png`}
+          alt="O2I"
           width={70}
           height={50}
           style={{ cursor: "pointer" }}

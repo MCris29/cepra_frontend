@@ -69,7 +69,7 @@ export default function LandingSurvey() {
           key={data.row.itenc_codigo}
           href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(
             typeSurvey
-          )}/grafico/${data.row.itenc_codigo}`}
+          )}/${data.row.itenc_codigo}`}
         >
           <IconButton>
             <Tooltip title="Ver gráficos" placement="top-start" followCursor>
