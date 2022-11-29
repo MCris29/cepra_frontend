@@ -26,7 +26,7 @@ import LoadingInformation from "@/components/LoadingInformation";
 const Boxplot = dynamic(() => import("@/components/Boxplot"), {
   ssr: false,
   loading: () => (
-    <Skeleton variant="rectangular" width="40%">
+    <Skeleton variant="rectangular" width="40%" sx={{ bgcolor: "#c4c4c4" }}>
       <div style={{ paddingTop: "57%" }} />
     </Skeleton>
   ),
