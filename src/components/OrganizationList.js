@@ -13,11 +13,6 @@ import ContactsIcon from "@mui/icons-material/Contacts";
 import LoadingInformation from "@/components/LoadingInformation";
 
 const columns = [
-  { field: "itorg_ruc", headerName: "RUC", width: 150 },
-  { field: "itorg_nombre", headerName: "Organización", width: 200 },
-  { field: "itorg_sector", headerName: "Sector", width: 150 },
-  { field: "itorg_subsector", headerName: "Subsector", width: 150 },
-  { field: "itorg_num_empleados", headerName: "# empleados", width: 100 },
   {
     field: "actions",
     headerName: "",
@@ -42,6 +37,11 @@ const columns = [
       </div>,
     ],
   },
+  { field: "itorg_ruc", headerName: "RUC", width: 150 },
+  { field: "itorg_nombre", headerName: "Organización", width: 200 },
+  { field: "itorg_sector", headerName: "Sector", width: 150 },
+  { field: "itorg_subsector", headerName: "Subsector", width: 150 },
+  { field: "itorg_num_empleados", headerName: "# empleados", width: 100 },
 ];
 
 const OrganizationList = () => {
@@ -57,8 +57,8 @@ const OrganizationList = () => {
 
   return (
     <>
-      <h4>Lista de organizaciones</h4>
-      <p>
+      <h4 className="title">Lista de organizaciones</h4>
+      <p className="paragraph">
         En esta tabla se presentan las organizaciones que han respondido una o
         más encuestas, se pueden editar los datos y ver los contactos que
         pertenecen a cada organización.

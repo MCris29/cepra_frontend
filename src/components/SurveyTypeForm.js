@@ -59,7 +59,10 @@ const SurveyTypeForm = () => {
 
   return (
     <>
-      <h4>Tipo de encuesta</h4>
+      <h4 className="title">Tipo de encuesta</h4>
+      <p className="paragraph">
+        En esta sección se puede crear un nuevo tipo de encuesta.
+      </p>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_nombre"

@@ -8,10 +8,8 @@ const Logo = () => {
       <div>
         <img
           src={`${process.env.NEXT_PUBLIC_ROUTE}Logo-o2i.png`}
+          className={"logo"}
           alt="O2I"
-          width={70}
-          height={50}
-          style={{ cursor: "pointer" }}
         />
       </div>
     </Link>

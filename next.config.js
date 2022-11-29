@@ -6,9 +6,10 @@ const nextConfig = {
 const pathsConfig = {};
 
 module.exports = {
-  assetPrefix: "/o2i/",
+  nextConfig,
   trailingSlash: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // assetPrefix: "/o2i/",
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
 };

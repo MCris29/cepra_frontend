@@ -367,8 +367,8 @@ const ReplyForm = () => {
       });
       return (
         <div className="wrapper">
-          <h4>Respuesta individual</h4>
-          <p>
+          <h4 className="title">Respuesta individual</h4>
+          <p className="paragraph">
             En esta sección se suben las respuestas individualmente, para ello
             debe seleccionar la encuesta que va responder y llenar los campos.
           </p>
@@ -478,7 +478,7 @@ const ReplyForm = () => {
                   )}
                 />
                 {errorsSurvey["fechaTest"] && (
-                  <span style={{ color: "red" }}>
+                  <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                     {errorsSurvey["fechaTest"].message}
                   </span>
                 )}
@@ -504,9 +504,9 @@ const ReplyForm = () => {
               key="formOrganization"
               onSubmit={handleSubmitOrganization(onSubmitOrganization)}
             >
-              <h4>Datos de organización</h4>
+              <h4 className="subtitle">Datos de organización</h4>
               {Object.keys(formOrganization).map((e, index) => (
-                <section key={`org-${index}`} style={{ marginBottom: "10px" }}>
+                <section key={`org-${index}`} style={{ marginBottom: "4px" }}>
                   <Controller
                     name={e}
                     control={controlOrganization}
@@ -527,15 +527,15 @@ const ReplyForm = () => {
                     )}
                   />
                   {errorsOrganization[e] && (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                       {errorsOrganization[e].message}
                     </span>
                   )}
                 </section>
               ))}
-              <h4>Datos de contacto</h4>
+              <h4 className="subtitle">Datos de contacto</h4>
               {Object.keys(formContact).map((e, index) => (
-                <section key={`cont-${index}`} style={{ marginBottom: "10px" }}>
+                <section key={`cont-${index}`} style={{ marginBottom: "4px" }}>
                   <Controller
                     name={e}
                     control={controlOrganization}
@@ -556,7 +556,7 @@ const ReplyForm = () => {
                     )}
                   />
                   {errorsOrganization[e] && (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                       {errorsOrganization[e].message}
                     </span>
                   )}
@@ -595,14 +595,16 @@ const ReplyForm = () => {
           {showReplyForm ? (
             <>
               <form key="formReply" onSubmit={handleSubmitReply(onSubmitReply)}>
-                <h2 key="titleReply">{surveyTemplate.encuesta_observacion}</h2>
+                <h4 key="titleReply" className="subtitle">
+                  {surveyTemplate.encuesta_observacion}
+                </h4>
                 {formInputsReply.map((category, indexCategory) => (
                   <Box key={indexCategory}>
-                    <h3>{category.name}</h3>
+                    <h5>{category.name}</h5>
                     {category.questions.map((question, indexQuestion) => (
                       <Box key={indexQuestion}>
-                        <section style={{ marginBottom: "10px" }}>
-                          <label>{question.label}</label>
+                        <section style={{ marginBottom: "8px" }}>
+                          <p className="paragraph">{question.label}</p>
                           <div>
                             {question.observation ? (
                               <span

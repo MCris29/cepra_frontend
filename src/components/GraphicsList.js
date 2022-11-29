@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "@/styles/LandingGraphic.module.css";
 import { StaticGraphics } from "@/lib/staticGraphic";
 import LoadingInformation from "@/components/LoadingInformation";
 
@@ -28,13 +29,13 @@ const DashboardGraphics = (props) => {
               No existen gráficos estáticos
             </div>
           ) : (
-            <div style={{ paddingLeft: "4em" }}>
+            <div className={styles.container_static_graphic}>
               <div>
                 {newData.map((item, index) => (
                   <div key={index}>
-                    <h5>{item.itegr_titulo}</h5>
-                    <p>{item.itegr_observacion}</p>
-                    <img src={item.itegr_url} />
+                    <div className="subtitle">{item.itegr_titulo}</div>
+                    <p className="paragraph">{item.itegr_observacion}</p>
+                    <img src={item.itegr_url} className={styles.img_graphic} />
                   </div>
                 ))}
               </div>

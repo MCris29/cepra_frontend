@@ -225,8 +225,8 @@ const SurveyForm = () => {
 
   return (
     <>
-      <h4>Datos de encuesta</h4>
-      <p>
+      <h4 className="title">Datos de encuesta</h4>
+      <p className="paragraph">
         En esta sección se sube una plantilla de encuesta, para ello debe
         seleccionar un tipo de encuesta, llenar los demás campos y subir un
         archivo en formato .xlsx o .csv con la plantilla de la encuesta.
@@ -300,7 +300,7 @@ const SurveyForm = () => {
             <TextField
               {...field}
               id="observacion-form"
-              label="Observación"
+              label="Encuesta"
               variant="outlined"
               margin="dense"
               size="small"

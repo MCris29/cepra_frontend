@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
+import { List, ListItem, Divider, Collapse, Typography } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Collapse from "@mui/material/Collapse";
-import Typography from "@mui/material/Typography";
 
 function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
   const [collapsed, setCollapsed] = useState(true);
@@ -39,14 +35,37 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
         dense
         {...rest}
       >
-        <Typography style={{ paddingLeft: depth * depthStep }}>
-          <span
-            style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
-          >
-            {" "}
-            {expandIcon} {label}
-          </span>
-        </Typography>
+        {expandIcon ? (
+          <Typography style={{ paddingLeft: depth * depthStep}}>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "#05579f",
+              }}
+            >
+              {expandIcon} {label}
+            </span>
+          </Typography>
+        ) : (
+          <Typography style={{ paddingLeft: depth * depthStep }}>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                fontSize: "14px",
+                fontWeight: "bold",
+                color: "#0C89CB",
+              }}
+            >
+              {expandIcon} {label}
+            </span>
+          </Typography>
+        )}
       </ListItem>
       <Collapse in={!collapsed} timeout="auto" unmountOnExit>
         {Array.isArray(items) ? (

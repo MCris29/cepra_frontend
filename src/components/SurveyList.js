@@ -21,17 +21,6 @@ function handleDate(dateTime) {
 }
 
 const columns = [
-  { field: "itten_nombre", headerName: "Encuesta", width: 175 },
-  {
-    field: "itenc_fecha_vigente",
-    headerName: "Fecha de vigencia",
-    type: "dateTime",
-    width: 175,
-    renderCell: (data) => {
-      return handleDate(data.row.itenc_fecha_vigente);
-    },
-  },
-  { field: "itenc_observacion", headerName: "Observación", width: 400 },
   {
     field: "actions",
     headerName: "",
@@ -68,6 +57,17 @@ const columns = [
       </div>,
     ],
   },
+  { field: "itten_nombre", headerName: "Tipo de encuesta", width: 175 },
+  { field: "itenc_observacion", headerName: "Encuesta", width: 400 },
+  {
+    field: "itenc_fecha_vigente",
+    headerName: "Fecha de vigencia",
+    type: "dateTime",
+    width: 175,
+    renderCell: (data) => {
+      return handleDate(data.row.itenc_fecha_vigente);
+    },
+  },
 ];
 
 const SurveyList = () => {
@@ -83,8 +83,8 @@ const SurveyList = () => {
 
   return (
     <>
-      <h4>Lista de encuestas</h4>
-      <p>
+      <h4 className="title">Lista de encuestas</h4>
+      <p className="paragraph">
         En esta tabla se presentan todas las encuestas guardadas, presiona el
         botón <VisibilityIcon sx={{ margin: "-3px 0" }} fontSize="x-small" />{" "}
         para visualizar la encuesta y{" "}

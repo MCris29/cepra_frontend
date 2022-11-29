@@ -75,14 +75,14 @@ export default function SurveyId() {
 
   return (
     <>
-      <h3>{data.encuesta_observacion}</h3>
+      <h4 className="title">{data.encuesta_observacion}</h4>
       <ButtonAddQuestion categories={data.categorias} />
       {data ? (
         <div>
           {/* categorias */}
           {handleData(data).map((category, index) => (
             <div key={index}>
-              <h5>{category.nombre_categoria}</h5>
+              <h5 className="subtitle">{category.nombre_categoria}</h5>
 
               {/* preguntas */}
               {category.preguntas.map((question, index) => (
@@ -94,7 +94,7 @@ export default function SurveyId() {
           ))}
         </div>
       ) : (
-        <div>Cargando...</div>
+        <LoadingInformation />
       )}
     </>
   );

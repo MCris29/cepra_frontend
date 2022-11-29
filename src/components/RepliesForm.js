@@ -476,8 +476,8 @@ const RepliesForm = () => {
       });
       return (
         <>
-          <h4>Respuestas en bloque</h4>
-          <p>
+          <h4 className="title">Respuestas en bloque</h4>
+          <p className="paragraph">
             En esta sección se suben las respuestas en bloque, para ello debe
             seleccionar una encuesta y subir un archivo en formato .xlsx o .csv
             con las respuestas de la encuesta.

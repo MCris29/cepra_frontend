@@ -6,7 +6,10 @@ const QuestionCard = (props) => {
   return (
     <>
       <div className={styles.cardParent}>
-        <div>{props.index + ". " + props.question.nombre_pregunta}</div>
+        <p className="paragraph">
+          <strong>{props.index + ". "}</strong>
+          {props.question.nombre_pregunta}
+        </p>
         {
           /* Si la pregunta tiene opciones */
           props.question.grupo_opciones ? (
@@ -24,13 +27,10 @@ const QuestionCard = (props) => {
         props.question.preguntas_hija ? (
           props.question.preguntas_hija.map((questionChild, index) => (
             <div className={styles.cardChild} key={index}>
-              <div>
-                {props.index +
-                  "." +
-                  (index + 1) +
-                  " " +
-                  questionChild.nombre_pregunta}
-              </div>
+              <p className="paragraph">
+                <strong>{props.index + "." + (index + 1) + " "}</strong>
+                {questionChild.nombre_pregunta}
+              </p>
               {questionChild.grupo_opciones ? (
                 <OptionCard option={questionChild.grupo_opciones} />
               ) : (
