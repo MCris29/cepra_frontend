@@ -82,6 +82,10 @@ a {
 
 /*Responsive*/
 @media only screen and (max-width: 900px) {
+  .logo {
+    height: 112px;
+    width: 89px;
+  }
   .main-admin {
     margin-left: 14em;
     padding: 40px;
@@ -91,7 +95,6 @@ a {
 
 @media only screen and (max-width: 600px) {
   .logo {
-    cursor: pointer;
     height: 86px;
     width: 69px;
   }
@@ -99,5 +102,4 @@ a {
     margin-left: 6em;
     padding: 12px;
   }
-
 }

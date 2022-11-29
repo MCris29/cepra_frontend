@@ -517,7 +517,7 @@ export default function LandingGraphic() {
                                 width="100%"
                                 sx={{ bgcolor: "#c4c4c4" }}
                               >
-                                <div style={{ paddingTop: "57%" }} />
+                                <div style={{ paddingTop: "48%" }} />
                               </Skeleton>
                             ) : (
                               <>
