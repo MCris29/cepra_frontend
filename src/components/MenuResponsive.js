@@ -34,7 +34,7 @@ const items = [
   },
   {
     label: "Administrar",
-    to: Routes.MANAGEMENT,
+    to: Routes.LOGIN,
   },
 ];
 

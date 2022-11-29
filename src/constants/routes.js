@@ -4,6 +4,7 @@ const publicRoutes = {
   /* Rutas privadas para cambiar al implementar el Login*/
   /** Administración **/
   MANAGEMENT: "/administracion",
+  LOGIN: "/iniciar-sesion",
   ORGANIZATION: "/administracion/organizacion",
   SURVEY: "/administracion/encuesta",
   ANSWERS: "/administracion/respuestas",
