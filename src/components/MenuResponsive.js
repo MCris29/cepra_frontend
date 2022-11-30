@@ -26,7 +26,7 @@ const items = [
   },
   {
     label: "Proyecto",
-    to: "",
+    to: "https://observatorio-o2i.epn.edu.ec/",
   },
   {
     label: "Resultados",

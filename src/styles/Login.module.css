@@ -11,14 +11,14 @@
 .button_submit {
   margin-top: 12px;
   text-transform: none;
-  color: #05579f;
+  color: #0C89CB;
   font-weight: bold;
   background-color: transparent;
-  border: 1px solid #05579f;
+  border: 1px solid #0C89CB;
 }
 .button_submit:hover {
   color: #fff;
-  background-color: #05579f;
+  background-color: #0C89CB;
   transition: 0.5s;
 }
 
