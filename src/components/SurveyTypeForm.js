@@ -34,6 +34,34 @@ const CustomTextField = styled(TextField)({
   },
 });
 
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
+
 const schema = yup.object().shape({
   itten_nombre: yup
     .string()
@@ -128,14 +156,14 @@ const SurveyTypeForm = () => {
         />
         <div className={styles.error}>{errors.itten_observacion?.message}</div>
         <div className={styles.button_container}>
-          <Button
+          <CustomButton
             type="submit"
             variant="outlined"
             className={styles.button}
             disabled={loading}
           >
             {loading ? <Loading /> : <div>Guardar</div>}
-          </Button>
+          </CustomButton>
         </div>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>

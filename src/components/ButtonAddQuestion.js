@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "@/styles/Survey.module.css";
-import { Button, Box, Modal, Snackbar, Stack } from "@mui/material";
+import { Button, Box, Modal, Snackbar, Stack, styled } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import QuestionForm from "@/components/QuestionForm";
 
@@ -18,6 +18,34 @@ const styleModal = {
   padding: "12px 32px",
   overflow: "auto",
 };
+
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
 
 const ButtonAddQuestion = (props) => {
   const router = useRouter();
@@ -53,13 +81,13 @@ const ButtonAddQuestion = (props) => {
 
   return (
     <>
-      <Button
+      <CustomButton
         className={styles.button}
         onClick={handleOpenModal}
         variant="outlined"
       >
         Añadir pregunta
-      </Button>
+      </CustomButton>
       <Modal
         open={openModal}
         onClose={handleCloseModal}

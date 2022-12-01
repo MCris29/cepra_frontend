@@ -25,6 +25,36 @@ const CustomTextField = styled(TextField)({
   },
 });
 
+const CustomButton = styled(Button)({
+  width: "100%",
+  marginTop: "12px",
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
+
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -108,15 +138,17 @@ export default function Login() {
           />
           <span className={styles.error}>{errors.password?.message}</span>
 
-          {/* <Button
+          {/* <CustomButton
             type="submit"
             disabled={loading}
             className={styles.btn_login}
           >
             Iniciar Sesión
-          </Button> */}
+          </CustomButton> */}
           <Link href={Routes.MANAGEMENT}>
-            <Button className={styles.btn_login}>Iniciar Sesión</Button>
+            <CustomButton className={styles.btn_login}>
+              Iniciar Sesión
+            </CustomButton>
           </Link>
         </form>
       </div>

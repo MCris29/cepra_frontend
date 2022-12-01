@@ -39,6 +39,34 @@ const CustomTextField = styled(TextField)({
   },
 });
 
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
+
 const schema = yup.object().shape({
   itorg_ruc: yup.string().required("Debe ingresar el Ruc de la organización"),
   itorg_nombre: yup
@@ -329,9 +357,9 @@ const OrganizationForm = (props) => {
           </span>
 
           <div className={styles.button_container}>
-            <Button type="submit" variant="outlined" disabled={loading}>
+            <CustomButton type="submit" variant="outlined" disabled={loading}>
               {loading ? <Saving /> : <div>Guardar</div>}
-            </Button>
+            </CustomButton>
           </div>
         </form>
         <Stack spacing={2} sx={{ width: "100%" }}>

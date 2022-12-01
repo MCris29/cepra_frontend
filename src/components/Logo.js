@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Link href={Routes.HOME}>
       <div>
-        <img src={"/o2i/Logo-o2i.png"} className={"logo"} alt="O2I" />
+        <img src={"/o2i/Logo-o2i.jpg"} className={"logo"} alt="O2I" />
       </div>
     </Link>
   );
