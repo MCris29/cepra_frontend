@@ -17,6 +17,7 @@ import {
   FormControl,
   Tooltip,
   Divider,
+  styled,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -26,6 +27,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import Saving from "@/components/Saving";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const schema = yup.object().shape({
   nombre_pregunta: yup
@@ -184,7 +202,7 @@ const QuestionForm = (props) => {
                   defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       id="nombre-grupo-opcion-form"
                       label="Nombre del grupo de opciones"
@@ -201,7 +219,7 @@ const QuestionForm = (props) => {
                   )}
                 />
                 <div style={{ display: "flex" }}>
-                  <TextField
+                  <CustomTextField
                     id="options-form"
                     label="Agregar opción"
                     variant="outlined"
@@ -242,7 +260,7 @@ const QuestionForm = (props) => {
                   defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       id="nombre-grupo-opcion-form"
                       label="Grupo de opciones"
@@ -261,7 +279,7 @@ const QuestionForm = (props) => {
                           {option.itgop_nombre}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </CustomTextField>
                   )}
                 />
                 <div style={{ paddingLeft: "12px" }}>
@@ -291,7 +309,7 @@ const QuestionForm = (props) => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="category_id"
               label="Categoria"
@@ -310,7 +328,7 @@ const QuestionForm = (props) => {
                   {category.nombre_categoria}
                 </MenuItem>
               ))}
-            </TextField>
+            </CustomTextField>
           )}
         />
         <Divider style={{ margin: "12px 0" }} />
@@ -320,7 +338,7 @@ const QuestionForm = (props) => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="nombre-pregunta-form"
               label="Pregunta"
@@ -343,7 +361,7 @@ const QuestionForm = (props) => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="observacion-pregunta-form"
               label="Observación"
@@ -366,7 +384,7 @@ const QuestionForm = (props) => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="tipo_dato"
               label="Tipo de dato"
@@ -382,7 +400,7 @@ const QuestionForm = (props) => {
             >
               <MenuItem value={"texto"}>Texto</MenuItem>
               <MenuItem value={"numero"}>Númerico</MenuItem>
-            </TextField>
+            </CustomTextField>
           )}
         />
         <Divider style={{ margin: "12px 0" }} />

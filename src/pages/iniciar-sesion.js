@@ -2,11 +2,28 @@ import React, { useState } from "react";
 import styles from "@/styles/Login.module.css";
 import Routes from "@/constants/routes";
 import Link from "next/link";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, styled } from "@mui/material";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const schema = yup.object().shape({
   email: yup
@@ -39,7 +56,9 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h4 className="title">Iniciar Sesión</h4>
+        <h4 className="title" style={{ marginBottom: 0 }}>
+          Iniciar Sesión
+        </h4>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
@@ -47,7 +66,7 @@ export default function Login() {
             defaultValue=""
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 variant="outlined"
                 size="small"
@@ -71,7 +90,7 @@ export default function Login() {
             defaultValue=""
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 variant="outlined"
                 size="small"
@@ -91,23 +110,13 @@ export default function Login() {
 
           {/* <Button
             type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
             disabled={loading}
-            className={styles.button_submit}
+            className={styles.btn_login}
           >
             Iniciar Sesión
           </Button> */}
           <Link href={Routes.MANAGEMENT}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={styles.button_submit}
-            >
-              Iniciar Sesión
-            </Button>
+            <Button className={styles.btn_login}>Iniciar Sesión</Button>
           </Link>
         </form>
       </div>

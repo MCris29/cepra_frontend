@@ -7,8 +7,12 @@
   letter-spacing: 0.5px;
 }
 .button {
-  text-transform: none;
-  border-radius: 0;
+  color: #0c89cb;
+  border: 1px solid #0c89cb;
+}
+.button:hover {
+  color: #fff;
+  background-color: #0c89cb;
 }
 
 /*Formulario  de encuesta*/

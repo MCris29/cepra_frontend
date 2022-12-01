@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Stack,
+  Snackbar,
+  styled,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 import { useForm, Controller } from "react-hook-form";
@@ -9,6 +16,23 @@ import * as yup from "yup";
 
 import { SurveyTypes } from "@/lib/suveyType";
 import Loading from "@/components/Saving";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const schema = yup.object().shape({
   itten_nombre: yup
@@ -70,7 +94,7 @@ const SurveyTypeForm = () => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="nombre-form"
               label="Tipo de encuesta"
@@ -90,7 +114,7 @@ const SurveyTypeForm = () => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="observacion-form"
               label="Observación"

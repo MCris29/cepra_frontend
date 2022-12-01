@@ -8,6 +8,7 @@ import {
   TextField,
   Stack,
   Snackbar,
+  styled,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
@@ -21,6 +22,23 @@ import { SurveyReplys } from "@/lib/surveyReply";
 
 import ErrorInformation from "@/components/ErrorInformation";
 import LoadingInformation from "@/components/LoadingInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const formOrganization = {
   itorg_ruc: {
@@ -386,7 +404,7 @@ const ReplyForm = () => {
                     required: "Campo obligatorio!",
                   }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Tipo de encuesta"
                       variant="outlined"
@@ -406,7 +424,7 @@ const ReplyForm = () => {
                           {_typeSurvey}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </CustomTextField>
                   )}
                 />
                 {errorsSurvey["typeSurvey"] && (
@@ -421,7 +439,7 @@ const ReplyForm = () => {
                   control={controlSurvey}
                   defaultValue=""
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Encuesta"
                       variant="outlined"
@@ -442,7 +460,7 @@ const ReplyForm = () => {
                           {type.itenc_observacion}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </CustomTextField>
                   )}
                 />
                 {errorsSurvey["surveyId"] && (
@@ -460,7 +478,7 @@ const ReplyForm = () => {
                     required: "Campo obligatorio!",
                   }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Fecha test"
                       variant="outlined"
@@ -513,7 +531,7 @@ const ReplyForm = () => {
                     rules={formOrganization[e].rules}
                     defaultValue={formOrganization[e].defaultValue}
                     render={({ field }) => (
-                      <TextField
+                      <CustomTextField
                         {...field}
                         label={formOrganization[e].label}
                         variant="outlined"
@@ -542,7 +560,7 @@ const ReplyForm = () => {
                     rules={formContact[e].rules}
                     defaultValue={formContact[e].defaultValue}
                     render={({ field }) => (
-                      <TextField
+                      <CustomTextField
                         {...field}
                         label={formContact[e].label}
                         variant="outlined"
@@ -635,7 +653,7 @@ const ReplyForm = () => {
                                 rules={question.rules}
                                 defaultValue={question.defaultValue}
                                 render={({ field }) => (
-                                  <TextField
+                                  <CustomTextField
                                     {...field}
                                     hiddenLabel
                                     variant="outlined"
@@ -669,7 +687,7 @@ const ReplyForm = () => {
                                 rules={question.rules}
                                 defaultValue={question.defaultValue}
                                 render={({ field }) => (
-                                  <TextField
+                                  <CustomTextField
                                     {...field}
                                     hiddenLabel
                                     variant="outlined"
@@ -693,7 +711,7 @@ const ReplyForm = () => {
                                         {option.label}
                                       </MenuItem>
                                     ))}
-                                  </TextField>
+                                  </CustomTextField>
                                 )}
                               />
                               {errorsReply[question.id.toString()] && (

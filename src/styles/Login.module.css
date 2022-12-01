@@ -6,20 +6,18 @@
 
 .card {
   width: 22em;
-  /* border: 1px solid #c4c4c4; */
 }
-.button_submit {
-  margin-top: 12px;
-  text-transform: none;
-  color: #0C89CB;
-  font-weight: bold;
-  background-color: transparent;
-  border: 1px solid #0C89CB;
+
+.btn_login {
+  width: 100%;
+  margin: 12px 0;
+  color: #0c89cb;
+  border: 1px solid #0c89cb;
 }
-.button_submit:hover {
+
+.btn_login:hover {
   color: #fff;
-  background-color: #0C89CB;
-  transition: 0.5s;
+  background-color: #0c89cb;
 }
 
 .error {

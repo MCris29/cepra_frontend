@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
 
-import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Stack,
+  Snackbar,
+  styled,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 import { useForm, Controller } from "react-hook-form";
@@ -13,6 +20,23 @@ import useSWR from "swr";
 
 import { StaticGraphics } from "@/lib/staticGraphic";
 import ErrorInformation from "@/components/ErrorInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const schema = yup.object().shape({
   itegr_titulo: yup
@@ -152,7 +176,7 @@ const StaticGraphicForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   id="typeSurvey"
                   label="Tipo de encuesta"
                   helperText="Selecciona un tipo de encuesta"
@@ -171,7 +195,7 @@ const StaticGraphicForm = () => {
                       {_typeSurvey}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -180,7 +204,7 @@ const StaticGraphicForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="itenc_codigo"
                   label="Encuesta"
@@ -200,7 +224,7 @@ const StaticGraphicForm = () => {
                       {type.itenc_observacion}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -209,7 +233,7 @@ const StaticGraphicForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="itegr-titulo-form"
                   label="Título"
@@ -233,7 +257,7 @@ const StaticGraphicForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="iteg-observacion-form"
                   label="Observación"

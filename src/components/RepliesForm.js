@@ -10,6 +10,7 @@ import {
   LinearProgress,
   Typography,
   Box,
+  styled,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import PropTypes from "prop-types";
@@ -30,6 +31,23 @@ import { SurveyTemplates } from "@/lib/surveyTemplate";
 import { SurveyReplys } from "@/lib/surveyReply";
 import ErrorInformation from "@/components/ErrorInformation";
 import LoadingInformation from "@/components/LoadingInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
 
 const schema = yup.object().shape({
   itres_fecha_test: yup
@@ -489,7 +507,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   id="typeSurvey"
                   label="Tipo de encuesta"
                   helperText="Selecciona un tipo de encuesta"
@@ -508,7 +526,7 @@ const RepliesForm = () => {
                       {_typeSurvey}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -517,7 +535,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="itenc_codigo"
                   label="Encuesta"
@@ -537,7 +555,7 @@ const RepliesForm = () => {
                       {type.itenc_observacion}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -546,7 +564,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="date-form"
                   label="Fecha test"

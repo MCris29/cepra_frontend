@@ -38,6 +38,24 @@ a {
   margin: 0;
 }
 
+/* Button */
+.MuiButton-root {
+  text-transform: none;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: transparent;
+}
+.MuiButton-root:hover {
+  transition: 0.5s;
+}
+
+/* TextField */
+.MuiTextField-root .fieldset {
+  border-radius: 0;
+  font-size: 14px;
+}
+
 /*Landing Page*/
 .page {
   overflow: hidden;

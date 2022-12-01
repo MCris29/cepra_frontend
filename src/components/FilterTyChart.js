@@ -7,7 +7,7 @@ const FilterTypeChart = (props) => {
     <FormControl size="small" className={styles.filter_item}>
       <InputLabel id="demo-simple-select-label">Tipo de gráfico</InputLabel>
       <Select
-        style={{ borderRadius: 0 }}
+        style={{ borderRadius: 0, marginRight: "4px" }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={props.chartType}
