@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "@/styles/Organization.module.css";
 import { Organizations } from "@/lib/organization";
 
@@ -9,11 +9,63 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Stack,
+  Snackbar,
+  styled,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 import Saving from "@/components/Saving";
 import LoadingInformation from "@/components/LoadingInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
+
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
 
 const schema = yup.object().shape({
   itorg_ruc: yup.string().required("Debe ingresar el Ruc de la organización"),
@@ -118,7 +170,7 @@ const OrganizationForm = (props) => {
   return (
     <>
       <div className={styles.form_container}>
-        <h4>Organización</h4>
+        <h4 className="title">Organización</h4>
         <form id="form-organizacion" onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="itorg_ruc"
@@ -126,7 +178,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_ruc}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="ruc-form"
                 label="Ruc"
@@ -146,7 +198,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_nombre}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itorg_nombre-form"
                 label="Organización"
@@ -165,7 +217,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itgop_codigo}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itgop_codigo"
                 label="Provincia"
@@ -187,7 +239,7 @@ const OrganizationForm = (props) => {
                 ) : (
                   <span>Cargando...</span>
                 )}
-              </TextField>
+              </CustomTextField>
             )}
           />
           <Controller
@@ -196,7 +248,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itopc_codigo_ciudad}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itopc_codigo"
                 label="Ciudad"
@@ -221,7 +273,7 @@ const OrganizationForm = (props) => {
                         {item.itopc_nombre}
                       </MenuItem>
                     ))}
-              </TextField>
+              </CustomTextField>
             )}
           />
           <Controller
@@ -230,7 +282,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_ubicacion}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itorg_ubicacion-form"
                 label="Ubicación"
@@ -248,7 +300,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_sector}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itorg_sector-form"
                 label="Sector"
@@ -267,7 +319,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_subsector}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itorg_subsector-form"
                 label="Subsector"
@@ -288,7 +340,7 @@ const OrganizationForm = (props) => {
             defaultValue={props.data.itorg_num_empleados}
             rules={{ required: true }}
             render={({ field }) => (
-              <TextField
+              <CustomTextField
                 {...field}
                 id="itorg_num_empleados-form"
                 label="# de empleados"
@@ -305,14 +357,9 @@ const OrganizationForm = (props) => {
           </span>
 
           <div className={styles.button_container}>
-            <Button
-              type="submit"
-              variant="outlined"
-              disabled={loading}
-              className={styles.button}
-            >
+            <CustomButton type="submit" variant="outlined" disabled={loading}>
               {loading ? <Saving /> : <div>Guardar</div>}
-            </Button>
+            </CustomButton>
           </div>
         </form>
         <Stack spacing={2} sx={{ width: "100%" }}>

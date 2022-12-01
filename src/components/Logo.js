@@ -6,13 +6,7 @@ const Logo = () => {
   return (
     <Link href={Routes.HOME}>
       <div>
-        <img
-          src={`${process.env.NEXT_PUBLIC_ROUTE}Logo-o2i.png`}
-          alt="O2I"
-          width={70}
-          height={50}
-          style={{ cursor: "pointer" }}
-        />
+        <img src={"/o2i/Logo-o2i.jpg"} className={"logo"} alt="O2I" />
       </div>
     </Link>
   );

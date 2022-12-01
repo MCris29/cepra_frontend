@@ -1,8 +1,7 @@
 .desktopAppbar {
   padding: 12px 22px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
   border-bottom: 1px #c4c4c4;
 }
 
@@ -17,29 +16,32 @@
   cursor: pointer;
 }
 
-.item:hover {
-  color: #ea861b;
-  cursor: pointer;
-  transition: 0.6s;
+.items {
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  margin-left: 8em;
+  margin-bottom: 22px;
+  border-bottom: 0.5px solid rgb(5, 87, 159);
 }
-
-.login_button {
-  font-family: "Montserrat", sans-serif;
-  font-size: 15px;
+.item {
+  padding: 4px 32px;
+  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: bold;
   line-height: 26px;
   letter-spacing: normal;
-  padding: 2px 12px;
-  color: #4e555c;
+  color: rgb(50, 50, 50);
 }
-
-.login_button:hover {
-  color: #ea861b;
+.item:hover {
+  background-color: rgba(234, 134, 27, 0.3);
+  color: rgb(5, 87, 159);
   cursor: pointer;
   transition: 0.6s;
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .desktopAppbar {
     display: none;
   }
@@ -48,6 +50,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 22px;
+    padding: 12px 0px;
   }
 }

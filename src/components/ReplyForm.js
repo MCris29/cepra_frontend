@@ -8,6 +8,7 @@ import {
   TextField,
   Stack,
   Snackbar,
+  styled,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
@@ -21,6 +22,51 @@ import { SurveyReplys } from "@/lib/surveyReply";
 
 import ErrorInformation from "@/components/ErrorInformation";
 import LoadingInformation from "@/components/LoadingInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
+
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
 
 const formOrganization = {
   itorg_ruc: {
@@ -367,8 +413,8 @@ const ReplyForm = () => {
       });
       return (
         <div className="wrapper">
-          <h4>Respuesta individual</h4>
-          <p>
+          <h4 className="title">Respuesta individual</h4>
+          <p className="paragraph">
             En esta sección se suben las respuestas individualmente, para ello
             debe seleccionar la encuesta que va responder y llenar los campos.
           </p>
@@ -386,7 +432,7 @@ const ReplyForm = () => {
                     required: "Campo obligatorio!",
                   }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Tipo de encuesta"
                       variant="outlined"
@@ -406,7 +452,7 @@ const ReplyForm = () => {
                           {_typeSurvey}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </CustomTextField>
                   )}
                 />
                 {errorsSurvey["typeSurvey"] && (
@@ -421,7 +467,7 @@ const ReplyForm = () => {
                   control={controlSurvey}
                   defaultValue=""
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Encuesta"
                       variant="outlined"
@@ -442,7 +488,7 @@ const ReplyForm = () => {
                           {type.itenc_observacion}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </CustomTextField>
                   )}
                 />
                 {errorsSurvey["surveyId"] && (
@@ -460,7 +506,7 @@ const ReplyForm = () => {
                     required: "Campo obligatorio!",
                   }}
                   render={({ field }) => (
-                    <TextField
+                    <CustomTextField
                       {...field}
                       label="Fecha test"
                       variant="outlined"
@@ -478,7 +524,7 @@ const ReplyForm = () => {
                   )}
                 />
                 {errorsSurvey["fechaTest"] && (
-                  <span style={{ color: "red" }}>
+                  <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                     {errorsSurvey["fechaTest"].message}
                   </span>
                 )}
@@ -486,14 +532,14 @@ const ReplyForm = () => {
               <br />
               {/* <hr /> */}
               <div className={styles.button_container}>
-                <Button
+                <CustomButton
                   type="submit"
                   variant="outlined"
                   disabled={loading}
                   className={styles.button}
                 >
                   Llenar encuesta
-                </Button>
+                </CustomButton>
               </div>
             </form>
           ) : (
@@ -504,16 +550,16 @@ const ReplyForm = () => {
               key="formOrganization"
               onSubmit={handleSubmitOrganization(onSubmitOrganization)}
             >
-              <h4>Datos de organización</h4>
+              <h4 className="subtitle">Datos de organización</h4>
               {Object.keys(formOrganization).map((e, index) => (
-                <section key={`org-${index}`} style={{ marginBottom: "10px" }}>
+                <section key={`org-${index}`} style={{ marginBottom: "4px" }}>
                   <Controller
                     name={e}
                     control={controlOrganization}
                     rules={formOrganization[e].rules}
                     defaultValue={formOrganization[e].defaultValue}
                     render={({ field }) => (
-                      <TextField
+                      <CustomTextField
                         {...field}
                         label={formOrganization[e].label}
                         variant="outlined"
@@ -527,22 +573,22 @@ const ReplyForm = () => {
                     )}
                   />
                   {errorsOrganization[e] && (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                       {errorsOrganization[e].message}
                     </span>
                   )}
                 </section>
               ))}
-              <h4>Datos de contacto</h4>
+              <h4 className="subtitle">Datos de contacto</h4>
               {Object.keys(formContact).map((e, index) => (
-                <section key={`cont-${index}`} style={{ marginBottom: "10px" }}>
+                <section key={`cont-${index}`} style={{ marginBottom: "4px" }}>
                   <Controller
                     name={e}
                     control={controlOrganization}
                     rules={formContact[e].rules}
                     defaultValue={formContact[e].defaultValue}
                     render={({ field }) => (
-                      <TextField
+                      <CustomTextField
                         {...field}
                         label={formContact[e].label}
                         variant="outlined"
@@ -556,7 +602,7 @@ const ReplyForm = () => {
                     )}
                   />
                   {errorsOrganization[e] && (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d32f2f", fontSize: "12px" }}>
                       {errorsOrganization[e].message}
                     </span>
                   )}
@@ -571,22 +617,22 @@ const ReplyForm = () => {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Button
+                <CustomButton
                   variant="outlined"
                   className={styles.button}
                   onClick={onReturnOrganization}
                 >
                   <div>Regresar</div>
-                </Button>
+                </CustomButton>
 
-                <Button
+                <CustomButton
                   type="submit"
                   variant="outlined"
                   disabled={loading}
                   className={styles.button}
                 >
                   <div>Siguiente</div>
-                </Button>
+                </CustomButton>
               </Box>
             </form>
           ) : (
@@ -595,14 +641,16 @@ const ReplyForm = () => {
           {showReplyForm ? (
             <>
               <form key="formReply" onSubmit={handleSubmitReply(onSubmitReply)}>
-                <h2 key="titleReply">{surveyTemplate.encuesta_observacion}</h2>
+                <h4 key="titleReply" className="subtitle">
+                  {surveyTemplate.encuesta_observacion}
+                </h4>
                 {formInputsReply.map((category, indexCategory) => (
                   <Box key={indexCategory}>
-                    <h3>{category.name}</h3>
+                    <h5>{category.name}</h5>
                     {category.questions.map((question, indexQuestion) => (
                       <Box key={indexQuestion}>
-                        <section style={{ marginBottom: "10px" }}>
-                          <label>{question.label}</label>
+                        <section style={{ marginBottom: "8px" }}>
+                          <p className="paragraph">{question.label}</p>
                           <div>
                             {question.observation ? (
                               <span
@@ -633,7 +681,7 @@ const ReplyForm = () => {
                                 rules={question.rules}
                                 defaultValue={question.defaultValue}
                                 render={({ field }) => (
-                                  <TextField
+                                  <CustomTextField
                                     {...field}
                                     hiddenLabel
                                     variant="outlined"
@@ -667,7 +715,7 @@ const ReplyForm = () => {
                                 rules={question.rules}
                                 defaultValue={question.defaultValue}
                                 render={({ field }) => (
-                                  <TextField
+                                  <CustomTextField
                                     {...field}
                                     hiddenLabel
                                     variant="outlined"
@@ -691,7 +739,7 @@ const ReplyForm = () => {
                                         {option.label}
                                       </MenuItem>
                                     ))}
-                                  </TextField>
+                                  </CustomTextField>
                                 )}
                               />
                               {errorsReply[question.id.toString()] && (
@@ -720,22 +768,22 @@ const ReplyForm = () => {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Button
+                  <CustomButton
                     variant="outlined"
                     className={styles.button}
                     onClick={onReturnReply}
                   >
                     <div>Regresar</div>
-                  </Button>
+                  </CustomButton>
 
-                  <Button
+                  <CustomButton
                     type="submit"
                     variant="outlined"
                     disabled={loading}
                     className={styles.button}
                   >
                     <div>Guardar</div>
-                  </Button>
+                  </CustomButton>
                 </Box>
               </form>
               <Stack spacing={2} sx={{ width: "100%" }}>

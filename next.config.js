@@ -3,12 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-const pathsConfig = {};
-
 module.exports = {
-  assetPrefix: "/o2i/",
+  nextConfig,
   trailingSlash: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  basePath: "/o2i",
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
 };

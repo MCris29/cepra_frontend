@@ -58,18 +58,18 @@ export default function LandingSurvey() {
         return handleDate(data.row.itenc_fecha_vigente);
       },
     },
-    { field: "itenc_observacion", headerName: "Observación", width: 400 },
+    { field: "itenc_observacion", headerName: "Encuesta", width: 400 },
     {
       field: "actions",
-      headerName: "Acciones",
+      headerName: "",
       type: "actions",
       width: 200,
       renderCell: (data) => [
         <Link
           key={data.row.itenc_codigo}
-          href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(
-            typeSurvey
-          )}/${data.row.itenc_codigo}`}
+          href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(typeSurvey)}/${
+            data.row.itenc_codigo
+          }`}
         >
           <IconButton>
             <Tooltip title="Ver gráficos" placement="top-start" followCursor>
@@ -107,13 +107,7 @@ export default function LandingSurvey() {
           <ThemeProvider theme={theme}>
             <div className={styles.container}>
               <div className={styles.main}>
-                <Typography
-                  className={styles.title}
-                  variant="h5"
-                  sx={{ margin: "32px" }}
-                >
-                  Encuestas
-                </Typography>
+                <h4 className="title">Resultados</h4>
                 <Box
                   sx={{
                     width: {

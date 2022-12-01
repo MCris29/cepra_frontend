@@ -8,11 +8,9 @@ import { Tooltip } from "@mui/material";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import PollOutlinedIcon from "@mui/icons-material/PollOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 
 import Logo from "@/components/Logo";
@@ -57,12 +55,16 @@ const Menu = () => {
       <div
         className={styles.tab}
         style={{
-          backgroundColor: isSelected
-            ? "#1f3e5c"
+          borderLeft: isSelected
+            ? "3px solid #e37b00"
             : tabHover == index
             ? "#a3a5a8"
             : "transparent",
-          color: isSelected || tabHover == index ? "#f7f7f7 " : "#28333e",
+          color: isSelected
+            ? "#0C89CB"
+            : tabHover == index
+            ? "#05579f "
+            : "#0C89CB",
         }}
         onMouseEnter={() => setTabHover(index)}
         onMouseLeave={() => setTabHover(-1)}
@@ -82,7 +84,7 @@ const Menu = () => {
       className={styles.tab}
       style={{
         backgroundColor: "transparent",
-        color: "#28333e",
+        color: "#0c89cb",
       }}
     >
       <span>

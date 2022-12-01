@@ -28,7 +28,6 @@ export default function AdminGraphics() {
 
   const handleRefresh = () => {
     setRefresh(!refresh);
-    console.log("cambio", refresh);
   };
 
   return (
@@ -37,7 +36,7 @@ export default function AdminGraphics() {
         <div>
           {newData.length === 0 ? (
             <div style={{ display: "flex", justifyContent: "center" }}>
-              No existen gráficos estáticos
+              <p className="paragraph">No existen gráficos estáticos</p>
             </div>
           ) : (
             <div>
@@ -51,8 +50,8 @@ export default function AdminGraphics() {
                     />
                   </div>
                   <div>
-                    <h5>{item.itegr_titulo}</h5>
-                    <p>{item.itegr_observacion}</p>
+                    <h5 className="subtitle">{item.itegr_titulo}</h5>
+                    <p className="paragraph">{item.itegr_observacion}</p>
                     <img src={item.itegr_url} />
                   </div>
                   <Divider sx={{ margin: "40px 0" }} />

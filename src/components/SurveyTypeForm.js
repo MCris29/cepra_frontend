@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { TextField, Button, MenuItem, Stack, Snackbar } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Stack,
+  Snackbar,
+  styled,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 import { useForm, Controller } from "react-hook-form";
@@ -9,6 +16,51 @@ import * as yup from "yup";
 
 import { SurveyTypes } from "@/lib/suveyType";
 import Loading from "@/components/Saving";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
+
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
 
 const schema = yup.object().shape({
   itten_nombre: yup
@@ -59,7 +111,10 @@ const SurveyTypeForm = () => {
 
   return (
     <>
-      <h4>Tipo de encuesta</h4>
+      <h4 className="title">Tipo de encuesta</h4>
+      <p className="paragraph">
+        En esta sección se puede crear un nuevo tipo de encuesta.
+      </p>
       <form id="form-tipo-encuesta" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itten_nombre"
@@ -67,7 +122,7 @@ const SurveyTypeForm = () => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="nombre-form"
               label="Tipo de encuesta"
@@ -87,7 +142,7 @@ const SurveyTypeForm = () => {
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
+            <CustomTextField
               {...field}
               id="observacion-form"
               label="Observación"
@@ -101,14 +156,14 @@ const SurveyTypeForm = () => {
         />
         <div className={styles.error}>{errors.itten_observacion?.message}</div>
         <div className={styles.button_container}>
-          <Button
+          <CustomButton
             type="submit"
             variant="outlined"
             className={styles.button}
             disabled={loading}
           >
             {loading ? <Loading /> : <div>Guardar</div>}
-          </Button>
+          </CustomButton>
         </div>
       </form>
       <Stack spacing={2} sx={{ width: "100%" }}>

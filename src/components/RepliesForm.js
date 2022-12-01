@@ -10,6 +10,7 @@ import {
   LinearProgress,
   Typography,
   Box,
+  styled,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import PropTypes from "prop-types";
@@ -30,6 +31,51 @@ import { SurveyTemplates } from "@/lib/surveyTemplate";
 import { SurveyReplys } from "@/lib/surveyReply";
 import ErrorInformation from "@/components/ErrorInformation";
 import LoadingInformation from "@/components/LoadingInformation";
+
+const CustomTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#05579f",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#0C89CB",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#05579f",
+    },
+  },
+});
+
+const CustomButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#0C89CB",
+  borderRadius: 0,
+  color: "#0C89CB",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#0C89CB",
+    borderColor: "#0C89CB",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#05579f",
+    borderColor: "#05579f",
+  },
+});
 
 const schema = yup.object().shape({
   itres_fecha_test: yup
@@ -476,8 +522,8 @@ const RepliesForm = () => {
       });
       return (
         <>
-          <h4>Respuestas en bloque</h4>
-          <p>
+          <h4 className="title">Respuestas en bloque</h4>
+          <p className="paragraph">
             En esta sección se suben las respuestas en bloque, para ello debe
             seleccionar una encuesta y subir un archivo en formato .xlsx o .csv
             con las respuestas de la encuesta.
@@ -489,7 +535,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   id="typeSurvey"
                   label="Tipo de encuesta"
                   helperText="Selecciona un tipo de encuesta"
@@ -508,7 +554,7 @@ const RepliesForm = () => {
                       {_typeSurvey}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -517,7 +563,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="itenc_codigo"
                   label="Encuesta"
@@ -537,7 +583,7 @@ const RepliesForm = () => {
                       {type.itenc_observacion}
                     </MenuItem>
                   ))}
-                </TextField>
+                </CustomTextField>
               )}
             />
             <Controller
@@ -546,7 +592,7 @@ const RepliesForm = () => {
               defaultValue=""
               rules={{ required: true }}
               render={({ field }) => (
-                <TextField
+                <CustomTextField
                   {...field}
                   id="date-form"
                   label="Fecha test"
@@ -592,14 +638,14 @@ const RepliesForm = () => {
               <LinearProgressWithLabel value={progress} color={colorProgress} />
             </Box>
             <div className={styles.button_container}>
-              <Button
+              <CustomButton
                 type="submit"
                 variant="outlined"
                 disabled={loading}
                 className={styles.button}
               >
                 Guardar
-              </Button>
+              </CustomButton>
             </div>
           </form>
           <Stack spacing={2} sx={{ width: "100%" }}>

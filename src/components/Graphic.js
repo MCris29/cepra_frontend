@@ -17,7 +17,7 @@ import {
   LinearScale,
 } from "chart.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import ThemeCepra from "@/constants/theme";
 import { Chart, Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import LoadingInformation from "@/components/LoadingInformation";
@@ -25,7 +25,11 @@ import LoadingInformation from "@/components/LoadingInformation";
 //Carga dinámica de Boxplot
 const Boxplot = dynamic(() => import("@/components/Boxplot"), {
   ssr: false,
-  loading: () => <LoadingInformation />,
+  loading: () => (
+    <Skeleton variant="rectangular" width="40%" sx={{ bgcolor: "#c4c4c4" }}>
+      <div style={{ paddingTop: "57%" }} />
+    </Skeleton>
+  ),
 });
 
 const graphicBackgroundColor = [
@@ -231,13 +235,13 @@ const Graphic = (props) => {
                 props.type == "doughnut" ||
                 props.type == "radar"
                   ? "42%"
-                  : "66%",
+                  : "100%",
               laptop:
                 props.type == "pie" ||
                 props.type == "doughnut" ||
                 props.type == "radar"
                   ? "62%"
-                  : "82%",
+                  : "100%",
               tablet: "88%",
               mobile: "92%",
               min: "96%",

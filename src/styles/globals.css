@@ -3,9 +3,9 @@ body {
   scroll-behavior: smooth;
   padding: 0;
   margin: 0;
-  font-family: "Montserrat", sans-serif;
-  line-height: 1.6;
-  color: #28333e;
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  color: rgb(0, 0, 0);
 }
 
 a {
@@ -16,6 +16,28 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.logo {
+  cursor: pointer;
+  height: 166px;
+  width: 139px;
+}
+
+.title {
+  color: #05579f;
+  font-size: 24px;
+  font-weight: bold;
+}
+.subtitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(128, 129, 131);
+}
+.paragraph {
+  font-size: 14px;
+  margin: 0;
+}
+
 
 /*Landing Page*/
 .page {
@@ -49,20 +71,23 @@ a {
 .main-container .menu {
   position: fixed;
   padding: 40px 10px;
-  border-right: 1px solid #d9d9d9;
 }
 .main-container .menu ::-webkit-scrollbar {
   width: 0;
 }
 
 .main-admin {
-  margin-left: 15em;
+  margin-left: 18em;
   padding: 40px;
-  min-width: 82%;
+  max-width: 665px;
 }
 
 /*Responsive*/
 @media only screen and (max-width: 900px) {
+  .logo {
+    height: 112px;
+    width: 89px;
+  }
   .main-admin {
     margin-left: 14em;
     padding: 40px;
@@ -71,21 +96,12 @@ a {
 }
 
 @media only screen and (max-width: 600px) {
+  .logo {
+    height: 86px;
+    width: 69px;
+  }
   .main-admin {
     margin-left: 6em;
-    padding: 40px;
+    padding: 12px;
   }
-
-  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
-    border-radius: 0;
-    margin: 3px 0;
-  }
-}
-
-.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
-  border-radius: 0;
-  margin: 0 3px;
-}
-.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
-  border-radius: 0;
 }

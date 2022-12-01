@@ -3,10 +3,16 @@
   color: #d32f2f;
   padding: 0 0 15px 5px;
   min-width: 100%;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 .button {
-  text-transform: none;
-  border-radius: 0;
+  color: #0c89cb;
+  border: 1px solid #0c89cb;
+}
+.button:hover {
+  color: #fff;
+  background-color: #0c89cb;
 }
 
 /*Formulario  de encuesta*/
@@ -32,20 +38,18 @@ input[type="file"].input_file {
   color: #666666;
 }
 .button_template_survey:hover {
-  border: 1px solid #000;
+  border: 1px solid #0C89CB;
 }
 
 /*Tarjeta de preguntas*/
 .cardParent {
   margin: 8px 0;
   padding: 12px;
-  border: 1px solid #c4c4c4;
   border-radius: 0;
 }
 .cardChild {
   margin: 8px 0 0 35px;
   padding: 12px;
-  border: 1px solid #c4c4c4;
   border-radius: 0;
 }
 .cardOption {
@@ -53,6 +57,7 @@ input[type="file"].input_file {
 }
 .cardOption .options {
   padding: 0 0 0 16px;
+  font-size: 14px;
 }
 
 .observation {

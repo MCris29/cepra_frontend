@@ -5,7 +5,7 @@ import styles from "@/styles/LandingGraphic.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Skeleton } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import dayjs from "dayjs";
 
@@ -328,7 +328,7 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Lista de gráficos",
+            label: "Más gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -362,7 +362,7 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Lista de gráficos",
+            label: "Más gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -372,7 +372,7 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Lista de gráficos",
+            label: "Más gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -444,7 +444,7 @@ export default function LandingGraphic() {
           <ThemeProvider theme={theme}>
             <Box className={styles.container}>
               <Box className={styles.title_container}>
-                <Typography>{data.encuesta_observacion}</Typography>
+                <h4 className="title">{data.encuesta_observacion}</h4>
               </Box>
               <Box className={styles.sidebar}>
                 <Sidebar items={sidebarItems} />
@@ -512,7 +512,13 @@ export default function LandingGraphic() {
                             )}
 
                             {loadingFilter ? (
-                              <LoadingInformation />
+                              <Skeleton
+                                variant="rectangular"
+                                width="100%"
+                                sx={{ bgcolor: "#c4c4c4" }}
+                              >
+                                <div style={{ paddingTop: "48%" }} />
+                              </Skeleton>
                             ) : (
                               <>
                                 <Box className={styles.graphic}>
