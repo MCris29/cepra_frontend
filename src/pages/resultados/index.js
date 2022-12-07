@@ -45,7 +45,7 @@ export default function LandingSurvey() {
   const typeSurveyUrl = new Map([
     ["Energía", "energia"],
     ["Innovación", "innovacion"],
-    ["Desempeño", "desempeno"],
+    ["Desempeño Colaborativo", "desempeno"],
   ]);
   const [surveyList, setSurveyList] = useState([]);
   const columns = [
@@ -53,12 +53,12 @@ export default function LandingSurvey() {
       field: "itenc_fecha_vigente",
       headerName: "Fecha",
       type: "dateTime",
-      width: 175,
+      width: 125,
       renderCell: (data) => {
         return handleDate(data.row.itenc_fecha_vigente);
       },
     },
-    { field: "itenc_observacion", headerName: "Encuesta", width: 400 },
+    { field: "itenc_observacion", headerName: "Encuesta", width: 650 },
     {
       field: "actions",
       headerName: "",
