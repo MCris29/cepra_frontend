@@ -7,7 +7,7 @@ import ReplyForm from "@/components/ReplyForm";
 export default function Answers() {
   return (
     <>
-      <div className={styles.forms_container}>
+      <div className="main-admin-content">
         <RepliesForm />
         <Divider sx={{ margin: "40px 0" }} />
         <ReplyForm />

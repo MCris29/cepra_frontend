@@ -51,7 +51,7 @@ export default function LandingSurvey() {
   const columns = [
     {
       field: "itenc_fecha_vigente",
-      headerName: "Fecha de vigencia",
+      headerName: "Fecha",
       type: "dateTime",
       width: 175,
       renderCell: (data) => {

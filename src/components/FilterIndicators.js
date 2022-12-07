@@ -13,6 +13,7 @@ const FilterIndicators = (props) => {
   );
 
   const [filter, setFilter] = useState("all");
+  const [filterLabel, setFilterLabel] = useState("Dato");
   const [filterData, setFilterData] = useState("all");
   const [arrayData, setArrayData] = useState([]);
 
@@ -20,20 +21,40 @@ const FilterIndicators = (props) => {
     switch (filter) {
       case "sector":
         setArrayData(data.data.sector);
+        setFilterLabel("Sector");
         break;
       case "subsector":
         setArrayData(data.data.subsector);
+        setFilterLabel("Subsector");
         break;
       case "ciudad":
         setArrayData(data.data.ciudad);
+        setFilterLabel("Ciudad");
         break;
       case "all":
         setArrayData([]);
+        setFilterLabel("Dato");
         setFilterData("");
         props.handleFilter(filter, []);
         break;
     }
   }, [filter]);
+
+  const handleSorted = (array) => {
+    array.sort((a, b) => {
+      const nameA = a.label.toUpperCase();
+      const nameB = b.label.toUpperCase();
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  handleSorted(arrayData);
 
   const handleFilterIndicator = (e) => {
     setFilter(e.target.value);
@@ -47,13 +68,13 @@ const FilterIndicators = (props) => {
   const FilterItems = () => {
     return (
       <FormControl size="small" className={styles.filter_item}>
-        <InputLabel id="demo-simple-select-label">Indicador</InputLabel>
+        <InputLabel id="demo-simple-select-label">Filtro</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           style={{ borderRadius: 0, margin: "0 4px" }}
           value={filter}
-          label="Indicador"
+          label="Filtro"
           onChange={handleFilterIndicator}
         >
           <MenuItem value={"all"}>Todos</MenuItem>
@@ -68,13 +89,13 @@ const FilterIndicators = (props) => {
   const FilterDataItems = () => {
     return (
       <FormControl size="small" className={styles.filter_item}>
-        <InputLabel id="demo-simple-select-label">Dato</InputLabel>
+        <InputLabel id="demo-simple-select-label">{filterLabel}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           style={{ borderRadius: 0, margin: "0 4px" }}
           value={filterData}
-          label="Dato"
+          label={filterLabel}
           onChange={handleFilterData}
         >
           {arrayData.map((item, index) => {
@@ -101,13 +122,13 @@ const FilterIndicators = (props) => {
       ) : (
         <>
           <FormControl size="small" className={styles.filter_item}>
-            <InputLabel id="demo-simple-select-label">Indicador</InputLabel>
+            <InputLabel id="demo-simple-select-label">Filtro</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               style={{ borderRadius: 0, margin: "0 4px" }}
               value={"all"}
-              label="Indicador"
+              label="Filtro"
             >
               <MenuItem value={"all"}>Todos</MenuItem>
               <MenuItem disabled>Cargando...</MenuItem>

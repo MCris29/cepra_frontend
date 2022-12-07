@@ -241,15 +241,19 @@ const SurveyForm = () => {
               )
             );
 
-            newCategoryArray.push(
-              new Category(
-                data[index][0] ? data[index][0].toString().trim() : "", // nombre_categoria
-                data[index][1] ? data[index][1].toString().trim() : "", // observacion_categoria
-                questionArray // array preguntas
-              )
-            );
+            //Si existe una categoría se guardan las preguntas
+            if (data[index][0]) {
+              newCategoryArray.push(
+                new Category(
+                  data[index][0] ? data[index][0].toString().trim() : "", // nombre_categoria
+                  data[index][1] ? data[index][1].toString().trim() : "", // observacion_categoria
+                  questionArray // array preguntas
+                )
+              );
+            }
           }
         }
+
         setCategoryArray(newCategoryArray);
       };
       reader.readAsBinaryString(file);
@@ -326,7 +330,7 @@ const SurveyForm = () => {
             <CustomTextField
               {...field}
               id="date-form"
-              label="Fecha vigente"
+              label="Fecha"
               variant="outlined"
               type="date"
               margin="dense"

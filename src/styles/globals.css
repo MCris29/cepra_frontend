@@ -38,7 +38,6 @@ a {
   margin: 0;
 }
 
-
 /*Landing Page*/
 .page {
   overflow: hidden;
@@ -79,7 +78,9 @@ a {
 .main-admin {
   margin-left: 18em;
   padding: 40px;
-  max-width: 665px;
+}
+.main-admin-content {
+  max-width: 565px;
 }
 
 /*Responsive*/

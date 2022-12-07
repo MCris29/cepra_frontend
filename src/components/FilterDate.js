@@ -17,7 +17,7 @@ const CustomTextField = styled(TextField)({
 const FilterDate = (props) => {
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
           label="Fecha inicio"
           inputFormat="MM/DD/YYYY"
@@ -48,7 +48,7 @@ const FilterDate = (props) => {
             />
           )}
         />
-      </LocalizationProvider>
+      </LocalizationProvider> */}
     </>
   );
 };

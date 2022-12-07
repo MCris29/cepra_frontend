@@ -376,6 +376,40 @@ export default function LandingGraphic() {
             onClick: () => handleOpenDashboard(),
           },
         ];
+
+      default:
+        return [
+          "divider",
+          {
+            name: "sectores_economicos",
+            label: "Sectores económicos",
+            onClick: () => orgGraficoSector(surveyId),
+          },
+          "divider",
+          {
+            label: "Muestra por ciudad",
+            name: "grafico_i2",
+            onClick: () => orgGraficoCiudad(surveyId),
+          },
+          "divider",
+          {
+            name: "grafico_i3",
+            label: "Perfil de encuestados por nivel de decisión",
+            onClick: () => contactoGraficoDes(surveyId),
+          },
+          "divider",
+          {
+            name: "grafico_i4",
+            label: "Perfil de encuestados por nivel de estudios",
+            onClick: () => contactoGraficoEst(surveyId),
+          },
+          "divider",
+          {
+            name: "Lista de gráficos",
+            label: "Más gráficos",
+            onClick: () => handleOpenDashboard(),
+          },
+        ];
     }
   };
 
@@ -484,11 +518,12 @@ export default function LandingGraphic() {
                           </>
                         ) : (
                           <>
-                            {/* Se muestran los gráficos dinámicos con el filtro */}
+                            {/* Filtro de gráficos dínamicos discretos y continuos */}
                             {chartType === "boxplot" ? (
-                              <span></span>
+                              <span>{/* Filtro de datos continuos */}</span>
                             ) : (
                               <Box className={styles.filter}>
+                                {/* Filtro de datos discretos */}
                                 <div className={styles.filter_section}>
                                   <FilterTypeChart
                                     chartType={chartType}

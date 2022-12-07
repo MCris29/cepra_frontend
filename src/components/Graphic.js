@@ -234,7 +234,7 @@ const Graphic = (props) => {
                 props.type == "pie" ||
                 props.type == "doughnut" ||
                 props.type == "radar"
-                  ? "42%"
+                  ? "66%"
                   : "100%",
               laptop:
                 props.type == "pie" ||
