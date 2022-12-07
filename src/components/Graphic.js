@@ -22,15 +22,18 @@ import ThemeCepra from "@/constants/theme";
 import { Chart, Radar, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import LoadingInformation from "@/components/LoadingInformation";
 
-//Carga dinámica de Boxplot
-const Boxplot = dynamic(() => import("@/components/Boxplot"), {
-  ssr: false,
-  loading: () => (
-    <Skeleton variant="rectangular" width="40%" sx={{ bgcolor: "#c4c4c4" }}>
-      <div style={{ paddingTop: "57%" }} />
-    </Skeleton>
-  ),
-});
+//Carga dinámica de gráfico continuo
+const GraphicContinuos = dynamic(
+  () => import("@/components/GraphicContinuos"),
+  {
+    ssr: false,
+    loading: () => (
+      <Skeleton variant="rectangular" width="40%" sx={{ bgcolor: "#c4c4c4" }}>
+        <div style={{ paddingTop: "57%" }} />
+      </Skeleton>
+    ),
+  }
+);
 
 const graphicBackgroundColor = [
   "rgba(55, 160, 235, 0.5)",
@@ -220,7 +223,11 @@ const Graphic = (props) => {
       case "radar":
         return <Radar id="graphic_canvas" options={optionsRadar} data={data} />;
       case "boxplot":
-        return <Boxplot data={data} title={props.title} />;
+        return <GraphicContinuos data={data} title={props.title} type="box" />;
+      case "histogram":
+        return (
+          <GraphicContinuos data={data} title={props.title} type="histogram" />
+        );
     }
   };
 

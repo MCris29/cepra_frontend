@@ -25,6 +25,7 @@ import NotSelectedItem from "@/components/NotSelectedItem";
 import ThemeCepra from "@/constants/theme";
 import { filters } from "@/lib/filterGraphic";
 import { ChartData } from "@/lib/ChartData";
+import FilterContinuosGraphic from "@/components/FilterCotinuosGraphic";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -519,8 +520,17 @@ export default function LandingGraphic() {
                         ) : (
                           <>
                             {/* Filtro de gráficos dínamicos discretos y continuos */}
-                            {chartType === "boxplot" ? (
-                              <span>{/* Filtro de datos continuos */}</span>
+                            {chartType === "boxplot" ||
+                            chartType === "histogram" ? (
+                              <Box className={styles.filter}>
+                                {/* Filtro de datos continuos */}
+                                <div className={styles.filter_section}>
+                                  <FilterContinuosGraphic
+                                    chartType={chartType}
+                                    handleTypeChart={handleTypeChart}
+                                  />
+                                </div>
+                              </Box>
                             ) : (
                               <Box className={styles.filter}>
                                 {/* Filtro de datos discretos */}
