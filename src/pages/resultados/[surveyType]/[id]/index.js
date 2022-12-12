@@ -363,7 +363,7 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Gráficos estáticos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -397,17 +397,17 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Gráficos estáticos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
-      case "desempeno":
+      case "desempeno-colaborativo":
         return [
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Gráficos estáticos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -441,7 +441,7 @@ export default function LandingGraphic() {
           "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Gráficos estáticos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -497,8 +497,8 @@ export default function LandingGraphic() {
 
       let sidebarItems = [];
       sidebarItems.push({
-        name: "Gráficos estáticos",
-        label: "Gráficos estáticos",
+        name: "Gráficos",
+        label: "Gráficos",
         items: handleItems(),
       });
       sidebarItems.push("divider");

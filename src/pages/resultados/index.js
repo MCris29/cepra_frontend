@@ -41,13 +41,10 @@ export default function LandingSurvey() {
   const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
     shouldRetryOnError: false,
   });
+
   const [typeSurvey, setTypeSurvey] = useState("Selecciona una encuesta");
-  const typeSurveyUrl = new Map([
-    ["Energía", "energia"],
-    ["Innovación", "innovacion"],
-    ["Desempeño Colaborativo", "desempeno"],
-  ]);
   const [surveyList, setSurveyList] = useState([]);
+
   const columns = [
     {
       field: "itenc_fecha_vigente",
@@ -67,7 +64,7 @@ export default function LandingSurvey() {
       renderCell: (data) => [
         <Link
           key={data.row.itenc_codigo}
-          href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(typeSurvey)}/${
+          href={`${RoutesCepra.OBS_SURVEY}/${handleTypeSurvey(typeSurvey)}/${
             data.row.itenc_codigo
           }`}
         >
@@ -80,6 +77,14 @@ export default function LandingSurvey() {
       ],
     },
   ];
+
+  const handleTypeSurvey = (typeSurvey) => {
+    return typeSurvey
+      .toLowerCase()
+      .replace(" ", "-")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  };
 
   const handleChangeTypeSurvey = (event) => {
     const newTypeSurvey = event.target.value;
