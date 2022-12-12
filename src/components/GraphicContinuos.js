@@ -1,39 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Plot from "react-plotly.js";
 
 const GraphicContinuos = ({ data, title, type }) => {
-  var trace1 = {
-    name: "Sector 1",
-    y: data.labels,
-    type: type,
-    marker: {
-      color: "rgba(234, 134, 27, 0.7)",
-    },
-  };
+  const [traces, setTraces] = useState([]);
 
-  var trace2 = {
-    name: "Sector 2",
-    y: data.labels,
-    type: type,
-    marker: {
-      color: "rgba(25, 120, 227, 0.7)",
-    },
-  };
-
-  var trace3 = {
-    name: "Sector 3",
-    y: data.labels,
-    type: type,
-    marker: {
-      color: "rgba(200, 14, 27, 0.7)",
-    },
-  };
+  useEffect(() => {
+    let array_trace = [];
+    data.map((item) => {
+      for (let key in item) {
+        let trace = {
+          name: key,
+          y: item[key],
+          type: type,
+        };
+        array_trace.push(trace);
+      }
+    });
+    setTraces(array_trace);
+  }, [type]);
 
   return (
     <>
       <Plot
-        data={[trace1, trace2, trace3]}
-        layout={{ width: 620, height: 480, title: title }}
+        data={traces}
+        layout={{ width: 680, height: 520, title: title }}
       />
     </>
   );

@@ -223,10 +223,16 @@ const Graphic = (props) => {
       case "radar":
         return <Radar id="graphic_canvas" options={optionsRadar} data={data} />;
       case "boxplot":
-        return <GraphicContinuos data={data} title={props.title} type="box" />;
+        return (
+          <GraphicContinuos data={props.data} title={props.title} type="box" />
+        );
       case "histogram":
         return (
-          <GraphicContinuos data={data} title={props.title} type="histogram" />
+          <GraphicContinuos
+            data={props.data}
+            title={props.title}
+            type="histogram"
+          />
         );
     }
   };

@@ -131,29 +131,45 @@ export default function LandingGraphic() {
     setLoadingItem(true);
     setChartInformation(undefined);
     setItemId(item.id);
-    ChartData.getGraphic3ById(item.id)
-      .then((response) => {
-        if (response.data) {
-          response.data.data.title = item.label;
-          setChartInformation(response.data.data);
-          setChartTitle(item.name);
-          if (
-            item.data_type === "continua" ||
-            item.data_type === "variable continua"
-          ) {
-            setChartType("boxplot");
-          } else {
-            setChartType("bar");
-          }
 
+    // Diferencio el tipo de dato si es continuo para usar el método de gráficos continuos
+    if (
+      item.data_type === "continuo" ||
+      item.data_type === "continua" ||
+      item.data_type === "variable continua"
+    ) {
+      ChartData.graficoContinuo(surveyId, item.id, "sector")
+        .then((response) => {
+          if (response.data) {
+            response.data.data.title = item.label;
+            setChartInformation(response.data.data);
+            setChartTitle(item.name);
+            setChartType("boxplot");
+            setLoadingItem(false);
+            setObservation(item.observation);
+          }
+        })
+        .catch((error) => {
           setLoadingItem(false);
-          setObservation(item.observation);
-        }
-      })
-      .catch((error) => {
-        setLoadingItem(false);
-        setErrorItem(true);
-      });
+          setErrorItem(true);
+        });
+    } else {
+      ChartData.getGraphic3ById(item.id)
+        .then((response) => {
+          if (response.data) {
+            response.data.data.title = item.label;
+            setChartInformation(response.data.data);
+            setChartTitle(item.name);
+            setChartType("bar");
+            setLoadingItem(false);
+            setObservation(item.observation);
+          }
+        })
+        .catch((error) => {
+          setLoadingItem(false);
+          setErrorItem(true);
+        });
+    }
   };
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
@@ -313,6 +329,24 @@ export default function LandingGraphic() {
           });
         break;
     }
+  };
+  // Filtro de indicadores continuos
+  const handleFilterContinous = (filter) => {
+    ChartData.graficoContinuo(surveyId, itemId, filter)
+      .then((response) => {
+        if (response.data) {
+          response.data.data.title = item.label;
+          setChartInformation(response.data.data);
+          setChartTitle(item.name);
+          setChartType("boxplot");
+          setLoadingItem(false);
+          setObservation(item.observation);
+        }
+      })
+      .catch((error) => {
+        setLoadingItem(false);
+        setErrorItem(true);
+      });
   };
 
   //Arma el menú de gráficos estáticos dependiendo del tipo de encuesta
@@ -528,6 +562,9 @@ export default function LandingGraphic() {
                                   <FilterContinuosGraphic
                                     chartType={chartType}
                                     handleTypeChart={handleTypeChart}
+                                    handleFilterContinous={
+                                      handleFilterContinous
+                                    }
                                   />
                                 </div>
                               </Box>
