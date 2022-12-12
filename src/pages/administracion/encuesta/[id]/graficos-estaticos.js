@@ -43,16 +43,24 @@ export default function AdminGraphics() {
               {newData.map((item, index) => (
                 <div key={index}>
                   <div>
-                    <DeleteStaticGraphic
-                      id={item.itegr_codigo}
-                      title={item.itegr_titulo}
-                      refresh={handleRefresh}
-                    />
-                  </div>
-                  <div>
                     <h5 className="subtitle">{item.itegr_titulo}</h5>
                     <p className="paragraph">{item.itegr_observacion}</p>
                     <img src={item.itegr_url} />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      marginTop: "12px",
+                    }}
+                  >
+                    <div>
+                      <DeleteStaticGraphic
+                        id={item.itegr_codigo}
+                        title={item.itegr_titulo}
+                        refresh={handleRefresh}
+                      />
+                    </div>
                   </div>
                   <Divider sx={{ margin: "40px 0" }} />
                 </div>

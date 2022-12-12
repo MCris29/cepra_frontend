@@ -35,6 +35,33 @@ const CustomButton = styled(Button)({
     borderColor: "#05579f",
   },
 });
+const DeleteButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 14,
+  fontWeight: "bold",
+  padding: "6px 12px",
+  border: "1px solid",
+  lineHeight: 1.5,
+  backgroundColor: "transparent",
+  borderColor: "#d32f2f",
+  borderRadius: 0,
+  color: "#d32f2f",
+
+  "&:hover": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#d32f2f",
+    borderColor: "#d32f2f",
+    transition: "0.3s",
+  },
+  "&:active": {
+    boxShadow: "none",
+    color: "#fff",
+    backgroundColor: "#d32f2f",
+    borderColor: "#d32f2f",
+  },
+});
 
 const style = {
   position: "absolute",
@@ -81,15 +108,16 @@ const DeleteStaticGraphic = (props) => {
 
   return (
     <>
-      <Button
+      <DeleteButton
         variant="outlined"
         size="small"
         color="error"
         style={{ borderRadius: 0 }}
         onClick={handleOpenModal}
       >
-        <DeleteIcon />
-      </Button>
+        <p className="paragraph">Eliminar gráfico</p>
+        
+      </DeleteButton>
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -102,12 +130,8 @@ const DeleteStaticGraphic = (props) => {
             <strong>{props.title}</strong>?
           </p>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <CustomButton className={styles.button} onClick={handleDelete}>
-              Eliminar
-            </CustomButton>
-            <CustomButton className={styles.button} onClick={handleCloseModal}>
-              Cancelar
-            </CustomButton>
+            <DeleteButton onClick={handleDelete}>Eliminar</DeleteButton>
+            <CustomButton onClick={handleCloseModal}>Cancelar</CustomButton>
           </div>
         </Box>
       </Modal>
