@@ -145,6 +145,9 @@ export default function LandingSurvey() {
                         </MenuItem>
                       ))}
                     </Select>
+                    <p className="paragraph" style={{ color: "#8a8a8a" }}>
+                      Selecciona una encuesta
+                    </p>
                   </FormControl>
                 </Box>
                 <Box
