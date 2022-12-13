@@ -23,7 +23,7 @@ const GraphicContinuos = ({ data, title, type }) => {
     <>
       <Plot
         data={traces}
-        layout={{ width: 680, height: 520, title: title }}
+        layout={{ width: 840, height: 420, title: title }}
       />
     </>
   );

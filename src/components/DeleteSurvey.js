@@ -118,6 +118,7 @@ const DeleteSurvey = (props) => {
   const handleDelete = () => {
     try {
       Surveys.deleteSurvey(survey_id).then((response) => {
+        console.log(response);
         handleOpenAlert();
         handleCloseModal();
         setTimeout(() => {
@@ -126,6 +127,7 @@ const DeleteSurvey = (props) => {
       });
     } catch (error) {
       console.log(error);
+      handleCloseModal();
       handleOpenErrorAlert();
     }
   };
