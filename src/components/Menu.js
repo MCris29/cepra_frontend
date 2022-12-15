@@ -13,8 +13,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 
-import Logo from "@/components/Logo";
-
 const menuItems = [
   {
     title: "Organización",
@@ -100,9 +98,6 @@ const Menu = () => {
     <>
       <div className={styles.container}>
         <div className={styles.tabs}>
-          <div className={styles.tabLogo}>
-            <Logo />
-          </div>
           <div className={styles.tabTitle}>Datos</div>
           {menuItems.map((item, index) => (
             <Tab

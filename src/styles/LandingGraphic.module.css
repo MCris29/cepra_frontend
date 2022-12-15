@@ -9,9 +9,12 @@
   flex-direction: row;
 }
 
-.title_container {
+.title_container_desktop {
   height: 9%;
   width: 100%;
+}
+.title_container_mobile {
+  display: none;
 }
 
 .container_static_graphic {
@@ -25,7 +28,6 @@
 .sidebar {
   padding: 0.5rem 0;
   text-decoration: none;
-  border: 1px solid #c4c4c4;
   border-radius: 0;
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -33,8 +35,8 @@
 
   overflow: auto;
   height: fit-content;
-  max-height: 71vh;
-  width: 28%;
+  max-height: 86vh;
+  width: 18%;
   margin-top: 0;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -47,7 +49,7 @@
   background-color: transparent;
 }
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #eaeaea;
+  background-color: transparent;
   border-radius: 8px;
   min-height: 24px;
   min-width: 24px;
@@ -67,7 +69,7 @@
 
 .dashboard {
   overflow: none;
-  margin-left: 4em;
+  margin-left: 2em;
   margin-top: 0%;
   height: 100%;
   max-height: 71vh;
@@ -91,8 +93,9 @@
   display: flex;
   justify-content: center;
   border-radius: 0;
-  margin: 16px 0;
+  margin: 18px 0;
   height: fit-content;
+  margin-bottom: 22px;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .graphic::-webkit-scrollbar {
@@ -169,5 +172,11 @@
   .img_graphic {
     width: 13rem;
     height: 13rem;
+  }
+  .title_container_desktop {
+    display: none;
+  }
+  .title_container_mobile {
+    display: flex;
   }
 }

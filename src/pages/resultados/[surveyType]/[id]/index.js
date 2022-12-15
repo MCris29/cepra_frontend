@@ -354,94 +354,87 @@ export default function LandingGraphic() {
     switch (surveyType) {
       case "energia":
         return [
-          "divider",
           {
             name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-          "divider",
+
           {
             name: "Lista de gráficos",
-            label: "Gráficos estáticos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
       case "innovacion":
         return [
-          "divider",
           {
             name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-          "divider",
+
           {
             label: "Muestra por ciudad",
             name: "grafico_i2",
             onClick: () => orgGraficoCiudad(surveyId),
           },
-          "divider",
           {
             name: "grafico_i3",
             label: "Perfil de encuestados por nivel de decisión",
             onClick: () => contactoGraficoDes(surveyId),
           },
-          "divider",
           {
             name: "grafico_i4",
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
-          "divider",
           {
             name: "Lista de gráficos",
-            label: "Gráficos estáticos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
       case "desempeno-colaborativo":
         return [
-          "divider",
           {
             name: "Lista de gráficos",
-            label: "Gráficos estáticos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
       default:
         return [
-          "divider",
           {
             name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-          "divider",
+
           {
             label: "Muestra por ciudad",
             name: "grafico_i2",
             onClick: () => orgGraficoCiudad(surveyId),
           },
-          "divider",
+
           {
             name: "grafico_i3",
             label: "Perfil de encuestados por nivel de decisión",
             onClick: () => contactoGraficoDes(surveyId),
           },
-          "divider",
+
           {
             name: "grafico_i4",
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
-          "divider",
+
           {
             name: "Lista de gráficos",
-            label: "Gráficos estáticos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -455,12 +448,12 @@ export default function LandingGraphic() {
 
       for (let index = 0; index < surveyCategoryList.length; index++) {
         let questionList = [];
-        categoryList.push("divider");
+        // categoryList.push("divider");
         surveyCategoryList[index].preguntas.forEach((nextQuestion) => {
           let sub_questions = [];
           // Añade las preguntas hijas dentro de un array en el pregunta padre
           nextQuestion.preguntas_hija.map((sub_question) => {
-            sub_questions.push("divider");
+            // sub_questions.push("divider");
             sub_questions.push({
               name: sub_question.nombre_pregunta,
               label: sub_question.titulo_pregunta,
@@ -483,7 +476,7 @@ export default function LandingGraphic() {
           if (sub_questions.length === 0) {
             question = { ...question, onClick };
           }
-          questionList.push("divider");
+          // questionList.push("divider");
           questionList.push(question);
         });
 
@@ -497,11 +490,11 @@ export default function LandingGraphic() {
 
       let sidebarItems = [];
       sidebarItems.push({
-        name: "Gráficos",
-        label: "Gráficos",
+        name: "Gráficos estáticos",
+        label: "Gráficos estáticos",
         items: handleItems(),
       });
-      sidebarItems.push("divider");
+      // sidebarItems.push("divider");
       sidebarItems.push({
         name: "Gráficos dinámicos",
         label: "Gráficos dinámicos",
@@ -512,13 +505,20 @@ export default function LandingGraphic() {
         <>
           <ThemeProvider theme={theme}>
             <Box className={styles.container}>
-              <Box className={styles.title_container}>
-                <h4 className="title">{data.encuesta_observacion}</h4>
+              <Box className={styles.title_container_mobile}>
+                <h4 className="title" style={{ margin: "0 0 32px 0" }}>
+                  {data.encuesta_observacion}
+                </h4>
               </Box>
               <Box className={styles.sidebar}>
                 <Sidebar items={sidebarItems} />
               </Box>
               <Box className={styles.dashboard}>
+                <Box className={styles.title_container_desktop}>
+                  <h4 className="title" style={{ margin: "0 0 32px 0" }}>
+                    {data.encuesta_observacion}
+                  </h4>
+                </Box>
                 {/* Se muestra del dashboard de imagenes */}
                 {dashboard ? (
                   <GraphicsList id={surveyId} />

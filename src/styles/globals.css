@@ -40,7 +40,6 @@ a {
 
 /*Landing Page*/
 .page {
-  overflow: hidden;
   height: 100%;
   width: 100%;
 }
@@ -48,7 +47,7 @@ a {
   overflow: hidden;
 }
 .content {
-  overflow: auto;
+  margin-bottom: 22px;
 }
 .content::-webkit-scrollbar {
   display: none;
@@ -68,16 +67,16 @@ a {
 }
 
 .main-container .menu {
-  position: fixed;
   padding: 40px 10px;
+  min-width: 18%;
 }
 .main-container .menu ::-webkit-scrollbar {
   width: 0;
 }
 
 .main-admin {
-  margin-left: 18em;
-  padding: 40px;
+  margin-left: 2em;
+  padding: 18px 12px;
 }
 .main-admin-content {
   max-width: 565px;
@@ -102,7 +101,7 @@ a {
     width: 69px;
   }
   .main-admin {
-    margin-left: 6em;
+    margin-left: 2em;
     padding: 12px;
   }
 }

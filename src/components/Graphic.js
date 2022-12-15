@@ -242,18 +242,19 @@ const Graphic = (props) => {
       <ThemeProvider theme={theme}>
         <Box
           sx={{
+            marginBottom: "42px",
             width: {
               desktop:
                 props.type == "pie" ||
                 props.type == "doughnut" ||
                 props.type == "radar"
-                  ? "66%"
+                  ? "46%"
                   : "100%",
               laptop:
                 props.type == "pie" ||
                 props.type == "doughnut" ||
                 props.type == "radar"
-                  ? "62%"
+                  ? "52%"
                   : "100%",
               tablet: "88%",
               mobile: "92%",
