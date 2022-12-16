@@ -33,7 +33,7 @@ export default function AdminGraphics() {
   return (
     <>
       {newData ? (
-        <div>
+        <div className="main-admin-content">
           {newData.length === 0 ? (
             <div style={{ display: "flex", justifyContent: "center" }}>
               <p className="paragraph">No existen gráficos estáticos</p>
@@ -45,7 +45,7 @@ export default function AdminGraphics() {
                   <div>
                     <h5 className="subtitle">{item.itegr_titulo}</h5>
                     <p className="paragraph">{item.itegr_observacion}</p>
-                    <img src={item.itegr_url} />
+                    <img src={item.itegr_url} style={{ width: "100%" }} />
                   </div>
                   <div
                     style={{

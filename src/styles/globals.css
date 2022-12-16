@@ -68,14 +68,14 @@ a {
 
 .main-container .menu {
   padding: 40px 10px;
-  min-width: 26%;
+  min-width: 22%;
 }
 .main-container .menu ::-webkit-scrollbar {
   width: 0;
 }
 
 .main-admin {
-  margin-left: 2em;
+  margin-left: 1em;
   padding: 18px 12px;
 }
 .main-admin-content {

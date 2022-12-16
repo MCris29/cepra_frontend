@@ -656,7 +656,7 @@ const RepliesForm = () => {
                 severity={"success"}
                 sx={{ width: "100%" }}
               >
-                Encuesta guardada con exito
+                Respuestas guardadas con exito
               </Alert>
             </Snackbar>
           </Stack>

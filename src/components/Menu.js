@@ -20,9 +20,9 @@ const menuItems = [
     to: Routes.ORGANIZATION,
   },
   { title: "Encuesta", icon: <ArticleOutlinedIcon />, to: Routes.SURVEY },
-  { title: "Respuestas", icon: <BallotOutlinedIcon />, to: Routes.ANSWERS },
+  { title: "Respuesta", icon: <BallotOutlinedIcon />, to: Routes.ANSWERS },
   {
-    title: "Gráficos estáticos",
+    title: "Gráfico estático",
     icon: <UploadFileOutlinedIcon />,
     to: Routes.STATIC_GRAPHICS,
   },
