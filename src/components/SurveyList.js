@@ -57,13 +57,13 @@ const columns = [
       </div>,
     ],
   },
-  { field: "itten_nombre", headerName: "Tipo de encuesta", width: 175 },
-  { field: "itenc_observacion", headerName: "Encuesta", width: 400 },
+  { field: "itenc_observacion", headerName: "Encuesta", width: 425 },
+  { field: "itten_nombre", headerName: "Tipo de encuesta", width: 225 },
   {
     field: "itenc_fecha_vigente",
-    headerName: "Fecha de vigencia",
+    headerName: "Fecha",
     type: "dateTime",
-    width: 175,
+    width: 125,
     renderCell: (data) => {
       return handleDate(data.row.itenc_fecha_vigente);
     },

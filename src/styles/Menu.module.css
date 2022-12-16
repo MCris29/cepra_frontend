@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   letter-spacing: 0.5px;
-  font-size: small;
+  font-size: 14px;
 }
 
 .tab p {
@@ -38,7 +38,7 @@
 .tabTitle {
   color: #05579f;
   font-weight: bold;
-  font-size: small;
+  font-size: 14px;
   text-transform: none;
   align-items: baseline;
   margin-top: 28px;

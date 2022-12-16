@@ -81,6 +81,10 @@ const schema = yup.object().shape({
     .string()
     .required("Debe ingresar el subsector")
     .max(200, "Debe contener máximo 200 caracteres"),
+  itorg_actividad: yup
+    .string()
+    .required("Debe ingresar la actividad")
+    .max(200, "Debe contener máximo 200 caracteres"),
   itorg_num_empleados: yup
     .string()
     .required("Debe ingresar el número de empleados")
@@ -117,6 +121,7 @@ const OrganizationForm = (props) => {
       itorg_sector: data.itorg_sector,
       itorg_subsector: data.itorg_subsector,
       itorg_num_empleados: data.itorg_num_empleados,
+      itorg_actividad: data.itorg_actividad,
       itorg_ubicacion: data.itorg_ubicacion,
     };
 
@@ -333,6 +338,27 @@ const OrganizationForm = (props) => {
           />
           <span className={styles.error}>
             {errors.itorg_subsector?.message}
+          </span>
+          <Controller
+            name="itorg_actividad"
+            control={control}
+            defaultValue={props.data.itorg_actividad}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <CustomTextField
+                {...field}
+                id="itorg_actividad-form"
+                label="Actividad"
+                variant="outlined"
+                margin="dense"
+                size="small"
+                fullWidth
+                error={Boolean(errors.itorg_actividad)}
+              />
+            )}
+          />
+          <span className={styles.error}>
+            {errors.itorg_actividad?.message}
           </span>
           <Controller
             name="itorg_num_empleados"

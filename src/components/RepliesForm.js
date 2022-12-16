@@ -390,7 +390,7 @@ const RepliesForm = () => {
           //Recorre la primera fila del excel
           //almacenando las preguntas de la
           //encuesta en un array
-          for (let index = 12; index < data[rowHeaders].length; index++) {
+          for (let index = 13; index < data[rowHeaders].length; index++) {
             let cellData = data[rowHeaders][index];
             let cellName = findCellName(rowHeaders + 1, index + 1);
 
@@ -450,13 +450,14 @@ const RepliesForm = () => {
               data[indexRow][4] ? data[indexRow][4].toString().trim() : "", //itorg_num_empleados
               data[indexRow][5] ? data[indexRow][5].toString().trim() : "", //itorg_ubicacion
               data[indexRow][6] ? data[indexRow][6].toString().trim() : "", //itorg_provincia
-              data[indexRow][7] ? data[indexRow][7].toString().trim() : "" //itorg_ciudad
+              data[indexRow][7] ? data[indexRow][7].toString().trim() : "", //itorg_ciudad
+              data[indexRow][8] ? data[indexRow][8].toString().trim() : "" //itorg_actividad
             );
             const contact = new Contact(
-              data[indexRow][8] ? data[indexRow][8].toString().trim() : "", //itcon_nombre
-              data[indexRow][9] ? data[indexRow][9].toString().trim() : "", //itcon_email
-              data[indexRow][10] ? data[indexRow][10].toString().trim() : "", //itcon_nivel_estudios
-              data[indexRow][11] ? data[indexRow][11].toString().trim() : "" //itcon_nivel_decision
+              data[indexRow][9] ? data[indexRow][9].toString().trim() : "", //itcon_nombre
+              data[indexRow][10] ? data[indexRow][10].toString().trim() : "", //itcon_email
+              data[indexRow][11] ? data[indexRow][11].toString().trim() : "", //itcon_nivel_estudios
+              data[indexRow][12] ? data[indexRow][12].toString().trim() : "" //itcon_nivel_decision
             );
 
             const questionReplyArray = [];
@@ -464,7 +465,7 @@ const RepliesForm = () => {
             //almacenando las respuestas de la
             //encuesta de la organizacion en un array
             newQuestionReplyArray.forEach((questionReply, indexCol) => {
-              let cellData = data[indexRow][12 + indexCol];
+              let cellData = data[indexRow][13 + indexCol];
               let cellHeader = questionReply.question;
               //Verifica si existe la celda
               if (cellData) {
@@ -655,7 +656,7 @@ const RepliesForm = () => {
                 severity={"success"}
                 sx={{ width: "100%" }}
               >
-                Encuesta guardada con exito
+                Respuestas guardadas con exito
               </Alert>
             </Snackbar>
           </Stack>

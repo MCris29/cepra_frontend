@@ -34,14 +34,23 @@ async function orgGraficoCiudad(id) {
   return await api.get(`it/orgGraficoCiudad/${id}`);
 }
 
+async function graficoContinuo(itenc_codigo, itepr_codigo, select) {
+  return await api.get(
+    `it/graficoContinuo?itenc_codigo=${itenc_codigo}&itepr_codigo=${itepr_codigo}&select=${select}`
+  );
+}
+
 export const ChartData = {
   getAll,
   getById,
   getGraphic3ById,
 
-  //Gráficos estáticos para la encuesta de innovación
+  //Gráficos dinámicos con cada indicador
   orgGraficoSector,
   orgGraficoCiudad,
   contactoGraficoDes,
   contactoGraficoEst,
+
+  //Gráficos continuos
+  graficoContinuo,
 };

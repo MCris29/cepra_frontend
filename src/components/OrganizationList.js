@@ -39,9 +39,10 @@ const columns = [
   },
   { field: "itorg_ruc", headerName: "RUC", width: 150 },
   { field: "itorg_nombre", headerName: "Organización", width: 200 },
-  { field: "itorg_sector", headerName: "Sector", width: 150 },
-  { field: "itorg_subsector", headerName: "Subsector", width: 150 },
+  { field: "itorg_sector", headerName: "Sector", width: 125 },
+  { field: "itorg_subsector", headerName: "Subsector", width: 125 },
   { field: "itorg_num_empleados", headerName: "# empleados", width: 100 },
+  { field: "itorg_actividad", headerName: "Actividad", width: 150 },
 ];
 
 const OrganizationList = () => {

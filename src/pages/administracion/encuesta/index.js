@@ -8,9 +8,9 @@ import SurveyList from "@/components/SurveyList";
 const Survey = () => {
   return (
     <>
-      <div className={styles.forms_container}>
-        {/* <SurveyTypeForm />
-        <Divider sx={{ margin: "40px 0" }} /> */}
+      <div className="main-admin-content">
+        <SurveyTypeForm />
+        <Divider sx={{ margin: "40px 0" }} />
         <SurveyForm />
       </div>
       <Divider sx={{ margin: "40px 0" }} />

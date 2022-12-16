@@ -16,9 +16,6 @@
 }
 
 /*Formulario  de encuesta*/
-.forms_container {
-  max-width: 40em;
-}
 input[type="file"].input_file {
   display: none;
 }

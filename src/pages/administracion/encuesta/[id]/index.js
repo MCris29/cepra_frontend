@@ -7,6 +7,7 @@ import QuestionCard from "@/components/QuestionCard";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 import ButtonAddQuestion from "@/components/ButtonAddQuestion";
+import DeleteSurvey from "@/components/DeleteSurvey";
 
 export default function SurveyId() {
   const router = useRouter();
@@ -76,7 +77,14 @@ export default function SurveyId() {
   return (
     <>
       <h4 className="title">{data.encuesta_observacion}</h4>
-      <ButtonAddQuestion categories={data.categorias} />
+      <div style={{ display: "flex", gap: "8px" }}>
+        <div>
+          <ButtonAddQuestion categories={data.categorias} />
+        </div>
+        <div>
+          <DeleteSurvey surveyId={id} surveyName={data.encuesta_observacion} />
+        </div>
+      </div>
       {data ? (
         <div>
           {/* categorias */}

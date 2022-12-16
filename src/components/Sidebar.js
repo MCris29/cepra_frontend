@@ -36,12 +36,10 @@ function SidebarItem({ depthStep = 15, depth = 0, expanded, item, ...rest }) {
         {...rest}
       >
         {expandIcon ? (
-          <Typography style={{ paddingLeft: depth * depthStep}}>
+          <Typography style={{ paddingLeft: depth * depthStep }}>
             <span
               style={{
                 display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
                 fontSize: "16px",
                 fontWeight: "bold",
                 color: "#05579f",

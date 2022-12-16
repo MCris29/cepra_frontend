@@ -687,6 +687,7 @@ const ReplyForm = () => {
                                     variant="outlined"
                                     margin="dense"
                                     size="small"
+                                    label="Escribe tu respuesta"
                                     fullWidth
                                     value={field.value}
                                     onChange={(event) =>
@@ -721,6 +722,7 @@ const ReplyForm = () => {
                                     variant="outlined"
                                     margin="dense"
                                     size="small"
+                                    label="Elige una opción"
                                     fullWidth
                                     select
                                     value={field.value}

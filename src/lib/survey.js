@@ -19,7 +19,11 @@ async function update(id, data) {
 }
 
 async function deleteSurvey(id) {
-  return await api.delete(`it/itencuesta/${id}`);
+  return await api.delete(`it/eliminarEncuesta/${id}`);
+}
+
+async function getNumAnswers(id) {
+  return await api.get(`it/numeroRespuestas/${id}`);
 }
 
 export const Surveys = {
@@ -27,4 +31,5 @@ export const Surveys = {
   create,
   update,
   deleteSurvey,
+  getNumAnswers,
 };

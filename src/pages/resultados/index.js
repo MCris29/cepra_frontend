@@ -41,24 +41,21 @@ export default function LandingSurvey() {
   const { data, error } = useSWR("it/datosGrafico2/2", fetcher, {
     shouldRetryOnError: false,
   });
+
   const [typeSurvey, setTypeSurvey] = useState("Selecciona una encuesta");
-  const typeSurveyUrl = new Map([
-    ["Energía", "energia"],
-    ["Innovación", "innovacion"],
-    ["Desempeño", "desempeno"],
-  ]);
   const [surveyList, setSurveyList] = useState([]);
+
   const columns = [
     {
       field: "itenc_fecha_vigente",
-      headerName: "Fecha de vigencia",
+      headerName: "Fecha",
       type: "dateTime",
-      width: 175,
+      width: 125,
       renderCell: (data) => {
         return handleDate(data.row.itenc_fecha_vigente);
       },
     },
-    { field: "itenc_observacion", headerName: "Encuesta", width: 400 },
+    { field: "itenc_observacion", headerName: "Encuesta", width: 650 },
     {
       field: "actions",
       headerName: "",
@@ -67,7 +64,7 @@ export default function LandingSurvey() {
       renderCell: (data) => [
         <Link
           key={data.row.itenc_codigo}
-          href={`${RoutesCepra.OBS_SURVEY}/${typeSurveyUrl.get(typeSurvey)}/${
+          href={`${RoutesCepra.OBS_SURVEY}/${handleTypeSurvey(typeSurvey)}/${
             data.row.itenc_codigo
           }`}
         >
@@ -80,6 +77,14 @@ export default function LandingSurvey() {
       ],
     },
   ];
+
+  const handleTypeSurvey = (typeSurvey) => {
+    return typeSurvey
+      .toLowerCase()
+      .replace(" ", "-")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  };
 
   const handleChangeTypeSurvey = (event) => {
     const newTypeSurvey = event.target.value;
@@ -140,6 +145,9 @@ export default function LandingSurvey() {
                         </MenuItem>
                       ))}
                     </Select>
+                    <p className="paragraph" style={{ color: "#8a8a8a" }}>
+                      Selecciona una encuesta
+                    </p>
                   </FormControl>
                 </Box>
                 <Box

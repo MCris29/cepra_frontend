@@ -25,6 +25,7 @@ import NotSelectedItem from "@/components/NotSelectedItem";
 import ThemeCepra from "@/constants/theme";
 import { filters } from "@/lib/filterGraphic";
 import { ChartData } from "@/lib/ChartData";
+import FilterContinuosGraphic from "@/components/FilterCotinuosGraphic";
 
 const theme = createTheme({
   breakpoints: ThemeCepra.landing.breakpoints,
@@ -46,11 +47,15 @@ export default function LandingGraphic() {
   const [itemId, setItemId] = useState("");
   const [loadingdItem, setLoadingItem] = useState(false);
   const [loadingFilter, setLoadingFilter] = useState(false);
+  const [continuosFilter, setContinuosFilter] = useState("sector");
   const [errordItem, setErrorItem] = useState(false);
   // const [dateInit, setDateInit] = useState(dayjs("2014-08-18T21:11:54"));
   // const [dateEnd, setDateEnd] = useState(dayjs("2014-08-18T21:11:54"));
   const [dashboard, setDashboard] = useState(false);
   const [showStaticGraphic, setShowStaticGraphic] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   if (error && surveyId) return <ErrorInformation />;
   if (!data) return <LoadingInformation />;
@@ -130,29 +135,45 @@ export default function LandingGraphic() {
     setLoadingItem(true);
     setChartInformation(undefined);
     setItemId(item.id);
-    ChartData.getGraphic3ById(item.id)
-      .then((response) => {
-        if (response.data) {
-          response.data.data.title = item.label;
-          setChartInformation(response.data.data);
-          setChartTitle(item.name);
-          if (
-            item.data_type === "continua" ||
-            item.data_type === "variable continua"
-          ) {
-            setChartType("boxplot");
-          } else {
-            setChartType("bar");
-          }
 
+    // Diferencio el tipo de dato si es continuo para usar el método de gráficos continuos
+    if (
+      item.data_type === "continuo" ||
+      item.data_type === "continua" ||
+      item.data_type === "variable continua"
+    ) {
+      ChartData.graficoContinuo(surveyId, item.id, "sector")
+        .then((response) => {
+          if (response.data) {
+            response.data.data.title = item.label;
+            setChartInformation(response.data.data);
+            setChartTitle(item.name);
+            setChartType("boxplot");
+            setLoadingItem(false);
+            setObservation(item.observation);
+          }
+        })
+        .catch((error) => {
           setLoadingItem(false);
-          setObservation(item.observation);
-        }
-      })
-      .catch((error) => {
-        setLoadingItem(false);
-        setErrorItem(true);
-      });
+          setErrorItem(true);
+        });
+    } else {
+      ChartData.getGraphic3ById(item.id)
+        .then((response) => {
+          if (response.data) {
+            response.data.data.title = item.label;
+            setChartInformation(response.data.data);
+            setChartTitle(item.name);
+            setChartType("bar");
+            setLoadingItem(false);
+            setObservation(item.observation);
+          }
+        })
+        .catch((error) => {
+          setLoadingItem(false);
+          setErrorItem(true);
+        });
+    }
   };
   //Datos de gráfico de organizaciones por sectores
   const orgGraficoSector = (id) => {
@@ -313,66 +334,113 @@ export default function LandingGraphic() {
         break;
     }
   };
+  // Filtro de indicadores continuos
+  const handleFilterContinous = (filter) => {
+    handleCloseDashboard();
+    setLoadingItem(true);
+    setChartInformation(null);
+    setContinuosFilter(filter);
+
+    ChartData.graficoContinuo(surveyId, itemId, filter)
+      .then((response) => {
+        setChartInformation(response.data.data);
+        setChartTitle(item.name);
+        setChartType("boxplot");
+        setLoadingItem(false);
+        setObservation(item.observation);
+      })
+      .catch((error) => {
+        setLoadingItem(false);
+        setErrorItem(true);
+      });
+  };
 
   //Arma el menú de gráficos estáticos dependiendo del tipo de encuesta
   const handleItems = () => {
     switch (surveyType) {
       case "energia":
         return [
-          "divider",
           {
             name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-          "divider",
+
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
       case "innovacion":
         return [
-          "divider",
           {
             name: "sectores_economicos",
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-          "divider",
+
           {
             label: "Muestra por ciudad",
             name: "grafico_i2",
             onClick: () => orgGraficoCiudad(surveyId),
           },
-          "divider",
           {
             name: "grafico_i3",
             label: "Perfil de encuestados por nivel de decisión",
             onClick: () => contactoGraficoDes(surveyId),
           },
-          "divider",
           {
             name: "grafico_i4",
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
-          "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
 
-      case "desempeno":
+      case "desempeno-colaborativo":
         return [
-          "divider",
           {
             name: "Lista de gráficos",
-            label: "Más gráficos",
+            label: "Más Gráficos",
+            onClick: () => handleOpenDashboard(),
+          },
+        ];
+
+      default:
+        return [
+          {
+            name: "sectores_economicos",
+            label: "Sectores económicos",
+            onClick: () => orgGraficoSector(surveyId),
+          },
+
+          {
+            label: "Muestra por ciudad",
+            name: "grafico_i2",
+            onClick: () => orgGraficoCiudad(surveyId),
+          },
+
+          {
+            name: "grafico_i3",
+            label: "Perfil de encuestados por nivel de decisión",
+            onClick: () => contactoGraficoDes(surveyId),
+          },
+
+          {
+            name: "grafico_i4",
+            label: "Perfil de encuestados por nivel de estudios",
+            onClick: () => contactoGraficoEst(surveyId),
+          },
+
+          {
+            name: "Lista de gráficos",
+            label: "Más Gráficos",
             onClick: () => handleOpenDashboard(),
           },
         ];
@@ -386,12 +454,12 @@ export default function LandingGraphic() {
 
       for (let index = 0; index < surveyCategoryList.length; index++) {
         let questionList = [];
-        categoryList.push("divider");
+        // categoryList.push("divider");
         surveyCategoryList[index].preguntas.forEach((nextQuestion) => {
           let sub_questions = [];
           // Añade las preguntas hijas dentro de un array en el pregunta padre
           nextQuestion.preguntas_hija.map((sub_question) => {
-            sub_questions.push("divider");
+            // sub_questions.push("divider");
             sub_questions.push({
               name: sub_question.nombre_pregunta,
               label: sub_question.titulo_pregunta,
@@ -414,7 +482,7 @@ export default function LandingGraphic() {
           if (sub_questions.length === 0) {
             question = { ...question, onClick };
           }
-          questionList.push("divider");
+          // questionList.push("divider");
           questionList.push(question);
         });
 
@@ -432,7 +500,7 @@ export default function LandingGraphic() {
         label: "Gráficos estáticos",
         items: handleItems(),
       });
-      sidebarItems.push("divider");
+      // sidebarItems.push("divider");
       sidebarItems.push({
         name: "Gráficos dinámicos",
         label: "Gráficos dinámicos",
@@ -443,13 +511,50 @@ export default function LandingGraphic() {
         <>
           <ThemeProvider theme={theme}>
             <Box className={styles.container}>
-              <Box className={styles.title_container}>
-                <h4 className="title">{data.encuesta_observacion}</h4>
+              <Box className={styles.title_container_mobile}>
+                <h4 className="title" style={{ margin: "0 0 32px 0" }}>
+                  {data.encuesta_observacion}
+                </h4>
               </Box>
+              <div className={styles.mobile}>
+                <p
+                  className="paragraph"
+                  onClick={() => {
+                    setShowMenu(!showMenu);
+                  }}
+                >
+                  Menú
+                </p>
+                <p
+                  className="paragraph"
+                  onClick={() => {
+                    setShowFilter(!showFilter);
+                  }}
+                >
+                  Filtro
+                </p>
+              </div>
               <Box className={styles.sidebar}>
-                <Sidebar items={sidebarItems} />
+                <div className={styles.container_mobile}>
+                  {showMenu ? (
+                    <>
+                      <Sidebar items={sidebarItems} />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className={styles.container_desktop}>
+                  <Sidebar items={sidebarItems} />
+                </div>
               </Box>
+
               <Box className={styles.dashboard}>
+                <Box className={styles.title_container_desktop}>
+                  <h4 className="title" style={{ margin: "0 0 32px 0" }}>
+                    {data.encuesta_observacion}
+                  </h4>
+                </Box>
                 {/* Se muestra del dashboard de imagenes */}
                 {dashboard ? (
                   <GraphicsList id={surveyId} />
@@ -460,19 +565,45 @@ export default function LandingGraphic() {
                         {showStaticGraphic ? (
                           <>
                             {/* Se muestran los gráficos estáticos sin filtro */}
-                            <Box className={styles.filter}>
-                              <div className={styles.filter_section}>
-                                <FilterTypeChart
-                                  chartType={chartType}
-                                  handleTypeChart={handleTypeChart}
-                                />
-                              </div>
-                              <div className={styles.filter_section}>
-                                <ButtonDownloadGraphic
-                                  title={chartTitle + " (" + chartType + ")"}
-                                />
-                              </div>
-                            </Box>
+                            <div className={styles.container_mobile}>
+                              {showFilter ? (
+                                <>
+                                  <Box className={styles.filter}>
+                                    <div className={styles.filter_section}>
+                                      <FilterTypeChart
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                      />
+                                    </div>
+                                    <div className={styles.filter_section}>
+                                      <ButtonDownloadGraphic
+                                        title={
+                                          chartTitle + " (" + chartType + ")"
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </div>
+                            <div className={styles.container_desktop}>
+                              <Box className={styles.filter}>
+                                <div className={styles.filter_section}>
+                                  <FilterTypeChart
+                                    chartType={chartType}
+                                    handleTypeChart={handleTypeChart}
+                                  />
+                                </div>
+                                <div className={styles.filter_section}>
+                                  <ButtonDownloadGraphic
+                                    title={chartTitle + " (" + chartType + ")"}
+                                  />
+                                </div>
+                              </Box>
+                            </div>
+
                             <Box className={styles.graphic}>
                               <Graphic
                                 type={chartType}
@@ -484,31 +615,111 @@ export default function LandingGraphic() {
                           </>
                         ) : (
                           <>
-                            {/* Se muestran los gráficos dinámicos con el filtro */}
-                            {chartType === "boxplot" ? (
-                              <span></span>
+                            {/* Filtro de gráficos dínamicos discretos y continuos */}
+                            {chartType === "boxplot" ||
+                            chartType === "histogram" ? (
+                              <>
+                                <div className={styles.container_mobile}>
+                                  {showFilter ? (
+                                    <>
+                                      <Box className={styles.filter}>
+                                        {/* Filtro de datos continuos */}
+                                        <div className={styles.filter_section}>
+                                          <FilterContinuosGraphic
+                                            continuosFilter={continuosFilter}
+                                            chartType={chartType}
+                                            handleTypeChart={handleTypeChart}
+                                            handleFilterContinous={
+                                              handleFilterContinous
+                                            }
+                                          />
+                                        </div>
+                                      </Box>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
+                                <div className={styles.container_desktop}>
+                                  <Box className={styles.filter}>
+                                    {/* Filtro de datos continuos */}
+                                    <div className={styles.filter_section}>
+                                      <FilterContinuosGraphic
+                                        continuosFilter={continuosFilter}
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                        handleFilterContinous={
+                                          handleFilterContinous
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
+                                </div>
+                              </>
                             ) : (
-                              <Box className={styles.filter}>
-                                <div className={styles.filter_section}>
-                                  <FilterTypeChart
-                                    chartType={chartType}
-                                    handleTypeChart={handleTypeChart}
-                                  />
-                                  <FilterIndicators
-                                    surveyId={surveyId}
-                                    handleFilter={handleFilter}
-                                  />
-                                  <FilterDate
-                                    handleDateInit={() => {}}
-                                    handleDateEnd={() => {}}
-                                  />
+                              <>
+                                <div className={styles.container_mobile}>
+                                  {showFilter ? (
+                                    <>
+                                      <Box className={styles.filter}>
+                                        {/* Filtro de datos discretos */}
+                                        <div className={styles.filter_section}>
+                                          <FilterTypeChart
+                                            chartType={chartType}
+                                            handleTypeChart={handleTypeChart}
+                                          />
+                                          <FilterIndicators
+                                            surveyId={surveyId}
+                                            handleFilter={handleFilter}
+                                          />
+                                          <FilterDate
+                                            handleDateInit={() => {}}
+                                            handleDateEnd={() => {}}
+                                          />
+                                        </div>
+                                        <div className={styles.filter_section}>
+                                          <ButtonDownloadGraphic
+                                            title={
+                                              chartTitle +
+                                              " (" +
+                                              chartType +
+                                              ")"
+                                            }
+                                          />
+                                        </div>
+                                      </Box>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
-                                <div className={styles.filter_section}>
-                                  <ButtonDownloadGraphic
-                                    title={chartTitle + " (" + chartType + ")"}
-                                  />
+                                <div className={styles.container_desktop}>
+                                  <Box className={styles.filter}>
+                                    {/* Filtro de datos discretos */}
+                                    <div className={styles.filter_section}>
+                                      <FilterTypeChart
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                      />
+                                      <FilterIndicators
+                                        surveyId={surveyId}
+                                        handleFilter={handleFilter}
+                                      />
+                                      <FilterDate
+                                        handleDateInit={() => {}}
+                                        handleDateEnd={() => {}}
+                                      />
+                                    </div>
+                                    <div className={styles.filter_section}>
+                                      <ButtonDownloadGraphic
+                                        title={
+                                          chartTitle + " (" + chartType + ")"
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
                                 </div>
-                              </Box>
+                              </>
                             )}
 
                             {loadingFilter ? (

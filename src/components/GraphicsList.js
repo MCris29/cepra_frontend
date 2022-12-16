@@ -32,7 +32,9 @@ const DashboardGraphics = (props) => {
             <div className={styles.container_static_graphic}>
               <div>
                 {newData.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} style={{ marginBottom: "3em" }}>
+                    
+                    
                     <div className="subtitle">{item.itegr_titulo}</div>
                     <p className="paragraph">{item.itegr_observacion}</p>
                     <img src={item.itegr_url} className={styles.img_graphic} />
