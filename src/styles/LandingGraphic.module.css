@@ -23,6 +23,7 @@
 
 .img_graphic {
   margin: 0;
+  width: 100%;
 }
 
 .sidebar {
@@ -168,10 +169,6 @@
   .container_static_graphic {
     padding-left: 0;
     margin-top: 32px;
-  }
-  .img_graphic {
-    width: 13rem;
-    height: 13rem;
   }
   .title_container_desktop {
     display: none;
