@@ -54,6 +54,9 @@ export default function LandingGraphic() {
   const [dashboard, setDashboard] = useState(false);
   const [showStaticGraphic, setShowStaticGraphic] = useState(false);
 
+  const [showMenu, setShowMenu] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+
   if (error && surveyId) return <ErrorInformation />;
   if (!data) return <LoadingInformation />;
 
@@ -513,9 +516,39 @@ export default function LandingGraphic() {
                   {data.encuesta_observacion}
                 </h4>
               </Box>
+              <div className={styles.mobile}>
+                <p
+                  className="paragraph"
+                  onClick={() => {
+                    setShowMenu(!showMenu);
+                  }}
+                >
+                  Menú
+                </p>
+                <p
+                  className="paragraph"
+                  onClick={() => {
+                    setShowFilter(!showFilter);
+                  }}
+                >
+                  Filtro
+                </p>
+              </div>
               <Box className={styles.sidebar}>
-                <Sidebar items={sidebarItems} />
+                <div className={styles.container_mobile}>
+                  {showMenu ? (
+                    <>
+                      <Sidebar items={sidebarItems} />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className={styles.container_desktop}>
+                  <Sidebar items={sidebarItems} />
+                </div>
               </Box>
+
               <Box className={styles.dashboard}>
                 <Box className={styles.title_container_desktop}>
                   <h4 className="title" style={{ margin: "0 0 32px 0" }}>
@@ -532,19 +565,45 @@ export default function LandingGraphic() {
                         {showStaticGraphic ? (
                           <>
                             {/* Se muestran los gráficos estáticos sin filtro */}
-                            <Box className={styles.filter}>
-                              <div className={styles.filter_section}>
-                                <FilterTypeChart
-                                  chartType={chartType}
-                                  handleTypeChart={handleTypeChart}
-                                />
-                              </div>
-                              <div className={styles.filter_section}>
-                                <ButtonDownloadGraphic
-                                  title={chartTitle + " (" + chartType + ")"}
-                                />
-                              </div>
-                            </Box>
+                            <div className={styles.container_mobile}>
+                              {showFilter ? (
+                                <>
+                                  <Box className={styles.filter}>
+                                    <div className={styles.filter_section}>
+                                      <FilterTypeChart
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                      />
+                                    </div>
+                                    <div className={styles.filter_section}>
+                                      <ButtonDownloadGraphic
+                                        title={
+                                          chartTitle + " (" + chartType + ")"
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </div>
+                            <div className={styles.container_desktop}>
+                              <Box className={styles.filter}>
+                                <div className={styles.filter_section}>
+                                  <FilterTypeChart
+                                    chartType={chartType}
+                                    handleTypeChart={handleTypeChart}
+                                  />
+                                </div>
+                                <div className={styles.filter_section}>
+                                  <ButtonDownloadGraphic
+                                    title={chartTitle + " (" + chartType + ")"}
+                                  />
+                                </div>
+                              </Box>
+                            </div>
+
                             <Box className={styles.graphic}>
                               <Graphic
                                 type={chartType}
@@ -559,42 +618,108 @@ export default function LandingGraphic() {
                             {/* Filtro de gráficos dínamicos discretos y continuos */}
                             {chartType === "boxplot" ||
                             chartType === "histogram" ? (
-                              <Box className={styles.filter}>
-                                {/* Filtro de datos continuos */}
-                                <div className={styles.filter_section}>
-                                  <FilterContinuosGraphic
-                                    continuosFilter={continuosFilter}
-                                    chartType={chartType}
-                                    handleTypeChart={handleTypeChart}
-                                    handleFilterContinous={
-                                      handleFilterContinous
-                                    }
-                                  />
+                              <>
+                                <div className={styles.container_mobile}>
+                                  {showFilter ? (
+                                    <>
+                                      <Box className={styles.filter}>
+                                        {/* Filtro de datos continuos */}
+                                        <div className={styles.filter_section}>
+                                          <FilterContinuosGraphic
+                                            continuosFilter={continuosFilter}
+                                            chartType={chartType}
+                                            handleTypeChart={handleTypeChart}
+                                            handleFilterContinous={
+                                              handleFilterContinous
+                                            }
+                                          />
+                                        </div>
+                                      </Box>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
-                              </Box>
+                                <div className={styles.container_desktop}>
+                                  <Box className={styles.filter}>
+                                    {/* Filtro de datos continuos */}
+                                    <div className={styles.filter_section}>
+                                      <FilterContinuosGraphic
+                                        continuosFilter={continuosFilter}
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                        handleFilterContinous={
+                                          handleFilterContinous
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
+                                </div>
+                              </>
                             ) : (
-                              <Box className={styles.filter}>
-                                {/* Filtro de datos discretos */}
-                                <div className={styles.filter_section}>
-                                  <FilterTypeChart
-                                    chartType={chartType}
-                                    handleTypeChart={handleTypeChart}
-                                  />
-                                  <FilterIndicators
-                                    surveyId={surveyId}
-                                    handleFilter={handleFilter}
-                                  />
-                                  <FilterDate
-                                    handleDateInit={() => {}}
-                                    handleDateEnd={() => {}}
-                                  />
+                              <>
+                                <div className={styles.container_mobile}>
+                                  {showFilter ? (
+                                    <>
+                                      <Box className={styles.filter}>
+                                        {/* Filtro de datos discretos */}
+                                        <div className={styles.filter_section}>
+                                          <FilterTypeChart
+                                            chartType={chartType}
+                                            handleTypeChart={handleTypeChart}
+                                          />
+                                          <FilterIndicators
+                                            surveyId={surveyId}
+                                            handleFilter={handleFilter}
+                                          />
+                                          <FilterDate
+                                            handleDateInit={() => {}}
+                                            handleDateEnd={() => {}}
+                                          />
+                                        </div>
+                                        <div className={styles.filter_section}>
+                                          <ButtonDownloadGraphic
+                                            title={
+                                              chartTitle +
+                                              " (" +
+                                              chartType +
+                                              ")"
+                                            }
+                                          />
+                                        </div>
+                                      </Box>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
-                                <div className={styles.filter_section}>
-                                  <ButtonDownloadGraphic
-                                    title={chartTitle + " (" + chartType + ")"}
-                                  />
+                                <div className={styles.container_desktop}>
+                                  <Box className={styles.filter}>
+                                    {/* Filtro de datos discretos */}
+                                    <div className={styles.filter_section}>
+                                      <FilterTypeChart
+                                        chartType={chartType}
+                                        handleTypeChart={handleTypeChart}
+                                      />
+                                      <FilterIndicators
+                                        surveyId={surveyId}
+                                        handleFilter={handleFilter}
+                                      />
+                                      <FilterDate
+                                        handleDateInit={() => {}}
+                                        handleDateEnd={() => {}}
+                                      />
+                                    </div>
+                                    <div className={styles.filter_section}>
+                                      <ButtonDownloadGraphic
+                                        title={
+                                          chartTitle + " (" + chartType + ")"
+                                        }
+                                      />
+                                    </div>
+                                  </Box>
                                 </div>
-                              </Box>
+                              </>
                             )}
 
                             {loadingFilter ? (

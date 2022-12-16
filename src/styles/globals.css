@@ -68,7 +68,7 @@ a {
 
 .main-container .menu {
   padding: 40px 10px;
-  min-width: 18%;
+  min-width: 26%;
 }
 .main-container .menu ::-webkit-scrollbar {
   width: 0;
@@ -89,7 +89,7 @@ a {
     width: 89px;
   }
   .main-admin {
-    margin-left: 14em;
+    margin-left: 2em;
     padding: 40px;
     min-width: 74%;
   }
