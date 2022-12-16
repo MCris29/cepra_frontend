@@ -1,7 +1,8 @@
+import { BathroomRounded } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import Plot from "react-plotly.js";
 
-const GraphicContinuos = ({ data, title, type }) => {
+const GraphicContinuos = ({ data, title, observation, type }) => {
   const [traces, setTraces] = useState([]);
 
   useEffect(() => {
@@ -23,8 +24,11 @@ const GraphicContinuos = ({ data, title, type }) => {
     <>
       <Plot
         data={traces}
-        layout={{ width: 840, height: 420, title: title }}
+        layout={{ width: 840, height: 420, title: title, barmode: "stack" }}
       />
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <p className="paragraph">{observation}</p>
+      </div>
     </>
   );
 };

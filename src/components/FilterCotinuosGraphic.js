@@ -3,7 +3,7 @@ import styles from "@/styles/LandingGraphic.module.css";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const FilterContinuosGraphic = (props) => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(props.continuosFilter);
 
   const handleFilter = (event) => {
     let filterData = event.target.value;
@@ -38,7 +38,7 @@ const FilterContinuosGraphic = (props) => {
         >
           <MenuItem value={"sector"}>Sector</MenuItem>
           <MenuItem value={"subsector"}>Subsector</MenuItem>
-          <MenuItem value={"provincia"}>Provincia</MenuItem>
+          {/* <MenuItem value={"provincia"}>Provincia</MenuItem> */}
         </Select>
       </FormControl>
     </>

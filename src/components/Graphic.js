@@ -28,7 +28,7 @@ const GraphicContinuos = dynamic(
   {
     ssr: false,
     loading: () => (
-      <Skeleton variant="rectangular" width="40%" sx={{ bgcolor: "#c4c4c4" }}>
+      <Skeleton variant="rectangular" width="100%" sx={{ bgcolor: "#c4c4c4" }}>
         <div style={{ paddingTop: "57%" }} />
       </Skeleton>
     ),
@@ -224,13 +224,19 @@ const Graphic = (props) => {
         return <Radar id="graphic_canvas" options={optionsRadar} data={data} />;
       case "boxplot":
         return (
-          <GraphicContinuos data={props.data} title={props.title} type="box" />
+          <GraphicContinuos
+            data={props.data}
+            title={props.title}
+            observation={props.observation}
+            type="box"
+          />
         );
       case "histogram":
         return (
           <GraphicContinuos
             data={props.data}
             title={props.title}
+            observation={props.observation}
             type="histogram"
           />
         );

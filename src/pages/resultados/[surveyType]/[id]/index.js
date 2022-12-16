@@ -47,6 +47,7 @@ export default function LandingGraphic() {
   const [itemId, setItemId] = useState("");
   const [loadingdItem, setLoadingItem] = useState(false);
   const [loadingFilter, setLoadingFilter] = useState(false);
+  const [continuosFilter, setContinuosFilter] = useState("sector");
   const [errordItem, setErrorItem] = useState(false);
   // const [dateInit, setDateInit] = useState(dayjs("2014-08-18T21:11:54"));
   // const [dateEnd, setDateEnd] = useState(dayjs("2014-08-18T21:11:54"));
@@ -332,16 +333,18 @@ export default function LandingGraphic() {
   };
   // Filtro de indicadores continuos
   const handleFilterContinous = (filter) => {
+    handleCloseDashboard();
+    setLoadingItem(true);
+    setChartInformation(null);
+    setContinuosFilter(filter);
+
     ChartData.graficoContinuo(surveyId, itemId, filter)
       .then((response) => {
-        if (response.data) {
-          response.data.data.title = item.label;
-          setChartInformation(response.data.data);
-          setChartTitle(item.name);
-          setChartType("boxplot");
-          setLoadingItem(false);
-          setObservation(item.observation);
-        }
+        setChartInformation(response.data.data);
+        setChartTitle(item.name);
+        setChartType("boxplot");
+        setLoadingItem(false);
+        setObservation(item.observation);
       })
       .catch((error) => {
         setLoadingItem(false);
@@ -560,6 +563,7 @@ export default function LandingGraphic() {
                                 {/* Filtro de datos continuos */}
                                 <div className={styles.filter_section}>
                                   <FilterContinuosGraphic
+                                    continuosFilter={continuosFilter}
                                     chartType={chartType}
                                     handleTypeChart={handleTypeChart}
                                     handleFilterContinous={
