@@ -1,10 +1,12 @@
 const publicRoutes = {
   HOME: "/",
+  LOGIN: "/iniciar-sesion",
+  OBS_SURVEY: "/resultados",
+};
 
-  /* Rutas privadas para cambiar al implementar el Login*/
+const privateRoutes = {
   /** Administración **/
   MANAGEMENT: "/administracion/perfil",
-  LOGIN: "/iniciar-sesion",
   ORGANIZATION: "/administracion/organizacion",
   SURVEY: "/administracion/encuesta",
   ANSWERS: "/administracion/respuestas",
@@ -12,14 +14,7 @@ const publicRoutes = {
   GRAPHIC: "/administracion/grafico",
   GRAPHICAREA: "/administracion/mapa",
   PROFILE: "/administracion/perfil",
-
-  /** Observatorio **/
-  OBS_SURVEY: "/resultados",
-  OBS_GRAPHIC: "/encuesta/:id/innovacion",
-  /* */
 };
-
-const privateRoutes = {};
 
 const Routes = {
   ...publicRoutes,

@@ -5,6 +5,8 @@ import Routes from "@/constants/routes";
 import styles from "@/styles/Menu.module.css";
 import { Tooltip } from "@mui/material";
 
+import { useAuth } from "@/lib/auth";
+
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
@@ -39,6 +41,7 @@ const indicatorsItems = [
 
 const Menu = () => {
   const router = useRouter();
+  const { logout } = useAuth();
 
   const [tabHover, setTabHover] = useState(-1);
 
@@ -46,6 +49,10 @@ const Menu = () => {
     const currentRoute = router.pathname;
     if (currentRoute.includes(tabSelected)) return true;
     else return false;
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   const Tab = ({ index, href, isSelected, title, icon }) => (
@@ -77,12 +84,15 @@ const Menu = () => {
     </Link>
   );
 
-  const TabButton = ({ title, icon }) => (
+  const TabButton = ({ title, icon, action }) => (
     <div
       className={styles.tab}
       style={{
         backgroundColor: "transparent",
         color: "#0c89cb",
+      }}
+      onClick={() => {
+        action();
       }}
     >
       <span>
@@ -129,7 +139,11 @@ const Menu = () => {
             href={Routes.PROFILE}
             isSelected={handleTadSelected(Routes.PROFILE)}
           />
-          <TabButton title="Cerrar Sesión" icon={<LoginOutlinedIcon />} />
+          <TabButton
+            title="Cerrar Sesión"
+            icon={<LoginOutlinedIcon />}
+            action={handleLogout}
+          />
         </div>
       </div>
     </>
