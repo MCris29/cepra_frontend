@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Divider } from "@mui/material";
 
+import withAuth from "@/hocs/withAuth";
+
 import { StaticGraphics } from "@/lib/staticGraphic";
 import DeleteStaticGraphic from "@/components/DeleteStaticGraphic";
 import LoadingInformation from "@/components/LoadingInformation";
 
-export default function AdminGraphics() {
+const AdminGraphics = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -73,4 +75,6 @@ export default function AdminGraphics() {
       )}
     </>
   );
-}
+};
+
+export default withAuth(AdminGraphics);

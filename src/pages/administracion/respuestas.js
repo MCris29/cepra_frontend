@@ -3,8 +3,9 @@ import styles from "@/styles/Survey.module.css";
 import { Divider } from "@mui/material";
 import RepliesForm from "@/components/RepliesForm";
 import ReplyForm from "@/components/ReplyForm";
+import withAuth from "@/hocs/withAuth";
 
-export default function Answers() {
+const Answers = () => {
   return (
     <>
       <div className="main-admin-content">
@@ -14,4 +15,6 @@ export default function Answers() {
       </div>
     </>
   );
-}
+};
+
+export default withAuth(Answers);

@@ -14,6 +14,15 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+
+const adminItems = [
+  {
+    title: "Usuarios",
+    icon: <SupervisedUserCircleIcon />,
+    to: Routes.USERS,
+  },
+];
 
 const menuItems = [
   {
@@ -41,7 +50,7 @@ const indicatorsItems = [
 
 const Menu = () => {
   const router = useRouter();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const [tabHover, setTabHover] = useState(-1);
 
@@ -108,6 +117,20 @@ const Menu = () => {
     <>
       <div className={styles.container}>
         <div className={styles.tabs}>
+          {/* Apartado de adminsitración */}
+          <div className={styles.tabTitle}>Administrar</div>
+          {adminItems.map((item, index) => (
+            <Tab
+              key={index}
+              index={index}
+              title={item.title}
+              icon={item.icon}
+              href={item.to}
+              isSelected={handleTadSelected(item.to)}
+            />
+          ))}
+          {/* ************************** */}
+
           <div className={styles.tabTitle}>Datos</div>
           {menuItems.map((item, index) => (
             <Tab

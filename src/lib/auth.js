@@ -99,7 +99,8 @@ function useAuthProvider() {
 
   async function editUser(data) {
     try {
-      const response = await api.put("it/itusuarios/", data);
+      const userId = cookie.get("userId");
+      const response = await api.put(`it/itusuarios/${userId}`, data);
       // handleUser(response.data.user);
       return response;
     } catch (error) {

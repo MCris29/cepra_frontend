@@ -4,6 +4,7 @@ import { Divider } from "@mui/material";
 import SurveyTypeForm from "@/components/SurveyTypeForm";
 import SurveyForm from "@/components/SurveyForm";
 import SurveyList from "@/components/SurveyList";
+import withAuth from "@/hocs/withAuth";
 
 const Survey = () => {
   return (
@@ -19,4 +20,4 @@ const Survey = () => {
   );
 };
 
-export default Survey;
+export default withAuth(Survey);

@@ -5,7 +5,6 @@ const publicRoutes = {
 };
 
 const privateRoutes = {
-  /** Administración **/
   MANAGEMENT: "/administracion/perfil",
   ORGANIZATION: "/administracion/organizacion",
   SURVEY: "/administracion/encuesta",
@@ -13,7 +12,9 @@ const privateRoutes = {
   STATIC_GRAPHICS: "/administracion/graficos-estaticos",
   GRAPHIC: "/administracion/grafico",
   GRAPHICAREA: "/administracion/mapa",
+
   PROFILE: "/administracion/perfil",
+  USERS: "/administracion/usuarios",
 };
 
 const Routes = {
