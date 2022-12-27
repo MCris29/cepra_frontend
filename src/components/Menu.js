@@ -113,7 +113,9 @@ const Menu = () => {
   );
 
   const AdminMenu = ({ user }) => {
-    if (user.roles[0].itrol_codigo == 1) {
+    // Se presenta para el administrador
+    let rol = user.roles[0].itrol_codigo;
+    if (rol == 1) {
       return (
         <>
           <div className={styles.tabTitle}>Administrar</div>
@@ -132,31 +134,43 @@ const Menu = () => {
     }
   };
 
+  const InvestigatorMenu = () => {
+    // Se presenta para el administrador e investigador
+    let rol = user.roles[0].itrol_codigo;
+    if (rol == 1 || rol == 2) {
+      return (
+        <>
+          <div className={styles.tabTitle}>Datos</div>
+          {menuItems.map((item, index) => (
+            <Tab
+              key={index}
+              index={index}
+              title={item.title}
+              icon={item.icon}
+              href={item.to}
+              isSelected={handleTadSelected(item.to)}
+            />
+          ))}
+          <div className={styles.tabTitle}>Indicadores</div>
+          {indicatorsItems.map((item, index) => (
+            <Tab
+              key={index}
+              index={index + "indicator"}
+              title={item.title}
+              icon={item.icon}
+              href={item.to}
+              isSelected={handleTadSelected(item.to)}
+            />
+          ))}
+        </>
+      );
+    }
+  };
+
   const UserMenu = () => {
+    // Se presenta para todos los usuarios
     return (
       <>
-        <div className={styles.tabTitle}>Datos</div>
-        {menuItems.map((item, index) => (
-          <Tab
-            key={index}
-            index={index}
-            title={item.title}
-            icon={item.icon}
-            href={item.to}
-            isSelected={handleTadSelected(item.to)}
-          />
-        ))}
-        <div className={styles.tabTitle}>Indicadores</div>
-        {indicatorsItems.map((item, index) => (
-          <Tab
-            key={index}
-            index={index + "indicator"}
-            title={item.title}
-            icon={item.icon}
-            href={item.to}
-            isSelected={handleTadSelected(item.to)}
-          />
-        ))}
         <div className={styles.tabTitle}>Usuario</div>
         <Tab
           title="Perfil"
@@ -179,6 +193,7 @@ const Menu = () => {
         <div className={styles.container}>
           <div className={styles.tabs}>
             <AdminMenu user={user} />
+            <InvestigatorMenu />
             <UserMenu />
           </div>
         </div>
