@@ -40,7 +40,6 @@ const menuItems = [
 ];
 
 const indicatorsItems = [
-  // { title: "Gráfico", icon: <PollOutlinedIcon />, to: Routes.GRAPHIC },
   {
     title: "Área Geográfica",
     icon: <PublicOutlinedIcon />,
@@ -113,11 +112,10 @@ const Menu = () => {
     </div>
   );
 
-  return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.tabs}>
-          {/* Apartado de adminsitración */}
+  const AdminMenu = ({ user }) => {
+    if (user.roles[0].itrol_codigo == 1) {
+      return (
+        <>
           <div className={styles.tabTitle}>Administrar</div>
           {adminItems.map((item, index) => (
             <Tab
@@ -129,48 +127,64 @@ const Menu = () => {
               isSelected={handleTadSelected(item.to)}
             />
           ))}
-          {/* ************************** */}
+        </>
+      );
+    }
+  };
 
-          <div className={styles.tabTitle}>Datos</div>
-          {menuItems.map((item, index) => (
-            <Tab
-              key={index}
-              index={index}
-              title={item.title}
-              icon={item.icon}
-              href={item.to}
-              isSelected={handleTadSelected(item.to)}
-            />
-          ))}
-
-          <div className={styles.tabTitle}>Indicadores</div>
-          {indicatorsItems.map((item, index) => (
-            <Tab
-              key={index}
-              index={index + "indicator"}
-              title={item.title}
-              icon={item.icon}
-              href={item.to}
-              isSelected={handleTadSelected(item.to)}
-            />
-          ))}
-
-          <div className={styles.tabTitle}>Usuario</div>
+  const UserMenu = () => {
+    return (
+      <>
+        <div className={styles.tabTitle}>Datos</div>
+        {menuItems.map((item, index) => (
           <Tab
-            title="Perfil"
-            icon={<AccountCircleOutlinedIcon />}
-            href={Routes.PROFILE}
-            isSelected={handleTadSelected(Routes.PROFILE)}
+            key={index}
+            index={index}
+            title={item.title}
+            icon={item.icon}
+            href={item.to}
+            isSelected={handleTadSelected(item.to)}
           />
-          <TabButton
-            title="Cerrar Sesión"
-            icon={<LoginOutlinedIcon />}
-            action={handleLogout}
+        ))}
+        <div className={styles.tabTitle}>Indicadores</div>
+        {indicatorsItems.map((item, index) => (
+          <Tab
+            key={index}
+            index={index + "indicator"}
+            title={item.title}
+            icon={item.icon}
+            href={item.to}
+            isSelected={handleTadSelected(item.to)}
           />
+        ))}
+        <div className={styles.tabTitle}>Usuario</div>
+        <Tab
+          title="Perfil"
+          icon={<AccountCircleOutlinedIcon />}
+          href={Routes.PROFILE}
+          isSelected={handleTadSelected(Routes.PROFILE)}
+        />
+        <TabButton
+          title="Cerrar Sesión"
+          icon={<LoginOutlinedIcon />}
+          action={handleLogout}
+        />
+      </>
+    );
+  };
+
+  if (user) {
+    return (
+      <>
+        <div className={styles.container}>
+          <div className={styles.tabs}>
+            <AdminMenu user={user} />
+            <UserMenu />
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default Menu;
