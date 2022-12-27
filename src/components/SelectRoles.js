@@ -14,7 +14,7 @@ import { Roles } from "@/lib/rol";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
-    marginTop: theme.spacing(3),
+    marginTop: 0,
   },
   "& .MuiInputBase-input": {
     borderRadius: "0",
