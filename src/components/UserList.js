@@ -4,7 +4,6 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { DataGrid } from "@mui/x-data-grid";
-import { IconButton, Tooltip } from "@mui/material";
 
 import SelectRoles from "./SelectRoles";
 import LoadingInformation from "@/components/LoadingInformation";
@@ -20,7 +19,11 @@ const columns = [
     width: 200,
     renderCell: (data) => [
       <div key={data.row.id}>
-        <SelectRoles rolId={1} userId={data.row.itus_codigo} />
+        <SelectRoles
+          rolUserId={data.row.roles[0].itrus_codigo}
+          rolId={data.row.roles[0].itrol_codigo}
+          userId={data.row.itus_codigo}
+        />
       </div>,
     ],
   },

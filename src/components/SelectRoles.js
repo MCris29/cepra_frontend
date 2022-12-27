@@ -10,6 +10,8 @@ import InputBase from "@mui/material/InputBase";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
+import { Roles } from "@/lib/rol";
+
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
     marginTop: theme.spacing(3),
@@ -27,7 +29,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SelectRoles = ({ rolId, userId }) => {
+const SelectRoles = ({ rolUserId, rolId, userId }) => {
   const { data, error } = useSWR("it/itroles/", fetcher);
 
   const [rol, setRol] = useState(rolId);
@@ -37,6 +39,18 @@ const SelectRoles = ({ rolId, userId }) => {
 
   const handleChange = (event) => {
     setRol(event.target.value);
+    let newRol = event.target.value;
+
+    const rolData = {
+      itus_codigo: userId,
+      itrol_codigo: newRol,
+    };
+
+    try {
+      Roles.update(rolUserId, rolData);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
