@@ -47,7 +47,7 @@ function useAuthProvider() {
     };
 
     try {
-      const response = await api.post("it/itusuarios/", data, config);
+      const response = await api.post("it/itusuarios/", data);
       console.log("response", response);
 
       return response;
