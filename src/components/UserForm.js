@@ -177,7 +177,7 @@ const UserForm = () => {
 
   return (
     <>
-      <h4 className="title">Crear Usuario</h4>
+      <h4 className="title">Registrar un nuevo usuario</h4>
       <p className="paragraph">
         En esta sección se puede crear un nuevo usuario, para ello se debe
         llenar el formulario y presionar el botón de guardar.

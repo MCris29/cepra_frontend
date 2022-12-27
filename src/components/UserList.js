@@ -41,10 +41,11 @@ const UserList = () => {
   }
 
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <h4 className="title">Lista de usuarios</h4>
       <p className="paragraph">
-        En esta tabla se muestran todos los usuarios registrados.
+        En esta tabla se muestran todos los usuarios registrados, en la columna
+        rol se puede modificar el tipo de rol de cada usuario.
       </p>
       {data.data ? (
         <DataGrid
@@ -58,7 +59,7 @@ const UserList = () => {
       ) : (
         <div>No existen registros</div>
       )}
-    </>
+    </div>
   );
 };
 

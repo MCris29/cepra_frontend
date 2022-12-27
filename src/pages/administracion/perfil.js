@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import styles from "@/styles/Survey.module.css";
-import { Button, TextField, styled } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Stack,
+  Snackbar,
+  styled,
+} from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 import { useAuth } from "@/lib/auth";
 import withAuth from "@/hocs/withAuth";
 
@@ -77,6 +85,9 @@ const schema = yup.object().shape({
 const Profile = () => {
   const { user, editUser } = useAuth();
 
+  const [errorSubmit, setErrorSubmit] = useState("");
+  const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -91,23 +102,39 @@ const Profile = () => {
       const userData = await editUser(data);
       console.log("userData", userData);
 
-      // handleOpenSucces();
+      setOpen(true);
     } catch (e) {
       console.log("error", e);
-      alert("Algo salió mal, intentalo otra vez");
+      setLoading(false);
+      setErrorSubmit("Algo salió mal, intentalo otra vez");
+      openError(true);
     }
     setLoading(false);
   };
 
+  //Mensaje de alerta
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
+
   return (
     <div className="main-admin-content">
-      <h4 className="title">Perfil</h4>
-      <form
-        id="user-form"
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <h4 className="title">Información de usuario</h4>
+      <form id="user-form" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="itus_nombre"
           control={control}
@@ -120,7 +147,7 @@ const Profile = () => {
               required
               label="Nombre"
               variant="outlined"
-              margin="normal"
+              margin="dense"
               size="small"
               fullWidth
               error={Boolean(errors.itus_nombre)}
@@ -128,6 +155,26 @@ const Profile = () => {
           )}
         />
         <span className={styles.error}>{errors.itus_nombre?.message}</span>
+        <Controller
+          name="itus_contacto"
+          control={control}
+          defaultValue={user.itus_contacto}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <CustomTextField
+              {...field}
+              id="itus_contacto-form"
+              required
+              label="Teléfono"
+              variant="outlined"
+              margin="dense"
+              size="small"
+              fullWidth
+              error={Boolean(errors.itus_contacto)}
+            />
+          )}
+        />
+        <span className={styles.error}>{errors.itus_contacto?.message}</span>
         <Controller
           name="itus_correo"
           control={control}
@@ -141,33 +188,15 @@ const Profile = () => {
               disabled
               label="Correo"
               variant="outlined"
-              margin="normal"
+              margin="dense"
               size="small"
               fullWidth
               error={Boolean(errors.itus_correo)}
             />
           )}
         />
-        <Controller
-          name="itus_contacto"
-          control={control}
-          defaultValue={user.itus_contacto}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <CustomTextField
-              {...field}
-              id="itus_contacto-form"
-              required
-              label="Teléfono"
-              variant="outlined"
-              margin="normal"
-              size="small"
-              fullWidth
-              error={Boolean(errors.itus_contacto)}
-            />
-          )}
-        />
-        <span className={styles.error}>{errors.itus_contacto?.message}</span>
+        <div className={styles.error}>{errorSubmit}</div>
+
         <div className={styles.button_container}>
           <CustomButton
             type="submit"
@@ -178,6 +207,31 @@ const Profile = () => {
           </CustomButton>
         </div>
       </form>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={"success"}
+            sx={{ width: "100%" }}
+          >
+            Información actualizada con exito
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert
+            onClose={handleCloseError}
+            severity={"error"}
+            sx={{ width: "100%" }}
+          >
+            {errorSubmit}
+          </Alert>
+        </Snackbar>
+      </Stack>
     </div>
   );
 };
