@@ -9,8 +9,8 @@ async function getById(id) {
   return await api.get(`it/itroles/${id}`);
 }
 
-async function create(id, data) {
-  return await api.post(`it/itrolesusuarios/${id}`, data);
+async function create(data) {
+  return await api.post(`it/itrolesusuarios/`, data);
 }
 
 async function update(id, data) {

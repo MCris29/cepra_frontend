@@ -11,6 +11,8 @@ import {
 import MuiAlert from "@mui/material/Alert";
 
 import { useAuth } from "@/lib/auth";
+import { Roles } from "@/lib/rol";
+import { Users } from "@/lib/users";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -134,12 +136,7 @@ const UserForm = () => {
           itus_password: data.itus_password,
         };
         const userData = await register(jsonData);
-        console.log("userData", userData);
-
-        reset();
-        setRol("");
-
-        setOpen(true);
+        submitRol(userData.data.usuario.itus_codigo);
       } else {
         setErrorPassword("La contraseña no coincide");
       }
@@ -150,6 +147,27 @@ const UserForm = () => {
       setOpenError(true);
     }
     setLoading(false);
+  };
+
+  const submitRol = async (userId) => {
+    const rolesUsuario = {
+      itus_codigo: userId,
+      itrol_codigo: rol,
+    };
+
+    try {
+      const dataRoles = await Roles.create(rolesUsuario);
+      console.log(dataRoles);
+
+      reset();
+      setRol("");
+      setOpen(true);
+    } catch (e) {
+      console.log(e);
+      setErrorSubmit("Ocurrió un error");
+      await Users.deleteUser(userId);
+      setOpenError(true);
+    }
   };
 
   const handleChange = (event) => {
@@ -290,6 +308,7 @@ const UserForm = () => {
               variant="outlined"
               margin="dense"
               size="small"
+              type="password"
               fullWidth
               error={Boolean(errors.itus_password)}
             />
@@ -310,6 +329,7 @@ const UserForm = () => {
               variant="outlined"
               margin="dense"
               size="small"
+              type="password"
               fullWidth
               error={Boolean(errors.password_confirmation)}
             />

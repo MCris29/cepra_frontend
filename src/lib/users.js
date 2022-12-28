@@ -10,6 +10,6 @@ async function deleteUser(id) {
   return await api.delete(`it/itusuarios/${id}`);
 }
 
-export const Surveys = {
+export const Users = {
   deleteUser,
 };
