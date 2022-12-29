@@ -83,9 +83,6 @@ const SurveyId = () => {
         <div>
           <ButtonAddQuestion categories={data.categorias} />
         </div>
-        <div>
-          <DeleteSurvey surveyId={id} surveyName={data.encuesta_observacion} />
-        </div>
       </div>
       {data ? (
         <div>

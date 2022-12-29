@@ -8,6 +8,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InsertChartOutlinedTwoToneIcon from "@mui/icons-material/InsertChartOutlinedTwoTone";
 
+import DeleteSurvey from "@/components/DeleteSurvey";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 
@@ -25,7 +26,7 @@ const columns = [
     field: "actions",
     headerName: "",
     type: "actions",
-    width: 100,
+    width: 150,
     renderCell: (data) => [
       <div key={data.row.id}>
         {/* Redirecciona a una página para visualizar las preguntas de la encuesta seleccionada */}
@@ -33,7 +34,7 @@ const columns = [
           key={`${Routes.SURVEY}/${data.row.id}`}
           href={`${Routes.SURVEY}/${data.row.id}`}
         >
-          <IconButton>
+          <IconButton style={{ color: "#05579f" }}>
             <Tooltip title="Ver encuesta" placement="top-start" followCursor>
               <VisibilityIcon />
             </Tooltip>
@@ -44,7 +45,7 @@ const columns = [
           key={`${Routes.SURVEY}/${data.row.id}/graficos-estaticos`}
           href={`${Routes.SURVEY}/${data.row.id}/graficos-estaticos`}
         >
-          <IconButton>
+          <IconButton style={{ color: "#0c89cb" }}>
             <Tooltip
               title="Ver gráficos estáticos"
               placement="top-start"
@@ -54,6 +55,10 @@ const columns = [
             </Tooltip>
           </IconButton>
         </Link>
+        <DeleteSurvey
+          surveyId={data.row.id}
+          surveyName={data.row.itenc_observacion}
+        />
       </div>,
     ],
   },

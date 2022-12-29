@@ -21,14 +21,14 @@ const columns = [
     renderCell: (data) => [
       <div key={data.row.id}>
         <Link href={`${Routes.ORGANIZATION}/${data.row.id}`}>
-          <IconButton>
+          <IconButton style={{ color: "#0C89CB" }}>
             <Tooltip title="Editar" placement="top-start" followCursor>
               <EditIcon />
             </Tooltip>
           </IconButton>
         </Link>
         <Link href={`${Routes.ORGANIZATION}/${data.row.id}/contactos`}>
-          <IconButton>
+          <IconButton style={{ color: "#05579f" }}>
             <Tooltip title="Ver contactos" placement="top-start" followCursor>
               <ContactsIcon />
             </Tooltip>
