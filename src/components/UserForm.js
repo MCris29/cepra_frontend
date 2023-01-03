@@ -21,7 +21,7 @@ import * as yup from "yup";
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
-import ErrorInformation from " @/components/ErrorInformation";
+import ErrorInformation from "@/components/ErrorInformation";
 
 const CustomTextField = styled(TextField)({
   "& label.Mui-focused": {
