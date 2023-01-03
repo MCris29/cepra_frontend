@@ -148,6 +148,7 @@ const ResetPasswordForm = () => {
               variant="outlined"
               margin="dense"
               size="small"
+              type="password"
               fullWidth
               error={Boolean(errors.itus_password)}
             />
@@ -168,6 +169,7 @@ const ResetPasswordForm = () => {
               variant="outlined"
               margin="dense"
               size="small"
+              type="password"
               fullWidth
               error={Boolean(errors.itus_newPassword)}
             />
@@ -188,6 +190,7 @@ const ResetPasswordForm = () => {
               variant="outlined"
               margin="dense"
               size="small"
+              type="password"
               fullWidth
               error={Boolean(passwordError)}
             />
