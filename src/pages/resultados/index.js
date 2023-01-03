@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import styles from "@/styles/LandingSurvey.module.css";
 import Link from "next/link";
-import {
-  Box,
-  IconButton,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
 
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";

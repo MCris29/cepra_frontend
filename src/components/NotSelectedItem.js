@@ -12,15 +12,15 @@ const NotSelectedItem = (props) => {
     >
       <Grid item xs={3}>
         <BarChartIcon
-          color="primary"
           sx={{
-            height: "65%",
-            width: "65%",
+            height: "56%",
+            width: "56%",
+            color: "#05579f",
           }}
         />
         {props.message ? (
           <>
-            <Typography variant="h4" color="primary">
+            <Typography variant="h5" color="#05579f">
               <span>{props.message}</span>
             </Typography>
           </>

@@ -140,7 +140,17 @@ const Menu = () => {
     if (rol == 1 || rol == 2) {
       return (
         <>
-          <div className={styles.tabTitle}>Datos</div>
+          <div className={styles.tabTitle}>
+            Datos{" "}
+            <span>
+              <img
+                src={"/o2i/datos_ico.png"}
+                className={styles.ico}
+                style={{ width: "17px", height: "28px" }}
+                alt="ico"
+              />
+            </span>
+          </div>
           {menuItems.map((item, index) => (
             <Tab
               key={index}
@@ -151,7 +161,17 @@ const Menu = () => {
               isSelected={handleTadSelected(item.to)}
             />
           ))}
-          <div className={styles.tabTitle}>Indicadores</div>
+          <div className={styles.tabTitle}>
+            Indicadores{" "}
+            <span>
+              <img
+                src={"/o2i/indicadores_ico.png"}
+                className={styles.ico}
+                style={{ width: "24px", height: "22px" }}
+                alt="ico"
+              />
+            </span>
+          </div>
           {indicatorsItems.map((item, index) => (
             <Tab
               key={index}
@@ -171,7 +191,17 @@ const Menu = () => {
     // Se presenta para todos los usuarios
     return (
       <>
-        <div className={styles.tabTitle}>Usuario</div>
+        <div className={styles.tabTitle}>
+          Usuario{" "}
+          <span>
+            <img
+              src={"/o2i/usuario_ico.png"}
+              className={styles.ico}
+              style={{ width: "19px", height: "22px" }}
+              alt="ico"
+            />
+          </span>
+        </div>
         <Tab
           title="Perfil"
           icon={<AccountCircleOutlinedIcon />}

@@ -44,6 +44,10 @@
   margin-top: 28px;
   margin-bottom: 8px;
 }
+.tabTitle .ico {
+  position: absolute;
+  margin: -4px 6px;
+}
 
 .tabLogo {
   display: flex;
