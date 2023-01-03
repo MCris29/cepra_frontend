@@ -149,6 +149,7 @@ export default function LandingGraphic() {
             setChartInformation(response.data.data);
             setChartTitle(item.name);
             setChartType("boxplot");
+            setContinuosFilter("sector");
             setLoadingItem(false);
             setObservation(item.observation);
           }
