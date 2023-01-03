@@ -1,11 +1,19 @@
 import React from "react";
 
-export default function Profiler() {
+import { Divider } from "@mui/material";
+
+import withAuth from "@/hocs/withAuth";
+import ProfileForm from "@/components/ProfileForm";
+import ResetPasswordForm from "@/components/ResetPasswordForm";
+
+const Profile = () => {
   return (
-    <>
-      <div className="main-admin-content">
-        <h4 className="title">Perfil</h4>
-      </div>
-    </>
+    <div className="main-admin-content">
+      <ProfileForm />
+      <Divider sx={{ margin: "40px 0" }} />
+      <ResetPasswordForm />
+    </div>
   );
-}
+};
+
+export default withAuth(Profile);

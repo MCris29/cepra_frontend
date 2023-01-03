@@ -1,5 +1,8 @@
 import React from "react";
+import withAuth from "@/hocs/withAuth";
 
-export default function Management() {
+const Management = () => {
   return <></>;
-}
+};
+
+export default withAuth(Management);

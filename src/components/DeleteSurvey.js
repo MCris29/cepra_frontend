@@ -2,8 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Routes from "@/constants/routes";
 
-import { styled, Button, Box, Modal, Snackbar, Stack } from "@mui/material";
+import {
+  styled,
+  Button,
+  Box,
+  Modal,
+  Snackbar,
+  Stack,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { Surveys } from "@/lib/survey";
 
@@ -78,7 +88,6 @@ const CustomButton = styled(Button)({
 
 const DeleteSurvey = (props) => {
   const router = useRouter();
-  const survey_id = router.query.id;
 
   const [openModal, setOpenModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -89,7 +98,7 @@ const DeleteSurvey = (props) => {
   const handleCloseModal = () => setOpenModal(false);
 
   useEffect(() => {
-    Surveys.getNumAnswers(survey_id).then((response) => {
+    Surveys.getNumAnswers(props.surveyId).then((response) => {
       setNumAnswer(response.data.data.num_respuestas);
     });
   }, []);
@@ -117,12 +126,12 @@ const DeleteSurvey = (props) => {
 
   const handleDelete = () => {
     try {
-      Surveys.deleteSurvey(survey_id).then((response) => {
+      Surveys.deleteSurvey(props.surveyId).then((response) => {
         console.log(response);
         handleOpenAlert();
         handleCloseModal();
         setTimeout(() => {
-          router.push(Routes.SURVEY);
+          router.reload(Routes.SURVEY);
         }, 2000);
       });
     } catch (error) {
@@ -134,7 +143,12 @@ const DeleteSurvey = (props) => {
 
   return (
     <>
-      <DeleteButton onClick={handleOpenModal}>Eliminar encuesta</DeleteButton>
+      <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
+        <Tooltip title="Eliminar encuesta" placement="top-start" followCursor>
+          <DeleteIcon />
+        </Tooltip>
+      </IconButton>
+      {/* <DeleteButton onClick={handleOpenModal}></DeleteButton> */}
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -148,7 +162,13 @@ const DeleteSurvey = (props) => {
           </p>
           <p className="paragraph">
             <strong>Nota: </strong>
-            Esta encuesta contiene <strong>{numAnswer}</strong> respuestas
+            {numAnswer ? (
+              <>
+                Esta encuesta contiene <strong>{numAnswer}</strong> respuestas
+              </>
+            ) : (
+              <>Esta encuesta no contiene respuestas</>
+            )}
           </p>
           <div
             style={{

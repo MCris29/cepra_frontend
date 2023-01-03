@@ -3,13 +3,15 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 import { useRouter } from "next/router";
 
+import withAuth from "@/hocs/withAuth";
+
 import QuestionCard from "@/components/QuestionCard";
 import LoadingInformation from "@/components/LoadingInformation";
 import ErrorInformation from "@/components/ErrorInformation";
 import ButtonAddQuestion from "@/components/ButtonAddQuestion";
 import DeleteSurvey from "@/components/DeleteSurvey";
 
-export default function SurveyId() {
+const SurveyId = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -81,9 +83,6 @@ export default function SurveyId() {
         <div>
           <ButtonAddQuestion categories={data.categorias} />
         </div>
-        <div>
-          <DeleteSurvey surveyId={id} surveyName={data.encuesta_observacion} />
-        </div>
       </div>
       {data ? (
         <div>
@@ -106,4 +105,6 @@ export default function SurveyId() {
       )}
     </>
   );
-}
+};
+
+export default withAuth(SurveyId);

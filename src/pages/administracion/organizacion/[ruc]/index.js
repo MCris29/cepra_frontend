@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import withAuth from "@/hocs/withAuth";
 
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
@@ -8,7 +9,7 @@ import LoadingInformation from "@/components/LoadingInformation";
 import OrganizationForm from "@/components/OrganizationForm";
 import ErrorInformation from "@/components/ErrorInformation";
 
-export default function OrganizationId() {
+const OrganizationId = () => {
   const router = useRouter();
   const { ruc } = router.query;
 
@@ -22,4 +23,6 @@ export default function OrganizationId() {
       <OrganizationForm data={data.data} id={ruc} />
     </>
   );
-}
+};
+
+export default withAuth(OrganizationId);

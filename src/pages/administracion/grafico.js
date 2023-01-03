@@ -1,18 +1,16 @@
 import React from "react";
 import "@/styles/Sidebar.module.css";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import SurveyIndicators from "@/components/SurveyIndicators";
-
 import GenericGraphic from "@/components/GenericGraphic";
+import withAuth from "@/hocs/withAuth";
 
-export default function Graphic() {
+const Graphic = () => {
   return (
     <>
-      <SurveyIndicators />
-      <GenericGraphic id={1} />
+      <h4 className="title">Gráfico</h4>
     </>
   );
-}
+};
+
+export default withAuth(Graphic);

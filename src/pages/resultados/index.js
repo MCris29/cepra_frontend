@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import styles from "@/styles/LandingSurvey.module.css";
 import Link from "next/link";
-import {
-  Box,
-  IconButton,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
 
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
-import BarChartIcon from "@mui/icons-material/BarChart";
 
 import RoutesCepra from "@/constants/routes";
 import ThemeCepra from "@/constants/theme";
@@ -55,12 +45,11 @@ export default function LandingSurvey() {
         return handleDate(data.row.itenc_fecha_vigente);
       },
     },
-    { field: "itenc_observacion", headerName: "Encuesta", width: 650 },
+    // { field: "itenc_observacion", headerName: "Encuesta", width: 650,  },
     {
-      field: "actions",
-      headerName: "",
-      type: "actions",
-      width: 200,
+      field: "itenc_observacion",
+      headerName: "Encuestas",
+      width: 800,
       renderCell: (data) => [
         <Link
           key={data.row.itenc_codigo}
@@ -68,11 +57,17 @@ export default function LandingSurvey() {
             data.row.itenc_codigo
           }`}
         >
-          <IconButton>
-            <Tooltip title="Ver gráficos" placement="top-start" followCursor>
-              <BarChartIcon />
-            </Tooltip>
-          </IconButton>
+          <div
+            style={{
+              cursor: "pointer",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <p className="paragraph">{data.row.itenc_observacion}</p>
+          </div>
         </Link>,
       ],
     },
@@ -145,13 +140,17 @@ export default function LandingSurvey() {
                         </MenuItem>
                       ))}
                     </Select>
-                    <p className="paragraph" style={{ color: "#8a8a8a" }}>
-                      Selecciona una encuesta
+                    <p
+                      className="paragraph"
+                      style={{ color: "#8a8a8a", margin: "4px 0" }}
+                    >
+                      Selecciona un tipo de encuesta
                     </p>
                   </FormControl>
                 </Box>
                 <Box
                   sx={{
+                    marginTop: "16px",
                     width: {
                       desktop: "80%",
                       laptop: "80%",
@@ -161,6 +160,10 @@ export default function LandingSurvey() {
                     },
                   }}
                 >
+                  <p className="paragraph">
+                    Selecciona una encuesta en la tabla para visualizar los
+                    gráficos.
+                  </p>
                   {data ? (
                     <DataGrid
                       rows={surveyList}

@@ -423,7 +423,7 @@ const ReplyForm = () => {
               key="formSurvey"
               onSubmit={handleSubmitSurvey(onSubmitSurvey)}
             >
-              <section style={{ marginBottom: "10px" }}>
+              <section>
                 <Controller
                   name={"typeSurvey"}
                   control={controlSurvey}
@@ -461,7 +461,7 @@ const ReplyForm = () => {
                   </span>
                 )}
               </section>
-              <section style={{ marginBottom: "10px" }}>
+              <section>
                 <Controller
                   name="surveyId"
                   control={controlSurvey}
@@ -497,7 +497,7 @@ const ReplyForm = () => {
                   </span>
                 )}
               </section>
-              <section style={{ marginBottom: "10px" }}>
+              <section>
                 <Controller
                   name="fechaTest"
                   control={controlSurvey}
@@ -552,7 +552,7 @@ const ReplyForm = () => {
             >
               <h4 className="subtitle">Datos de organización</h4>
               {Object.keys(formOrganization).map((e, index) => (
-                <section key={`org-${index}`} style={{ marginBottom: "4px" }}>
+                <section key={`org-${index}`}>
                   <Controller
                     name={e}
                     control={controlOrganization}
@@ -581,7 +581,7 @@ const ReplyForm = () => {
               ))}
               <h4 className="subtitle">Datos de contacto</h4>
               {Object.keys(formContact).map((e, index) => (
-                <section key={`cont-${index}`} style={{ marginBottom: "4px" }}>
+                <section key={`cont-${index}`}>
                   <Controller
                     name={e}
                     control={controlOrganization}
@@ -649,7 +649,7 @@ const ReplyForm = () => {
                     <h5>{category.name}</h5>
                     {category.questions.map((question, indexQuestion) => (
                       <Box key={indexQuestion}>
-                        <section style={{ marginBottom: "8px" }}>
+                        <section style={{ marginBottom: "32px" }}>
                           <p className="paragraph">{question.label}</p>
                           <div>
                             {question.observation ? (

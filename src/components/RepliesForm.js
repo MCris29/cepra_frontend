@@ -192,13 +192,13 @@ const RepliesForm = () => {
             let error = "Error al procesar las preguntas. ";
             if (questionTemplateNotFoundArray.length > 0) {
               error +=
-                "PLANTILLA - Preguntas no encontradas: " +
+                "Preguntas no encontradas en la plantilla: " +
                 questionTemplateNotFoundArray.join(", ") +
                 ". ";
             }
             if (questionReplyNotFoundArray.length > 0) {
               error +=
-                "RESPUESTAS - Preguntas adicionales encontradas: " +
+                "Preguntas adicionales encontradas en las respuestas: " +
                 questionReplyNotFoundArray.join(", ") +
                 ". ";
             }

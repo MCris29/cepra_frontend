@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "@/styles/Survey.module.css";
 import StaticGraphicForm from "@/components/StaticGraphicForm";
+import withAuth from "@/hocs/withAuth";
 
-export default function StaticGraphics() {
+const StaticGraphics = () => {
   return (
     <div className="main-admin-content">
       <h4 className="title">Gráfico estático</h4>
@@ -14,4 +15,6 @@ export default function StaticGraphics() {
       <StaticGraphicForm />
     </div>
   );
-}
+};
+
+export default withAuth(StaticGraphics);

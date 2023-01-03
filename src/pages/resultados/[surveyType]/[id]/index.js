@@ -5,7 +5,7 @@ import styles from "@/styles/LandingGraphic.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/utils";
 
-import { Typography, Box, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import dayjs from "dayjs";
 
@@ -149,6 +149,7 @@ export default function LandingGraphic() {
             setChartInformation(response.data.data);
             setChartTitle(item.name);
             setChartType("boxplot");
+            setContinuosFilter("sector");
             setLoadingItem(false);
             setObservation(item.observation);
           }

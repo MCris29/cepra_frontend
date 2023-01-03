@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/Organization.module.css";
 import { Organizations } from "@/lib/organization";
 
@@ -92,10 +92,10 @@ const schema = yup.object().shape({
 });
 
 const OrganizationForm = (props) => {
-  const [province, setProvince] = useState("");
   const [cityList, setCityList] = useState([]);
   const [cityListState, setCityListState] = useState(false);
   const [city, setCity] = useState(props.data.itopc_codigo_ciudad);
+  const [province, setProvince] = useState(props.data.itopc_codigo_provincia);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -117,6 +117,7 @@ const OrganizationForm = (props) => {
     const newOrganization = {
       itorg_ruc: data.itorg_ruc,
       itopc_codigo_ciudad: city,
+      itopc_codigo_provincia: province,
       itorg_nombre: data.itorg_nombre,
       itorg_sector: data.itorg_sector,
       itorg_subsector: data.itorg_subsector,
@@ -219,7 +220,7 @@ const OrganizationForm = (props) => {
           <Controller
             name="itgop_codigo"
             control={control}
-            defaultValue={props.data.itgop_codigo}
+            defaultValue={props.data.itopc_codigo_provincia}
             rules={{ required: true }}
             render={({ field }) => (
               <CustomTextField
@@ -273,11 +274,15 @@ const OrganizationForm = (props) => {
                         {item.itopc_nombre}
                       </MenuItem>
                     ))
-                  : handleCityList().map((item, index) => (
-                      <MenuItem key={index} value={item.itopc_codigo}>
-                        {item.itopc_nombre}
-                      </MenuItem>
-                    ))}
+                  : handleCityList().map((item, index) => {
+                      if (item.itopc_codigo == city) {
+                        return (
+                          <MenuItem key={index} value={item.itopc_codigo}>
+                            {item.itopc_nombre}
+                          </MenuItem>
+                        );
+                      }
+                    })}
               </CustomTextField>
             )}
           />

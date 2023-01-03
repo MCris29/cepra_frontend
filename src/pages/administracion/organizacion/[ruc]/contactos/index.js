@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import withAuth from "@/hocs/withAuth";
 import { Organizations } from "@/lib/organization";
-
 import ContactList from "@/components/ContactList";
 
-export default function Contacts() {
+const Contacts = () => {
   const router = useRouter();
   const { ruc } = router.query;
 
@@ -27,4 +27,6 @@ export default function Contacts() {
   }, [ruc]);
 
   return <ContactList ruc={ruc} organization={organization} />;
-}
+};
+
+export default withAuth(Contacts);
