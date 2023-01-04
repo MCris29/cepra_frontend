@@ -38,7 +38,8 @@ const FilterContinuosGraphic = (props) => {
         >
           <MenuItem value={"sector"}>Sector</MenuItem>
           <MenuItem value={"subsector"}>Subsector</MenuItem>
-          {/* <MenuItem value={"provincia"}>Provincia</MenuItem> */}
+          <MenuItem value={"provincia"}>Provincia</MenuItem>
+          <MenuItem value={"ciudad"}>Ciudad</MenuItem>
         </Select>
       </FormControl>
     </>
