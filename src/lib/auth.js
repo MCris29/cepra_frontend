@@ -130,7 +130,7 @@ function useAuthProvider() {
     if (userId) {
       try {
         const response = await api.get(`/it/itusuarios/${userId}`);
-        console.log("response user", response);
+        // console.log("response user", response);
         handleUser(response.data.data);
         return response;
       } catch (error) {
@@ -159,7 +159,7 @@ function useAuthProvider() {
   }
 
   useEffect(() => {
-    console.log("RENDER AUTH", user);
+    // console.log("RENDER AUTH", user);
     try {
       getAuthenticatedUser();
     } catch (error) {

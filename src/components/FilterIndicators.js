@@ -27,10 +27,14 @@ const FilterIndicators = (props) => {
         setArrayData(data.data.subsector);
         setFilterLabel("Subsector");
         break;
-      case "ciudad":
-        setArrayData(data.data.ciudad);
-        setFilterLabel("Ciudad");
+      case "provincia":
+        setArrayData(data.data.provincia);
+        setFilterLabel("Provincia");
         break;
+        case "ciudad":
+          setArrayData(data.data.ciudad);
+          setFilterLabel("Ciudad");
+          break;
       case "all":
         setArrayData([]);
         setFilterLabel("Dato");
@@ -80,6 +84,7 @@ const FilterIndicators = (props) => {
           <MenuItem value={"all"}>Todos</MenuItem>
           <MenuItem value={"sector"}>Sector</MenuItem>
           <MenuItem value={"subsector"}>Subsector</MenuItem>
+          <MenuItem value={"provincia"}>Provincia</MenuItem>
           <MenuItem value={"ciudad"}>Ciudad</MenuItem>
         </Select>
       </FormControl>

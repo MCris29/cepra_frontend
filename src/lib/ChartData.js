@@ -30,6 +30,10 @@ async function orgGraficoSector(id) {
   return await api.get(`it/orgGraficoSector/${id}`);
 }
 
+async function orgGraficoProvincia(id) {
+  return await api.get(`it/orgGraficoProvincia/${id}`);
+}
+
 async function orgGraficoCiudad(id) {
   return await api.get(`it/orgGraficoCiudad/${id}`);
 }
@@ -47,6 +51,7 @@ export const ChartData = {
 
   //Gráficos dinámicos con cada indicador
   orgGraficoSector,
+  orgGraficoProvincia,
   orgGraficoCiudad,
   contactoGraficoDes,
   contactoGraficoEst,

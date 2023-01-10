@@ -198,6 +198,27 @@ export default function LandingGraphic() {
       });
   };
   //Datos de gráfico de organizaciones por provincias
+  const orgGraficoProvincia = (id) => {
+    handleCloseDashboard();
+    handleOpenStaticGraphic();
+    setLoadingItem(true);
+    setChartInformation(undefined);
+    ChartData.orgGraficoProvincia(id)
+      .then((response) => {
+        if (response.data) {
+          setChartInformation(response.data.data);
+          setChartTitle("Muestra por provincia");
+          setChartType("bar");
+          setLoadingItem(false);
+          setObservation("");
+        }
+      })
+      .catch((error) => {
+        setLoadingItem(false);
+        setErrorItem(true);
+      });
+  };
+  //Datos de gráfico de organizaciones por ciudad
   const orgGraficoCiudad = (id) => {
     handleCloseDashboard();
     handleOpenStaticGraphic();
@@ -307,6 +328,19 @@ export default function LandingGraphic() {
             setErrorItem(true);
           });
         break;
+      case "provincia":
+        filters
+          .getByProvince(questionId, fil_data)
+          .then((response) => {
+            setChartInformation(response.data.data);
+            setLoadingFilter(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoadingFilter(false);
+            setErrorItem(true);
+          });
+        break;
       case "ciudad":
         filters
           .getByCity(questionId, fil_data)
@@ -381,19 +415,23 @@ export default function LandingGraphic() {
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-
+          {
+            label: "Muestra por provincia",
+            name: "grafico_i2",
+            onClick: () => orgGraficoProvincia(surveyId),
+          },
           {
             label: "Muestra por ciudad",
-            name: "grafico_i2",
+            name: "grafico_i3",
             onClick: () => orgGraficoCiudad(surveyId),
           },
           {
-            name: "grafico_i3",
+            name: "grafico_i4",
             label: "Perfil de encuestados por nivel de decisión",
             onClick: () => contactoGraficoDes(surveyId),
           },
           {
-            name: "grafico_i4",
+            name: "grafico_i5",
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
@@ -420,21 +458,25 @@ export default function LandingGraphic() {
             label: "Sectores económicos",
             onClick: () => orgGraficoSector(surveyId),
           },
-
+          {
+            label: "Muestra por provincia",
+            name: "grafico_2",
+            onClick: () => orgGraficoProvincia(surveyId),
+          },
           {
             label: "Muestra por ciudad",
-            name: "grafico_i2",
+            name: "grafico_3",
             onClick: () => orgGraficoCiudad(surveyId),
           },
 
           {
-            name: "grafico_i3",
+            name: "grafico_4",
             label: "Perfil de encuestados por nivel de decisión",
             onClick: () => contactoGraficoDes(surveyId),
           },
 
           {
-            name: "grafico_i4",
+            name: "grafico_5",
             label: "Perfil de encuestados por nivel de estudios",
             onClick: () => contactoGraficoEst(surveyId),
           },
