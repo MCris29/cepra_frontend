@@ -135,8 +135,6 @@ const ButtonDeleteUser = (props) => {
     }
   };
 
-  console.log("props", props);
-
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
