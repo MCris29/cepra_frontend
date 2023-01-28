@@ -9,6 +9,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import ErrorInformation from "./ErrorInformation";
 import LoadingInformation from "./LoadingInformation";
 import ButtonDeleteTypeSurvey from "./ButtonDeleteTypeSurvey";
+import ButtonEditTypeSurvey from "./ButtonEditTypeSurvey";
 
 const columns = [
   {
@@ -17,7 +18,8 @@ const columns = [
     type: "actions",
     width: 100,
     renderCell: (data) => [
-      <div key={data.row.id}>
+      <div key={data.row.id} style={{ display: "flex" }}>
+        <ButtonEditTypeSurvey surveyType={data.row} />
         <ButtonDeleteTypeSurvey surveyType={data.row} />
       </div>,
     ],
