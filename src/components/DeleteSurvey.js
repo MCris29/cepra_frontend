@@ -178,7 +178,7 @@ const DeleteSurvey = (props) => {
               marginTop: "12px",
             }}
           >
-            <DeleteButton onClick={handleDelete}>Eliminar</DeleteButton>
+            <DeleteButton onClick={handleDelete}>Sí, eliminar</DeleteButton>
             <CustomButton onClick={handleCloseModal}>Cancelar</CustomButton>
           </div>
         </Box>
