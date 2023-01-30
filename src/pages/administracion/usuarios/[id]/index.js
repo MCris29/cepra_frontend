@@ -154,10 +154,9 @@ const UserId = () => {
       return (
         <>
           <div className="main-admin-content">
-            <h4 className="title">Resetear información</h4>
+            <h4 className="title">Resetear contraseña</h4>
             <p>
-              En esta sección puede cambiar la información de un usuario, además
-              de cambiar la contraseña.
+              En esta sección puede cambiar la contraseña de un usuario.
             </p>
             <form
               id="user-form"

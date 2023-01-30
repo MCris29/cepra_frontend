@@ -138,7 +138,7 @@ const ButtonDeleteUser = (props) => {
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
-        <Tooltip title="Eliminar encuesta" placement="top-start" followCursor>
+        <Tooltip title="Eliminar usuario" placement="top-start" followCursor>
           <DeleteIcon />
         </Tooltip>
       </IconButton>

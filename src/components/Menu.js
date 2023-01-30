@@ -15,6 +15,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 
 const adminItems = [
   {
@@ -118,7 +119,12 @@ const Menu = () => {
     if (rol == 1) {
       return (
         <>
-          <div className={styles.tabTitle}>Administrar</div>
+          <div className={styles.tabTitle}>
+            Administrar{" "}
+            <span>
+              <AdminPanelSettingsOutlinedIcon className={styles.ico} />
+            </span>
+          </div>
           {adminItems.map((item, index) => (
             <Tab
               key={index}
