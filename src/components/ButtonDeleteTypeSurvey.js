@@ -140,7 +140,7 @@ const ButtonDeleteTypeSurvey = (props) => {
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
-        <Tooltip title="Eliminar encuesta" placement="top-start" followCursor>
+        <Tooltip title="Eliminar tipo de encuesta" placement="top-start" followCursor>
           <DeleteIcon />
         </Tooltip>
       </IconButton>

@@ -157,7 +157,7 @@ const ButtonEditTypeSurvey = (props) => {
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#0c89cb" }}>
-        <Tooltip title="Editar encuesta" placement="top-start" followCursor>
+        <Tooltip title="Editar tipo de encuesta" placement="top-start" followCursor>
           <EditIcon />
         </Tooltip>
       </IconButton>
