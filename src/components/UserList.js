@@ -1,35 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
+import Routes from "@/constants/routes";
 
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 
 import { DataGrid } from "@mui/x-data-grid";
 
-import SelectRoles from "./SelectRoles";
-import LoadingInformation from "@/components/LoadingInformation";
+import { IconButton, Tooltip } from "@mui/material";
+import LockResetIcon from "@mui/icons-material/LockReset";
 
-const columns = [
-  { field: "itus_nombre", headerName: "Nombre", width: 200 },
-  { field: "itus_correo", headerName: "Correo", width: 200 },
-  { field: "itus_contacto", headerName: "Teléfono", width: 125 },
-  {
-    field: "actions",
-    headerName: "Rol",
-    type: "actions",
-    width: 200,
-    renderCell: (data) => [
-      <div key={data.row.id}>
-        <SelectRoles
-          rolUserId={data.row.roles[0].itrus_codigo}
-          rolId={data.row.roles[0].itrol_codigo}
-          userId={data.row.itus_codigo}
-        />
-      </div>,
-    ],
-  },
-];
+import SelectRoles from "./SelectRoles";
+
+import LoadingInformation from "@/components/LoadingInformation";
+import ButtonDeleteUser from "@/components/ButtonDeleteUser";
 
 const UserList = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const columns = [
+    {
+      field: "actions",
+      headerName: "",
+      type: "actions",
+      width: 100,
+      renderCell: (data) => [
+        <div key={data.row.id}>
+          <Link
+            key={`${Routes.USERS}/${data.row.id}`}
+            href={`${Routes.USERS}/${data.row.id}`}
+          >
+            <IconButton style={{ color: "#05579f" }}>
+              <Tooltip
+                title="Resetear Contraseña"
+                placement="top-start"
+                followCursor
+              >
+                <LockResetIcon />
+              </Tooltip>
+            </IconButton>
+          </Link>
+          <ButtonDeleteUser user={data.row} />
+        </div>,
+      ],
+    },
+    { field: "itus_nombre", headerName: "Nombre", width: 200 },
+    { field: "itus_correo", headerName: "Correo", width: 200 },
+    { field: "itus_contacto", headerName: "Teléfono", width: 125 },
+    {
+      field: "Rol",
+      headerName: "Rol",
+      type: "actions",
+      width: 200,
+      renderCell: (data) => [
+        <div key={data.row.id}>
+          <SelectRoles
+            rolUserId={data.row.roles[0].itrus_codigo}
+            rolId={data.row.roles[0].itrol_codigo}
+            userId={data.row.itus_codigo}
+          />
+        </div>,
+      ],
+    },
+  ];
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const { data, error } = useSWR("it/itusuarios/", fetcher);
 
   if (error) return <>Error</>;

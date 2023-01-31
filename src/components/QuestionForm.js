@@ -426,8 +426,8 @@ const QuestionForm = (props) => {
               value={typeData}
               onChange={handleChange}
             >
-              <MenuItem value={"texto"}>Texto</MenuItem>
-              <MenuItem value={"numero"}>Númerico</MenuItem>
+              <MenuItem value={"discreta"}>Discreto</MenuItem>
+              <MenuItem value={"continua"}>Contínuo</MenuItem>
             </CustomTextField>
           )}
         />

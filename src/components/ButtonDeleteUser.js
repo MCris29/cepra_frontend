@@ -15,7 +15,7 @@ import {
 import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Surveys } from "@/lib/survey";
+import { Users } from "@/lib/users";
 
 const styleModal = {
   position: "absolute",
@@ -86,22 +86,15 @@ const CustomButton = styled(Button)({
   },
 });
 
-const DeleteSurvey = (props) => {
+const ButtonDeleteUser = (props) => {
   const router = useRouter();
 
   const [openModal, setOpenModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [openErrorAlert, setOpenErrorAlert] = useState(false);
-  const [numAnswer, setNumAnswer] = useState("");
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
-
-  useEffect(() => {
-    Surveys.getNumAnswers(props.surveyId).then((response) => {
-      setNumAnswer(response.data.data.num_respuestas);
-    });
-  }, []);
 
   //Mensaje de alerta
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -126,12 +119,13 @@ const DeleteSurvey = (props) => {
 
   const handleDelete = () => {
     try {
-      Surveys.deleteSurvey(props.surveyId).then((response) => {
+      // Delete user
+      Users.deleteUser(props.user.itus_codigo).then((response) => {
         console.log(response);
         handleOpenAlert();
         handleCloseModal();
         setTimeout(() => {
-          router.reload(Routes.SURVEY);
+          router.reload(Routes.USERS);
         }, 2000);
       });
     } catch (error) {
@@ -144,11 +138,10 @@ const DeleteSurvey = (props) => {
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
-        <Tooltip title="Eliminar encuesta" placement="top-start" followCursor>
+        <Tooltip title="Eliminar usuario" placement="top-start" followCursor>
           <DeleteIcon />
         </Tooltip>
       </IconButton>
-      {/* <DeleteButton onClick={handleOpenModal}></DeleteButton> */}
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -157,18 +150,8 @@ const DeleteSurvey = (props) => {
       >
         <Box sx={styleModal}>
           <p>
-            ¿Está seguro que desea eliminar la encuesta{" "}
-            <strong>{props.surveyName}</strong>?
-          </p>
-          <p className="paragraph">
-            <strong>Nota: </strong>
-            {numAnswer ? (
-              <>
-                Esta encuesta contiene <strong>{numAnswer}</strong> respuestas
-              </>
-            ) : (
-              <>Esta encuesta no contiene respuestas</>
-            )}
+            ¿Está seguro que desea eliminar el usuario{" "}
+            <strong>{props.user.itus_nombre}</strong>?
           </p>
           <div
             style={{
@@ -194,7 +177,7 @@ const DeleteSurvey = (props) => {
             severity={"success"}
             sx={{ width: "100%" }}
           >
-            Encuesta eliminada con exito
+            Usuario eliminado con exito
           </Alert>
         </Snackbar>
         <Snackbar
@@ -216,4 +199,4 @@ const DeleteSurvey = (props) => {
   );
 };
 
-export default DeleteSurvey;
+export default ButtonDeleteUser;

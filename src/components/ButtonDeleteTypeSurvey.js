@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Routes from "@/constants/routes";
 
@@ -15,7 +15,7 @@ import {
 import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Surveys } from "@/lib/survey";
+import { SurveyTypes } from "@/lib/suveyType";
 
 const styleModal = {
   position: "absolute",
@@ -86,22 +86,15 @@ const CustomButton = styled(Button)({
   },
 });
 
-const DeleteSurvey = (props) => {
+const ButtonDeleteTypeSurvey = (props) => {
   const router = useRouter();
 
   const [openModal, setOpenModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [openErrorAlert, setOpenErrorAlert] = useState(false);
-  const [numAnswer, setNumAnswer] = useState("");
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
-
-  useEffect(() => {
-    Surveys.getNumAnswers(props.surveyId).then((response) => {
-      setNumAnswer(response.data.data.num_respuestas);
-    });
-  }, []);
 
   //Mensaje de alerta
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -126,14 +119,17 @@ const DeleteSurvey = (props) => {
 
   const handleDelete = () => {
     try {
-      Surveys.deleteSurvey(props.surveyId).then((response) => {
-        console.log(response);
-        handleOpenAlert();
-        handleCloseModal();
-        setTimeout(() => {
-          router.reload(Routes.SURVEY);
-        }, 2000);
-      });
+      // Delete survey type
+      SurveyTypes.deleteSurveyType(props.surveyType.itten_codigo).then(
+        (response) => {
+          console.log(response);
+          handleOpenAlert();
+          handleCloseModal();
+          setTimeout(() => {
+            router.reload(Routes.SURVEY);
+          }, 2000);
+        }
+      );
     } catch (error) {
       console.log(error);
       handleCloseModal();
@@ -144,11 +140,10 @@ const DeleteSurvey = (props) => {
   return (
     <>
       <IconButton onClick={handleOpenModal} style={{ color: "#d32f2f" }}>
-        <Tooltip title="Eliminar encuesta" placement="top-start" followCursor>
+        <Tooltip title="Eliminar tipo de encuesta" placement="top-start" followCursor>
           <DeleteIcon />
         </Tooltip>
       </IconButton>
-      {/* <DeleteButton onClick={handleOpenModal}></DeleteButton> */}
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -157,19 +152,10 @@ const DeleteSurvey = (props) => {
       >
         <Box sx={styleModal}>
           <p>
-            ¿Está seguro que desea eliminar la encuesta{" "}
-            <strong>{props.surveyName}</strong>?
+            <strong>Nota: </strong>Se eliminarán todos los datos asociados al
+            tipo de encuesta <strong>{props.surveyType.itten_nombre}</strong>
           </p>
-          <p className="paragraph">
-            <strong>Nota: </strong>
-            {numAnswer ? (
-              <>
-                Esta encuesta contiene <strong>{numAnswer}</strong> respuestas
-              </>
-            ) : (
-              <>Esta encuesta no contiene respuestas</>
-            )}
-          </p>
+          <p>¿Está seguro que desea eliminar el tipo de encuesta?</p>
           <div
             style={{
               display: "flex",
@@ -194,7 +180,7 @@ const DeleteSurvey = (props) => {
             severity={"success"}
             sx={{ width: "100%" }}
           >
-            Encuesta eliminada con exito
+            Tipo de encuesta eliminada con exito
           </Alert>
         </Snackbar>
         <Snackbar
@@ -216,4 +202,4 @@ const DeleteSurvey = (props) => {
   );
 };
 
-export default DeleteSurvey;
+export default ButtonDeleteTypeSurvey;
